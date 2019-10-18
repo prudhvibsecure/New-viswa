@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#009245</color>
+    <color name="colorPrimaryDark">#005729</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="spinnergray">#9E9E9E</color>
+    <color name="red">#ed1b24</color>
+    <color name="textblue">#00416A</color>
+    <color name="txthdr">#333131</color>
+
+    <color name="newexam">#FB6B69</color>
+    <color name="historyexam">#62C2E1</color>
+    <color name="newassignment">#F7CA04</color>
+    <color name="historyassignment">#47BF74</color>
+
+    <color name="titlecolor">#005C9B</color>
+
+    <color name="lightGray">#aaaaaa</color>
+
+    <color name="text_hint_color">#bec4c9</color>
+
+    <color name="droparrow">#707070</color>
+
+    <color name="orangebg">#F6931D</color>
+
+    <color name="butblue">#327AB7</color>
+
+    <color name="gray">#555555</color>
+
+
+
+</resources>

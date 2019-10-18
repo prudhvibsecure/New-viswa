@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "393458351886",
+    "firebase_url": "https://sriviswa-17b94.firebaseio.com",
+    "project_id": "sriviswa-17b94",
+    "storage_bucket": "sriviswa-17b94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393458351886:android:677fb95388a2171a",
+        "android_client_info": {
+          "package_name": "com.adi.exams"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393458351886-7l393lv1b6mve5alfkesvicnsr3t63hc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF7Ec1dkwclbdgd3XISEqoR8lmstyI_G0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393458351886-7l393lv1b6mve5alfkesvicnsr3t63hc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

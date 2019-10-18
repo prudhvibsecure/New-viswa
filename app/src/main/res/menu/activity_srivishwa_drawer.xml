@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_materials"
+            android:icon="@drawable/openbook"
+            android:title="@string/materials" />
+
+        <item
+            android:id="@+id/nav_changepwd"
+            android:icon="@drawable/resume"
+            android:title="@string/Change_Password" />
+
+        <item
+            android:id="@+id/nav_wifisettings"
+            android:icon="@drawable/wifi"
+            android:title="@string/wifisettings" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_logout"
+            android:title="@string/logout" />
+        <item
+            android:id="@+id/nav_unlock"
+            android:icon="@drawable/ic_menu_logout"
+            android:enabled="false"
+            android:title="@string/unlock" />
+
+        <item
+            android:id="@+id/nav_download"
+            android:icon="@drawable/download"
+            android:enabled="true"
+            android:title="Download Question Paper"/>
+
+        <item
+            android:id="@+id/nav_update"
+            android:icon="@drawable/update"
+            android:enabled="true"
+            android:title="Update App"/>
+
+        <item
+            android:id="@+id/clear"
+            android:enabled="true"
+            android:title="Clear Exams"/>
+
+
+    </group>
+
+</menu>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_questionno"
+    android:layout_width="@dimen/_22sdp"
+    android:layout_height="@dimen/_22sdp"
+    android:orientation="horizontal"
+    android:padding="@dimen/_1sdp">
+
+    <FrameLayout
+        android:id="@+id/fl_questionno"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="#50000000"/>
+
+    <com.adi.exam.controls.CustomTextView
+        android:id="@+id/tv_questionno"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:padding="@dimen/_3sdp"
+        android:layout_margin="1dp"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@android:color/black"
+        app:fontType="1" />
+
+
+</RelativeLayout>

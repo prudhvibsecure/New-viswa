@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customtv="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/footer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_process_bg"
+    android:gravity="center"
+    android:padding="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity=""
+        android:orientation="horizontal">
+    <ProgressBar
+        android:id="@+id/progbr"
+        style="?android:attr/progressBarStyleSmallInverse"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_centerVertical="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical">
+    <com.adi.exam.controls.CustomTextView
+        android:id="@+id/progrtxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/progbr"
+        android:layout_toRightOf="@+id/progbr"
+        android:textSize="18sp"
+        android:text="Downloading..."
+        android:textColor="@android:color/black"
+        customtv:fontType="2" />
+    <com.adi.exam.controls.CustomTextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="14sp"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/template_pop_but_sel_green"
+        android:text="@string/cancel"
+        android:textColor="@android:color/white"
+        customtv:fontType="2" />
+    </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

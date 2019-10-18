@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customtv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="1dp">
+
+    <com.adi.exam.controls.CustomTextView
+        android:id="@+id/tv_questionno"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:padding="2dp"
+        android:singleLine="false"
+        android:text="@string/quesno"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        customtv:fontType="1" />
+
+    <com.adi.exam.controls.CustomTextView
+        android:id="@+id/tv_selectedoption"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="2dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/selectedoptions"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        customtv:fontType="1" />
+
+    <com.adi.exam.controls.CustomTextView
+        android:id="@+id/tv_status"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="@string/status"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        customtv:fontType="1" />
+
+    <com.adi.exam.controls.CustomTextView
+        android:id="@+id/tv_currectopion"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="@string/currectopion"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        customtv:fontType="1" />
+
+</TableRow>

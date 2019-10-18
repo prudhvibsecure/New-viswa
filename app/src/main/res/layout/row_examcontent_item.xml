@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/_5sdp"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingRight="@dimen/_5sdp">
+
+    <ImageView
+        android:id="@+id/iv_iconexamcontent"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/app_name"
+        android:paddingEnd="2dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/iv_iconexamcontent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.adi.exam.controls.CustomTextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:padding="@dimen/_3sdp"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@android:color/black"
+                app:fontType="2" />
+
+            <com.adi.exam.controls.CustomTextView
+                android:id="@+id/tv_startexam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:background="@drawable/button_bg_submit"
+                android:gravity="center"
+                android:text="@string/start"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                app:fontType="1" />
+
+        </LinearLayout>
+
+        <com.adi.exam.controls.CustomTextView
+            android:id="@+id/tv_subjects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/_3sdp"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/black"
+            app:fontType="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <com.adi.exam.controls.CustomTextView
+                android:id="@+id/tv_mins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:padding="@dimen/_3sdp"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                app:fontType="1" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="@dimen/_6sdp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimary" />
+
+            <com.adi.exam.controls.CustomTextView
+                android:id="@+id/tv_ques"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:padding="@dimen/_3sdp"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                app:fontType="1" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="@dimen/_6sdp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimary" />
+
+            <com.adi.exam.controls.CustomTextView
+                android:id="@+id/tv_examdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/_3sdp"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                app:fontType="1" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="@dimen/_6sdp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimary" />
+
+            <com.adi.exam.controls.CustomTextView
+                android:id="@+id/tv_examtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/_3sdp"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                app:fontType="1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customtv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/bg_top_corner"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <com.adi.exam.controls.CustomTextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textSize="16sp"
+            customtv:fontType="1" />
+
+        <com.adi.exam.controls.CustomTextView
+            android:id="@+id/tv_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/button_bg_submit"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            customtv:fontType="2" />
+
+        <com.adi.exam.controls.CustomTextView
+            android:id="@+id/tv_notnow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="@string/notnow"
+            android:textColor="@color/textblue"
+            android:textSize="14sp"
+            customtv:fontType="5" />
+
+    </LinearLayout>
+</RelativeLayout>

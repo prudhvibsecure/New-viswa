@@ -1,0 +1,100 @@
+{
+  "pri_paragraph": [
+    {
+      "paragraph_id": "1",
+      "paragraph": "1836.PNG",
+      "topic_id": "9",
+      "lesson_id": "3",
+      "question_ids": "231,232",
+      "status": "1"
+    },
+    {
+      "paragraph_id": "2",
+      "paragraph": "1841.PNG",
+      "topic_id": "10",
+      "lesson_id": "3",
+      "question_ids": "337,338",
+      "status": "1"
+    },
+    {
+      "paragraph_id": "3",
+      "paragraph": "2741.PNG",
+      "topic_id": "34",
+      "lesson_id": "6",
+      "question_ids": "354,355",
+      "status": "1"
+    },
+    {
+      "paragraph_id": "4",
+      "paragraph": "2831.PNG",
+      "topic_id": "35",
+      "lesson_id": "6",
+      "question_ids": "479,480",
+      "status": "1"
+    },
+    {
+      "paragraph_id": "5",
+      "paragraph": "726.PNG",
+      "topic_id": "119",
+      "lesson_id": "25",
+      "question_ids": "2425,2426",
+      "status": "1"
+    },
+    {
+      "paragraph_id": "6",
+      "paragraph": "781.PNG",
+      "topic_id": "120",
+      "lesson_id": "25",
+      "question_ids": "2391,2392",
+      "status": "1"
+    },
+    {
+      "paragraph_id": "7",
+      "paragraph": "300026.PNG",
+      "topic_id": "230",
+      "lesson_id": "36",
+      "question_ids": "2475,2476",
+      "status": "1"
+    },
+    {
+      "paragraph_id": "8",
+      "paragraph": "300046.PNG",
+      "topic_id": "245",
+      "lesson_id": "38",
+      "question_ids": "1339,1340",
+      "status": "1"
+    },
+    {
+      "paragraph_id": "11",
+      "paragraph": "40886.PNG",
+      "topic_id": "246",
+      "lesson_id": "38",
+      "question_ids": "1354,1355",
+      "status": "1"
+    },
+    {
+      "paragraph_id": "9",
+      "paragraph": "21246.PNG",
+      "topic_id": "126",
+      "lesson_id": "25",
+      "question_ids": "1823,1824",
+      "status": "1"
+    },
+    {
+      "paragraph_id": "10",
+      "paragraph": "21271.PNG",
+      "topic_id": "123",
+      "lesson_id": "25",
+      "question_ids": "1893,1894",
+      "status": "1"
+    },
+    {
+      "paragraph_id": "12",
+      "paragraph": "43036.PNG",
+      "topic_id": "269",
+      "lesson_id": "41",
+      "question_ids": "1743,1744",
+      "status": "1"
+    }
+  ]
+}

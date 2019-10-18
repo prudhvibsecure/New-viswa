@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BITSAT</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <style>
+
+.box {
+    width: 100%;
+    height: 40px;
+    background: #183eab;
+    margin: 0px;
+    z-index: 3;
+}
+
+.right-skew {
+  position: relative;
+}
+
+.right-skew::before {
+    z-index: 0;
+    content: '';
+    margin-right: -28px;
+    transform-origin: bottom right;
+    height: 37px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: block;
+    width: 80%;
+    background: #fff;
+    transform: skew(35deg);
+    margin-top: -1px!@important;
+}
+
+
+.box.right-skew span {
+    line-height: 40px;
+    padding-left: 20px;
+    color: #fff;
+}
+
+.a{border-color: white;}
+.spacer50{
+  height: 50px;
+}
+
+
+@media  (max-width: 1024px){
+  .right-skew::before {
+    width: 65%;
+}
+@media  (max-width: 768px){
+  .right-skew::before {
+    width: 60%;
+}  
+@media  (max-width: 640px){
+  .right-skew::before {
+    width: 40%;
+}  
+@media  (max-width: 480px){
+  .right-skew::before {
+    width: 15%;
+}  
+
+}
+    </style>
+
+      <header class="main-header">
+            <div class="navbar" data-spy="affix" data-offset-top="200">
+                <div class="navbar " role="navigation" id="navbar">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a class="navbar-brand home">
+                                <img src="images/sriviswa.png" style="width: 100px;height: 100px;"  alt="IIT" class="img-responsive">
+                            </a>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </header>
+
+<div class="container" style="margin-top: 60px;">
+  <div class="panel-group" >
+    
+    <div class="panel panel-primary a">
+      <div class="navbar"> 
+    <div class="box right-skew">
+<span>Instructions, Terms &amp; Conditions</span>
+</div>
+</div>
+      <div class="panel-body">
+
+          <li style="list-style-type: none; line-height: 27px;">
+              <ol start="1">
+                <li>The actual test is of 80 minutes duration.However this sample test has a time limit of 30 minutes.</li>
+                <li>You have been already informed of all the rules and regulations governing the BITSAT and once you start the test, it is understood that you have agreed to these terms and conditions.</li>
+
+
+                <li>Click on the 'I Agree' button to start the test.</li>
+                <p class="text-center">GOOD LUCK<p>
+
+              </ol>
+
+
+          </li>
+
+      </div>
+    </div>
+
+  <div class="spacer50"></div>
+ <!--<button style="border-radius: 35px;width: 110px;color: white;background-image: linear-gradient(#fefeff, #183eab, #fefeff);margin: 0 auto;display: block;">I Agree</button>-->
+
+
+  </div>
+</div>
+
+
+</body>
+</html>

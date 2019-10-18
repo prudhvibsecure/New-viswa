@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".SriVishwa"
+    tools:showIn="@layout/app_bar_sri_vishwa">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Downloading Question Papers. Please don't Refresh the page or navigate to other pages until download is complete."
+            android:textColor="#fff"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:background="#000"/>
+
+        <TextView
+            android:id="@+id/download_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Downloading updates.Please don't Refresh the page or navigate to other pages until download is complete."
+            android:textColor="#fff"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:background="#000"/>
+
+
+    </FrameLayout>
+
+</RelativeLayout>

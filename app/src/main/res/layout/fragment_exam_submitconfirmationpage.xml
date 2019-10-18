@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:context=".fragments.ExamSubmitConfirmationPage">
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_sectionname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="0.5dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/en"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_sectionnameval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_below="@+id/tv_sectionname"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="0.5dp"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_noofquestions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:background="@android:color/white"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/noq"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_noofquestionsval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_below="@+id/tv_noofquestions"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="0.5dp"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_answered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:background="@android:color/white"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/answered"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_answeredval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/tv_answered"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_notanswered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:background="@android:color/white"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/notanswered"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_notansweredval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/tv_notanswered"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_mfr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/mfr"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_mfrval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/tv_mfr"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_amfr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/amfr"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_amfrval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/tv_amfr"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_notvisited"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/notvisited"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+                <com.adi.exam.controls.CustomTextView
+                    android:id="@+id/tv_notvisitedval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/tv_notvisited"
+                    android:layout_marginBottom="0.5dp"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontType="2" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <com.adi.exam.controls.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/aysywtsffmncwbaas"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:fontType="2" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.adi.exam.controls.CustomTextView
+            android:id="@+id/tv_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:background="@drawable/button_bg_cancel_gray"
+            android:gravity="center"
+            android:text="@string/yes"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:fontType="1" />
+
+        <com.adi.exam.controls.CustomTextView
+            android:id="@+id/tv_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_bg_cancel_gray"
+            android:gravity="center"
+            android:text="@string/no"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:fontType="1" />
+
+    </LinearLayout>
+
+</LinearLayout>

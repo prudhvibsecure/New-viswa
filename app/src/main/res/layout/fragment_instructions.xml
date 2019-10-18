@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".fragments.Instructions">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/cb_instructions"
+            android:layout_alignParentTop="true"
+            tools:context="com.wataniya.rfgaemtns.BrowserFrag">
+
+            <android.webkit.WebView
+                android:id="@+id/wv_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:scrollbars="none" />
+
+            <ProgressBar
+                android:id="@+id/pb_instructions"
+                style="?android:attr/progressBarStyleSmallInverse"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:elevation="4dp"
+                android:indeterminate="true" />
+
+        </FrameLayout>
+
+        <com.adi.exam.controls.CustomCheckBox
+            android:id="@+id/cb_instructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@android:color/transparent"
+            android:drawablePadding="@dimen/_1sdp"
+            android:gravity="start|center"
+            android:padding="@dimen/_1sdp"
+            android:text="@string/instructiosntxt"
+            android:textSize="12sp" />
+
+        <com.adi.exam.controls.CustomTextView
+            android:id="@+id/tv_proceed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/button_bg_submit"
+            android:gravity="center"
+            android:text="@string/proceed"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:fontType="1" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

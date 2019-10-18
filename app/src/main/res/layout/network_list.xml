@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_2sdp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_2sdp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/ssid_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="Wifie Name"
+            android:textSize="16sp" />
+        <ImageView
+            android:id="@+id/Wifilogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:src="@mipmap/ic_action_wifi"
+            android:text="Button"
+            android:tint="@color/butblue" />
+
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/wifi_hiden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:visibility="gone"
+        android:layout_gravity="center">
+    <EditText
+        android:id="@+id/password_wifi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/button_bg_cancel_gray"
+        android:hint="Password"/>
+        <TextView
+            android:id="@+id/wfi_connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect"
+            android:layout_marginLeft="5dp"
+            android:textColor="#fff"
+            android:background="@drawable/button_bg_submit"/>
+    </LinearLayout>
+</LinearLayout><!--
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_2sdp"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/ssid_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:textSize="16sp" />
+    <ImageView
+        android:id="@+id/Wifilogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_action_wifi"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:tint="@color/butblue"
+        android:text="Button" />
+
+
+</LinearLayout>-->

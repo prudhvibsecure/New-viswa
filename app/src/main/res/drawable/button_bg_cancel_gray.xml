@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_pressed="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/template_pop_but_sel_cancel_gray" />
+    <item
+        android:state_enabled="true"
+        android:drawable="@drawable/template_pop_but_def_cancel_gray" />
+    </selector>

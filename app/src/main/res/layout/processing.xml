@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customtv="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/footer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_process_bg"
+    android:gravity="center"
+    android:padding="10dp">
+
+    <ProgressBar
+        android:id="@+id/progbr"
+        style="?android:attr/progressBarStyleSmallInverse"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_centerVertical="true" />
+
+    <com.adi.exam.controls.CustomTextView
+        android:id="@+id/progrtxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/progbr"
+        android:layout_toRightOf="@+id/progbr"
+        android:textSize="14sp"
+        android:text="@string/plwait"
+        android:textColor="@android:color/black"
+        customtv:fontType="2" />
+
+
+</RelativeLayout>

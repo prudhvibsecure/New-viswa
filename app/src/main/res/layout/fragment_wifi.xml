@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/wifiRecyclerView"
+       android:layout_width="match_parent"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+       android:layout_height="match_parent"/>
+
+   <ImageView
+       android:id="@+id/scan"
+       android:layout_width="@dimen/_20sdp"
+       android:layout_height="@dimen/_20sdp"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentEnd="true"
+       android:layout_marginBottom="@dimen/_10sdp"
+       android:src="@mipmap/wifi"/>
+
+   <com.adi.exam.controls.CustomTextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_centerInParent="true"
+       android:text="Scan your wifi connection..."
+       android:gravity="center"
+       android:visibility="gone"
+       android:id="@+id/no_scan"/>
+
+</RelativeLayout>

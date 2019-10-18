@@ -1,0 +1,300 @@
+<resources>
+    <string name="app_name">Sri Viswa</string>
+
+    <string name="isr">Something went wrong. Please try again</string>
+
+    <string name="sct">Something went wrong. Please try again</string>
+
+    <string name="snr1">Something went wrong. Please try again</string>
+
+    <string name="snr2">Something went wrong. Please try again</string>
+
+    <string name="snr3">Something went wrong. Please try again</string>
+
+    <string name="iurl">Something went wrong. Please try again</string>
+
+    <string name="oopsmsg">Something went wrong. Please try again</string>
+
+    <string name="nipcyns">Can\'t connect right now. Please check your internet connection</string>
+
+    <string name="appupdate">App Update</string>
+
+    <string name="acuiafyaycutawtuppwtu">Update Sri Viswa App to experience great new features!</string>
+
+    <string name="update">Update</string>
+
+    <string name="cancel">Cancel</string>
+
+    <string name="alert">Alert</string>
+
+    <string name="ok_txt">OK</string>
+
+    <string name="errorTxt">Error</string>
+
+    <string name="notnow"><u>Not now</u></string>
+
+    <string name="nonettitle">Info</string>
+
+    <string name="exitmsg">Are you sure you want to close the application?</string>
+
+    <string name="iitma">IIT &amp; MEDICAL ACADEMY</string>
+
+    <string name="network">Please enable Data/WiFi on your Device</string>
+
+    <string name="invalidcred">Invalid credentials</string>
+
+    <string name="username">Username</string>
+
+    <string name="password">Password</string>
+
+    <string name="forgotpassword"><u>Forgot Password?</u></string>
+
+    <string name="register">Register</string>
+
+    <string name="submit">Submit</string>
+
+    <string name="start">Start</string>
+
+    <string name="newuser">New User?</string>
+
+    <string name="login">LOGIN</string>
+
+    <string name="peui">Please enter Username</string>
+
+    <string name="pePswd">Please enter password</string>
+
+    <string name="plwait">Please wait ....</string>
+
+    <string name="dashboard">DASHBOARD</string>
+
+    <string name="prhiyrnu">Please register here if you are a new user.</string>
+
+    <string name="name">Name:</string>
+
+    <string name="classtxt">Class:</string>
+
+    <string name="batch">Batch:</string>
+
+    <string name="newexam">NEW EXAM</string>
+
+    <string name="exam">EXAM</string>
+
+    <string name="examhistory">EXAM HISTORY</string>
+
+    <string name="newassignment">NEW ASSIGNMENT</string>
+
+    <string name="assignmenthistory">ASSIGNMENT HISTORY</string>
+
+    <string name="cydhaen">Currently you don\'t have any exams now</string>
+
+    <string name="title_activity_sri_vishwa">SriVishwa</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="gi">GENERAL INSTRUCTIONS</string>
+
+    <string name="notvisited">Not Visited</string>
+
+    <string name="notanswered">Not Answered</string>
+
+    <string name="answered">Answered</string>
+
+    <string name="mfr">Marked for Review</string>
+
+    <string name="amfr">Answered &amp; Marked for Review (will be considered for evaluation)</string>
+
+    <string name="proceed">Proceed</string>
+
+    <string name="physics">Physics</string>
+
+    <string name="chemistry">Chemistry</string>
+
+    <string name="mathematics">Mathematics</string>
+
+    <string name="back">Back</string>
+
+    <string name="next">Next</string>
+
+    <string name="savenext">Save &amp; Next</string>
+
+    <string name="savemarkforreview">Save &amp; Mark for Review</string>
+
+    <string name="clearresponse">Clear Response</string>
+
+    <string name="mfrn">Mark for Review &amp; Next</string>
+
+    <string name="instructiosntxt">I have read and understood the instructions. All computer hardware allotted to me are in proper working condition. I declare that I am not in possession of / not wearing / not carrying any prohibited gadget like mobile phone, bluetooth devices etc. /any prohibited material with me into the Examination Hall.I agree that in case of not adhering to the instructions, I shall be liable to be debarred from this Test and/or to disciplinary action, which may include ban from future Tests / Examinations</string>
+
+    <string name="patacbp">Please accept terms and conditions before proceeding.</string>
+
+    <string name="questionno">Question: %1$s</string>
+
+    <string name="psao">Please select any options</string>
+    <string name="psas">Please Enter Answer</string>
+    <string name="date">Date: %1$s</string>
+
+    <string name="time">Time: %1$s</string>
+
+    <string name="ques">%1$s Ques</string>
+
+    <string name="hours">%1$s Hours</string>
+
+    <string name="subjects">Subjects: %1$s</string>
+
+    <string name="pd">Permission denied</string>
+
+    <string name="es">Exam Summary</string>
+
+    <string name="result">Result</string>
+
+    <string name="sn">Section Name</string>
+
+    <string name="en">Exam Name</string>
+
+    <string name="noq">No of Questions</string>
+
+   <!-- <string name="aysywtsffmncwbaas">Are you sure you want to submit for final marking? \n No changes will be allowed after submission. </string>-->
+    <string name="aysywtsffmncwbaas">Are you sure you want to view your result?. </string>
+
+    <string name="yes">Yes</string>
+
+    <string name="yesw">Check Result</string>
+
+    <string name="no">No</string>
+
+    <string name="confirmation">Confirmation</string>
+
+    <string name="message">Message</string>
+
+    <string name="viewresults">View Results</string>
+
+    <string name="tyyrwbsffmcotcfs">Thank You, your responses will be submitted for final marking - click OK to complete final submission. </string>
+
+    <string name="tyss">Thank you, Submitted Successfully.</string>
+
+    <string name="score">Score %1$s</string>
+
+    <string name="tq">Total Questions</string>
+
+    <string name="ta">Total Attempted</string>
+
+    <string name="ca">Correct Answers</string>
+
+    <string name="ica">Incorrect Answers</string>
+
+    <string name="quesno">Question No.</string>
+
+    <string name="selectedoptions">Selected Option</string>
+
+    <string name="status">Status</string>
+
+    <string name="lines">---</string>
+
+    <string name="notapplicable">N/A</string>
+
+    <string name="currectopion">Currect Option</string>
+
+    <string name="materials">Materials</string>
+
+    <string name="logout">Logout</string>
+
+    <string name="app_version">App Version: %1$s</string>
+
+    <string name="aq">ALL QUESTIONS</string>
+
+    <string name="ns">No subjects</string>
+
+    <string name="nl">No lessons</string>
+
+    <string name="nt">No topics</string>
+
+    <string name="ntas">No Assignments</string>
+
+    <string name="lessons">Lessons</string>
+
+    <string name="topics">Topics</string>
+
+    <string name="subject">Subjects</string>
+
+    <string name="material">Material</string>
+
+    <string name="nomaterial">No material</string>
+
+    <string name="minlft"> mins left</string>
+
+    <string name="seclft"> sec left</string>
+
+    <string name="downloading">Download....</string>
+
+    <string name="downloaded_successfully">downloaded successfully</string>
+
+    <string name="yhctd">You have cancelled the download</string>
+
+    <string name="dfptal">Download failed, please try again later.</string>
+
+    <string name="dip">Download in progress</string>
+
+    <string name="maatdq">Material already added to download queue</string>
+
+    <string name="fhbddywtdia">File has been deleted. Do you want to download it again</string>
+
+    <string name="ic">Invalid credentials</string>
+
+    <string name="qnumber">Q. %1$s)</string>
+
+    <string name="id">Student Id</string>
+
+    <string name="oldpwd">Old Password</string>
+
+    <string name="newpassword">New Password</string>
+
+    <string name="cnfmpassword">Confirm Password</string>
+
+    <string name="Change_Password">Change Password</string>
+    <string name="asn_history">Assignments History</string>
+    <string name="title_activity_view_material">ViewMaterial</string>
+    <string name="wifisettings">Wifi Settings</string>
+    <string name="ethbf">Exam time has been finished</string>
+    <string name="ewsi">Exam will start in %1$s</string>
+
+    <string name="indays">Exam will start in %1$s Day(s)</string>
+
+    <string name="inhours">Exam will start in %1$s Hours %2$s Mins and %3$s Secs</string>
+
+    <string name="inmins">Exam will start in %1$s Mins %2$s Secs</string>
+
+    <string name="insecs">Exam will start in %1$s Secs</string>
+
+    <string name="yhadwte">You have already done with this exam.</string>
+
+    <string name="sub_com">I Have Completed Test</string>
+    <string name="as">Assignment Summary</string>
+    <string name="sbs">Do you want submit Exam?</string>
+    <string name="blocked">Malicious Activity Detected - Your User ID Is Blocked - Please Contact Administrator.</string>
+
+    <string name="not_device_owner">This app is not set as device owner
+        and cannot start lock task mode</string>
+
+    <string name="unlock">Unlock</string>
+    <string name="unlock_note">Attention
+This Software is secured via hardware settings and its sole purpose is to conduct examinations. Any malicious activity will cause damages to the hardware. Please do not involve in any malicious activity as administration will not be responsible for hardware damages.
+Thank you for your co-operation</string>
+
+    <string name="is_ready">Android is now ready to serve.</string>
+    <string name="is_locked">Android is now locked with the master password.</string>
+    <string name="request_explanation">Some long explanation</string>
+</resources>
