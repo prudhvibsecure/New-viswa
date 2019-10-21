@@ -131,11 +131,6 @@ public class ExamContentListingAdapter extends RecyclerView.Adapter<ExamContentL
 
                 contactViewHolder.tv_examdate.setText(mContext.getString(R.string.date, question_details.optString("exam_date").trim()));
 
-                if (question_details.optString("down_status").equalsIgnoreCase("0")){
-                    contactViewHolder.tv_startexam.setText("Download");
-                }else{
-                    contactViewHolder.tv_startexam.setText("Start");
-                }
 
                 contactViewHolder.tv_examtime.setText(mContext.getString(R.string.time, question_details.optString("from_time").trim() + " - " + question_details.optString("to_time").trim()));
 
@@ -159,23 +154,31 @@ public class ExamContentListingAdapter extends RecyclerView.Adapter<ExamContentL
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 String c_date=df.format(c);
                 String exdt=question_details.optString("exam_date").trim();
-                if (c_date.equals(exdt)) {
-                    boolean result = inRange(tkl, tk2, time);
-                    if (result) {
-                        contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
-                        contactViewHolder.tv_startexam.setEnabled(true);
-                        contactViewHolder.tv_startexam.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_bg_submit));
-                    }else{
+
+                if (question_details.optString("down_status").equalsIgnoreCase("0")){
+                    contactViewHolder.tv_startexam.setText("Download");
+                }else{
+                    contactViewHolder.tv_startexam.setText("Start");
+
+                    if (c_date.equals(exdt)) {
+                        boolean result = inRange(tkl, tk2, time);
+                        if (result) {
+                            contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
+                            contactViewHolder.tv_startexam.setEnabled(true);
+                            contactViewHolder.tv_startexam.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_bg_submit));
+                        }else{
+                            contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
+                            contactViewHolder.tv_startexam.setEnabled(false);
+                            contactViewHolder.tv_startexam.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_bg_submit_disable));
+                        }
+                    }else {
                         contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
                         contactViewHolder.tv_startexam.setEnabled(false);
                         contactViewHolder.tv_startexam.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_bg_submit_disable));
+                        // contactViewHolder.tv_startexam.setEnabled(false);
                     }
-                }else {
-                    contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
-                   contactViewHolder.tv_startexam.setEnabled(false);
-                    contactViewHolder.tv_startexam.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_bg_submit_disable));
-                   // contactViewHolder.tv_startexam.setEnabled(false);
                 }
+
 //                if (time >= tkl && tk2<=time) {
 //                    contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
 //                } else {

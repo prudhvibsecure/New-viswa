@@ -1111,4 +1111,56 @@ public class App_Table {
             e.printStackTrace();
         }
     }
+
+    public void updateDownloadStatus_qs(String qs_id, String status,String table) {
+
+        if (database != null) {
+
+            SQLiteDatabase db = database.getWritableDatabase();
+
+            String iwhereClause = "question_paper_id=" + Integer.parseInt(qs_id);
+
+            ContentValues cv = new ContentValues();
+
+            cv.put("down_status", status);
+
+            db.update(table, cv, iwhereClause, null);
+
+            db.close();
+
+        }
+
+    }
+
+    public String getQuestionFileName(int question_id) {
+
+        String question_name="";
+
+        try {
+            if (database != null) {
+
+                String cursor_q = "select * from QUESTIONS where question_id=" + question_id ;
+                SQLiteDatabase db = database.getWritableDatabase();
+                Cursor cursor = db
+                        .rawQuery(cursor_q,
+                                null);
+                try {
+                    if (null != cursor)
+                        if (cursor.getCount() > 0) {
+                            cursor.moveToFirst();
+                            question_name = cursor.getString(cursor.getColumnIndex("question_name"));
+                        }
+                    cursor.close();
+                    db.close();
+                } finally {
+                    db.close();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return question_name;
+
+    }
 }

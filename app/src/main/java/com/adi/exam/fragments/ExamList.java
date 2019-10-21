@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,20 +29,26 @@ import com.adi.exam.SriVishwa;
 import com.adi.exam.adapters.ExamContentListingAdapter;
 import com.adi.exam.callbacks.IItemHandler;
 import com.adi.exam.common.AppPreferences;
+import com.adi.exam.common.AppSettings;
 import com.adi.exam.database.App_Table;
 import com.adi.exam.database.Database;
 import com.adi.exam.database.PhoneComponent;
+import com.adi.exam.services.DownloadFileAsync;
 import com.adi.exam.tasks.HTTPPostTask;
+import com.adi.exam.tasks.ImageProcesser;
 import com.adi.exam.utils.TraceUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import ir.mahdi.mzip.zip.ZipArchive;
 
 public class ExamList extends ParentFragment implements View.OnClickListener, IItemHandler {
 
@@ -226,7 +234,14 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                     JSONObject question_details = jsonObject1.getJSONObject("question_details");
 
                     if (question_details.optString("down_status").equalsIgnoreCase("0")){
-                        getQuestionsZip();
+
+                        final String zip_file_name= question_details.optString("zip_file_name");
+
+                                getZipFolderFile(zip_file_name,question_details.optString("question_paper_id"));
+
+
+
+
 
                     }else {
 
@@ -446,7 +461,6 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
     }
 
 
-
     private void checkQuestionPaper() {
 
         try {
@@ -534,7 +548,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                         }
                         else
                         {
-                            Toast.makeText(activity, "No Data Found", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(activity, "No Data Found", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -543,7 +557,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                 progressBar.setVisibility(View.GONE);
 
-                tv_content_txt.setVisibility(View.VISIBLE);
+              //  tv_content_txt.setVisibility(View.VISIBLE);
 
             } else if (requestId == 2) {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -563,8 +577,10 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                             JSONObject jsonObject1 = exam_details.getJSONObject(i);
 
                             String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") + "'";
-
-                            table.checkNInsertARecord(jsonObject1, "EXAM", iwhereClause);
+                            boolean isRecordAvailable = table.isRecordExits(iwhereClause, "EXAM");
+                            if (!isRecordAvailable) {
+                                table.checkNInsertARecord(jsonObject1, "EXAM", iwhereClause);
+                            }
 
                         }
 
@@ -579,8 +595,10 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                             JSONObject jsonObject1 = question_details.getJSONObject(i);
 
                             String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") + "' AND question_paper_id = '" + jsonObject1.optString("question_paper_id") + "'";
-
-                            table.checkNInsertARecord(jsonObject1, "QUESTIONPAPER", iwhereClause);
+                            boolean isRecordAvailable = table.isRecordExits(iwhereClause, "QUESTIONPAPER");
+                            if (!isRecordAvailable) {
+                                table.checkNInsertARecord(jsonObject1, "QUESTIONPAPER", iwhereClause);
+                            }
 
                         }
 
@@ -595,8 +613,10 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                             JSONObject jsonObject1 = student_question_paper_details.getJSONObject(i);
 
                             String iwhereClause = "student_question_paper_id = '" + jsonObject1.optString("student_question_paper_id") + "' AND question_paper_id = '" + jsonObject1.optString("question_paper_id") + "'";
-
-                            table.checkNInsertARecord(jsonObject1, "STUDENTQUESTIONPAPER", iwhereClause);
+                            boolean isRecordAvailable = table.isRecordExits(iwhereClause, "STUDENTQUESTIONPAPER");
+                            if (!isRecordAvailable) {
+                                table.checkNInsertARecord(jsonObject1, "STUDENTQUESTIONPAPER", iwhereClause);
+                            }
 
                         }
 
@@ -627,7 +647,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                         } else
                         {
-                            Toast.makeText(activity, "No Data Found", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(activity, "No Data Found", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -660,10 +680,9 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                 mSwipeRefreshLayout.setRefreshing(false);
                 mSwipeRefreshLayout.setEnabled(true);
                 JSONObject jsonObject = new JSONObject(results.toString());
-
+                App_Table table = new App_Table(activity);
                 if (jsonObject.optString("statuscode").equalsIgnoreCase("200")) {
 
-                    App_Table table = new App_Table(activity);
 
                     if (jsonObject.has("exam_details")) {
 
@@ -759,6 +778,20 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                 progressBar.setVisibility(View.GONE);
 
                 tv_content_txt.setVisibility(View.VISIBLE);
+
+            }else if (requestId==99){
+                JSONObject jsonObject = new JSONObject(results.toString());
+                App_Table table = new App_Table(activity);
+                if (jsonObject.optString("statuscode").equalsIgnoreCase("200")){
+                    if (jsonObject.has("question_details")) {
+                        JSONArray question_details = jsonObject.getJSONArray("question_details");
+                        table.insertMultipleRecords(question_details, "QUESTIONS");
+
+                    }
+                    table.updateDownloadStatus_qs(jsonObject.optString("question_paper_id"), "1","QUESTIONPAPER");
+
+
+                }
 
             }
 
@@ -1022,12 +1055,95 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
     }
     @Override
     public void onPause() {
+
         super.onPause();
         ActivityManager activityManager = (ActivityManager) getActivity()
                 .getSystemService(Context.ACTIVITY_SERVICE);
 
         activityManager.moveTaskToFront(getActivity().getTaskId(), 0);
     }
-    private void getQuestionsZip() {
+    private void getQuestionsZip(String qp_id) {
+    try {
+         JSONObject jsonObject = new JSONObject();
+
+         jsonObject.put("question_paper_id", qp_id);
+
+         HTTPPostTask post = new HTTPPostTask(activity, this);
+
+         post.disableProgress();
+
+         post.userRequest(getString(R.string.plwait), 99, "upload_question_papers", jsonObject.toString());
+
+    }catch (Exception e){
+e.printStackTrace();}
+    }
+    private void getZipFolderFile(final String zip_file_name, final String qs_ids) {
+
+
+        String path_url= AppSettings.getInstance().getPropertyValue("rtf_zip_download")+zip_file_name+".zip";
+        File kps= new File(Environment.getExternalStorageDirectory() + "/"+zip_file_name);
+        if (!kps.exists()) {
+            kps.mkdir();
+        }
+        DownloadFileAsync download = new DownloadFileAsync(Environment.getExternalStorageDirectory() + "/"+zip_file_name+".zip", getActivity(), new DownloadFileAsync.PostDownload(){
+            @Override
+            public void downloadDone(File file) {
+                Log.i("ZIP", "file download completed");
+
+                ZipArchive zipArchive = new ZipArchive();
+                zipArchive.unzip(Environment.getExternalStorageDirectory() + "/"+zip_file_name+".zip",Environment.getExternalStorageDirectory() + "/allFiles","");
+                sendToEncrypt(Environment.getExternalStorageDirectory() + "/allFiles");
+                Log.i("ZIP", "file unzip completed");
+               // checkQuestionPaper();
+                getQuestionsZip(qs_ids);
+                Toast.makeText(getActivity(), "Download Complete", Toast.LENGTH_SHORT).show();
+            }
+        });
+        download.execute(path_url);
+    }
+    private void sendToEncrypt(final String path) {
+        try {
+
+            ImageProcesser imageProcesser = new ImageProcesser(getActivity(), new IItemHandler() {
+
+                @Override
+                public void onFinish(Object results, int requestId) {
+
+                    try {
+                        Log.i("enc","completed");
+                        File dir = new File(Environment.getExternalStorageDirectory() + "/allFiles");
+                        if (dir.isDirectory()) {
+                            String[] children = dir.list();
+                            if (children.length > 0) {
+                                for (int i = 0; i < children.length; i++) {
+                                    new File(dir, children[i]).delete();
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                @Override
+                public void onError(String errorCode, int requestId) {
+                    Toast.makeText(getActivity(), errorCode, Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onProgressChange(int requestId, Long... values) {
+
+                }
+
+            });
+
+
+            imageProcesser.startProcess(1, path);
+        } catch (Exception e) {
+
+            TraceUtils.logException(e);
+
+        }
     }
 }

@@ -83,6 +83,7 @@ public class AppSettings {
 
             properties.setProperty("upload_question_papers", BASE_PATH + "admin/upload_question_papers");
 
+            properties.setProperty("rtf_zip_download", BASE_PATH + "assets/upload/rtf_zip/");
 
         } catch (Exception e) {
 

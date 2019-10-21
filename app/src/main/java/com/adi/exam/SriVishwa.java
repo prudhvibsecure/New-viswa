@@ -713,8 +713,8 @@ public class SriVishwa extends AppCompatActivity
             JSONObject jsonObject = new JSONObject(data);
 
             if (jsonObject.optString("course").equalsIgnoreCase("1")) { //JEE
-
-                swiftFragments(JEEemplates.newInstance(data), "examtemplate");
+                swiftFragments(ExamTemplates.newInstance(data), "examtemplate");
+            //    swiftFragments(JEEemplates.newInstance(data), "examtemplate");
 
             } else if (jsonObject.optString("course").equalsIgnoreCase("3")) { //BITSAT
                 // swiftFragments(ExamTemplates.newInstance(data), "examtemplate");

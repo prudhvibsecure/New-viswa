@@ -356,8 +356,8 @@ public class SplashActivity extends AppCompatActivity implements IDialogCallback
                         readExcelFileFromAssets(cloumnsNames, 2/*"student"*/, "LESSONS", table);
 
 
-                        cloumnsNames = table.getColumnNames("QUESTIONS");
-                        readExcelFileFromAssets(cloumnsNames, 3/*"student"*/, "QUESTIONS", table);
+//                        cloumnsNames = table.getColumnNames("QUESTIONS");
+//                        readExcelFileFromAssets(cloumnsNames, 3/*"student"*/, "QUESTIONS", table);
 
 
                     } catch (Exception ex) {
