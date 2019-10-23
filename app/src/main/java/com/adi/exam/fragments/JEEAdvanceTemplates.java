@@ -1386,6 +1386,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                 para_title.setVisibility(View.GONE);
 
             }
+            iv_questionimg.loadData(data_questions[0], "text/html", "utf-8");
             iv_option1.loadData(data_questions[1], "text/html", "utf-8");
             iv_option2.loadData(data_questions[2], "text/html", "utf-8");
             iv_option3.loadData(data_questions[3], "text/html", "utf-8");

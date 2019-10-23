@@ -76,71 +76,138 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <WebView
                         android:id="@+id/iv_question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/app_name"
                         android:padding="@dimen/_5sdp" />
 
-                    <ImageView
+                    <WebView
                         android:id="@+id/iv_questionimg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/app_name"
                         android:padding="@dimen/_5sdp" />
 
-                    <com.adi.exam.controls.CustomTextView
-                        android:id="@+id/tv_option1"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/qs_options"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:drawablePadding="@dimen/_3sdp"
-                        android:gravity="center"
-                        android:padding="@dimen/_5sdp"
-                        android:text="1)"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp"
-                        app:fontType="1" />
+                        android:orientation="vertical">
 
-                    <com.adi.exam.controls.CustomTextView
-                        android:id="@+id/tv_option2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:drawablePadding="@dimen/_3sdp"
-                        android:gravity="center"
-                        android:padding="@dimen/_5sdp"
-                        android:text="2)"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp"
-                        app:fontType="1" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                    <com.adi.exam.controls.CustomTextView
-                        android:id="@+id/tv_option3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:drawablePadding="@dimen/_3sdp"
-                        android:gravity="center"
-                        android:padding="@dimen/_5sdp"
-                        android:text="3)"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp"
-                        app:fontType="1" />
+                            <com.adi.exam.controls.CustomTextView
+                                android:id="@+id/tv_option1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:drawablePadding="@dimen/_3sdp"
+                                android:gravity="center"
+                                android:padding="@dimen/_5sdp"
+                                android:text="1)"
+                                android:textColor="@android:color/black"
+                                app:fontType="1" />
 
-                    <com.adi.exam.controls.CustomTextView
-                        android:id="@+id/tv_option4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:drawablePadding="@dimen/_3sdp"
-                        android:gravity="center"
-                        android:padding="@dimen/_5sdp"
-                        android:text="4)"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp"
-                        app:fontType="1" />
+                            <WebView
+                                android:id="@+id/iv_option1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:contentDescription="@string/app_name"
+                                android:padding="@dimen/_5sdp"
+                                android:scaleType="fitXY" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.adi.exam.controls.CustomTextView
+                                android:id="@+id/tv_option2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:drawablePadding="@dimen/_3sdp"
+                                android:gravity="center"
+                                android:padding="@dimen/_5sdp"
+                                android:text="2)"
+                                android:textColor="@android:color/black"
+                                app:fontType="1" />
+
+                            <WebView
+                                android:id="@+id/iv_option2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:contentDescription="@string/app_name"
+                                android:padding="@dimen/_5sdp"
+                                android:scaleType="fitXY" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.adi.exam.controls.CustomTextView
+                                android:id="@+id/tv_option3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:drawablePadding="@dimen/_3sdp"
+                                android:gravity="center"
+                                android:padding="@dimen/_5sdp"
+                                android:text="3)"
+                                android:textColor="@android:color/black"
+                                app:fontType="1" />
+
+                            <WebView
+                                android:id="@+id/iv_option3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:contentDescription="@string/app_name"
+                                android:padding="@dimen/_5sdp"
+                                android:scaleType="fitXY" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.adi.exam.controls.CustomTextView
+                                android:id="@+id/tv_option4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:drawablePadding="@dimen/_3sdp"
+                                android:gravity="center"
+                                android:padding="@dimen/_5sdp"
+                                android:text="4)"
+                                android:textColor="@android:color/black"
+                                app:fontType="1" />
+
+                            <WebView
+                                android:id="@+id/iv_option4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:contentDescription="@string/app_name"
+                                android:padding="@dimen/_5sdp"
+                                android:scaleType="fitXY" />
+
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <RadioGroup
                         android:id="@+id/rg_options"

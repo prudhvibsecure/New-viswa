@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <WebView
                         android:id="@+id/iv_question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                         android:padding="@dimen/_5sdp"
                         android:scaleType="fitXY" />
 
-                    <ImageView
+                    <WebView
                         android:id="@+id/iv_questionimg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                             android:textColor="@android:color/black"
                             app:fontType="1" />
 
-                        <ImageView
+                        <WebView
                             android:id="@+id/iv_option1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
                             android:textColor="@android:color/black"
                             app:fontType="1" />
 
-                        <ImageView
+                        <WebView
                             android:id="@+id/iv_option2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
                             android:textColor="@android:color/black"
                             app:fontType="1" />
 
-                        <ImageView
+                        <WebView
                             android:id="@+id/iv_option3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -246,7 +246,7 @@
                             android:textColor="@android:color/black"
                             app:fontType="1" />
 
-                        <ImageView
+                        <WebView
                             android:id="@+id/iv_option4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
