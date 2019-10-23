@@ -7,11 +7,15 @@ import android.os.Looper;
 
 import com.adi.exam.R;
 import com.adi.exam.callbacks.IItemHandler;
+import com.adi.exam.common.AESEncryptionDecryption;
 import com.adi.exam.utils.TraceUtils;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherOutputStream;
@@ -79,28 +83,48 @@ public class ImageProcesser {
 
                                         outStream = new FileOutputStream(IMGPATH + "/" + image.getName());
 
-                                        CipherOutputStream out = new CipherOutputStream(outStream, aes);
+//                                        CipherOutputStream out = new CipherOutputStream(outStream, aes);
+//
+//                                        inputStream = new FileInputStream(image);
+//
+//                                        int bufferSize = 50;
+//
+//                                        byte[] buffer = new byte[bufferSize];
+//
+//                                        int bytesRead;
+//
+//                                        while ((bytesRead = inputStream.read(buffer, 0, bufferSize)) >= 0) {
+//
+//                                            out.write(buffer, 0, bytesRead);
+//
+//                                        }
+//
+//                                        buffer = null;
+//
+//                                        outStream.close();
+//
+//                                        inputStream.close();
 
-                                        inputStream = new FileInputStream(image);
+                                        StringBuilder html_content = new StringBuilder();
 
-                                        int bufferSize = 50;
+                                        try {
+                                            BufferedReader br = new BufferedReader(new FileReader(image));
+                                            String line;
 
-                                        byte[] buffer = new byte[bufferSize];
-
-                                        int bytesRead;
-
-                                        while ((bytesRead = inputStream.read(buffer, 0, bufferSize)) >= 0) {
-
-                                            out.write(buffer, 0, bytesRead);
-
+                                            while ((line = br.readLine()) != null) {
+                                                html_content.append(line);
+                                                html_content.append('\n');
+                                            }
+                                            br.close();
                                         }
-
-                                        buffer = null;
-
+                                        catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        String encrypted=AESEncryptionDecryption.encrypt(html_content.toString());
+                                        byte[] bytes = encrypted.getBytes();
+                                        outStream.write(bytes);
+                                        outStream.flush();
                                         outStream.close();
-
-                                        inputStream.close();
-
                                     } catch (Exception e) {
 
                                         TraceUtils.logException(e);

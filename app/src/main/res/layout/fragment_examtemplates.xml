@@ -79,7 +79,7 @@
                     android:layout_below="@+id/v_topline"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <WebView
                         android:id="@+id/iv_question"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -87,13 +87,18 @@
                         android:padding="@dimen/_5sdp"
                         android:scaleType="fitXY" />
 
-                    <ImageView
+                    <WebView
                         android:id="@+id/iv_questionimg"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/app_name"
                         android:padding="@dimen/_5sdp" />
 
+                <LinearLayout
+                    android:id="@+id/option_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -111,7 +116,7 @@
                             android:textColor="@android:color/black"
                             app:fontType="1" />
 
-                        <ImageView
+                        <WebView
                             android:id="@+id/iv_option1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -139,7 +144,7 @@
                             android:textColor="@android:color/black"
                             app:fontType="1" />
 
-                        <ImageView
+                        <WebView
                             android:id="@+id/iv_option2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -167,7 +172,7 @@
                             android:textColor="@android:color/black"
                             app:fontType="1" />
 
-                        <ImageView
+                        <WebView
                             android:id="@+id/iv_option3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -195,7 +200,7 @@
                             android:textColor="@android:color/black"
                             app:fontType="1" />
 
-                        <ImageView
+                        <WebView
                             android:id="@+id/iv_option4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -246,8 +251,20 @@
                             android:text="4)" />
 
                     </RadioGroup>
-
                 </LinearLayout>
+
+                    <com.adi.exam.controls.CustomEditText
+                        android:id="@+id/ed_texx1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_bg_cancel"
+                        android:hint="Answer"
+                        android:imeOptions="actionDone"
+                        android:inputType="number|numberDecimal|numberSigned"
+                        android:padding="8dp" />
+                </LinearLayout>
+
+
 
             </androidx.core.widget.NestedScrollView>
 

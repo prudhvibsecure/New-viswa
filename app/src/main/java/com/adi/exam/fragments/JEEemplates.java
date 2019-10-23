@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,8 +37,10 @@ import com.adi.exam.SriVishwa;
 import com.adi.exam.adapters.QuestionNumberListingAdapter;
 import com.adi.exam.callbacks.IFileUploadCallback;
 import com.adi.exam.callbacks.IItemHandler;
+import com.adi.exam.common.AESEncryptionDecryption;
 import com.adi.exam.common.AppPreferences;
 import com.adi.exam.common.AppSettings;
+import com.adi.exam.controls.CustomEditText;
 import com.adi.exam.database.App_Table;
 import com.adi.exam.database.Database;
 import com.adi.exam.database.PhoneComponent;
@@ -51,9 +54,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -80,6 +85,8 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
     private RecyclerView rv_ques_nums;
 
+    private CustomEditText ed_texx = null;
+
     private QuestionNumberListingAdapter adapter;
 
     private TextView tv_questionno;
@@ -94,9 +101,9 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
     private TextView tv_amfrcnt;
 
-    private ImageView iv_option1, iv_option2, iv_option3, iv_option4;
+    private WebView iv_option1, iv_option2, iv_option3, iv_option4;
 
-    private ImageView iv_question, iv_questionimg;
+    private WebView iv_question, iv_questionimg;
 
     private int currentExamId = -1;
 
@@ -142,7 +149,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
     private String PATH = Environment.getExternalStorageDirectory().toString();
 
-    private final String IMGPATH = PATH + "/System/allimages/";
+    private final String IMGPATH = PATH + "/System/allFiles/";
     private Dialog mDialog;
 
     public JEEemplates() {
@@ -228,6 +235,8 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
         iv_option4 = layout.findViewById(R.id.iv_option4);
 
         tv_questionno = layout.findViewById(R.id.tv_questionno);
+
+        ed_texx = layout.findViewById(R.id.ed_texx1);
 
         tv_notvisitedcnt = layout.findViewById(R.id.tv_notvisitedcnt);
 
@@ -1007,6 +1016,10 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
         }
 
     }
+    boolean inRange(long low, long high, long x)
+    {
+        return ((x-high)*(x-low) <= 0);
+    }
 
     private void showNextQuestion(int position) {
 
@@ -1079,250 +1092,70 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
             tv_questionno.setText(getString(R.string.questionno, jsonObject.optString("sno")));
 
-            iv_question.setImageResource(jsonObject.optInt("qid"));
-           /* Picasso picasso = new Picasso.Builder(getActivity()).listener(new Picasso.Listener() {
-                @Override
-                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
 
-                }
-            }).build();
-            picasso.load("file:///android_asset/allimages/"+jsonObject.optString("question_name"))
-                    .into(iv_question, new Callback() {
-                        @Override
-                        public void onSuccess() {
+            File file = new File(IMGPATH, jsonObject.optString("question_name"));
 
-                        }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    }); picasso.load("file:///android_asset/allimages/"+jsonObject.optString("option_a"))
-                    .into(iv_option1, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    }); picasso.load("file:///android_asset/allimages/"+jsonObject.optString("option_b"))
-                    .into(iv_option2, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    }); picasso.load("file:///android_asset/allimages/"+jsonObject.optString("option_c"))
-                    .into(iv_option3, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    }); picasso.load("file:///android_asset/allimages/"+jsonObject.optString("option_d"))
-                    .into(iv_option4, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    });*/
-//            decrypt("enc_"+jsonObject.optString("question_name"));
-//            decrypt("enc_"+jsonObject.optString("option_a"));
-//            decrypt("enc_"+jsonObject.optString("option_b"));
-//            decrypt("enc_"+jsonObject.optString("option_c"));
-//            decrypt("enc_"+jsonObject.optString("option_d"));
-
-//            imageLoader.displayImage("file://" + Environment.getExternalStorageDirectory() + "/SystemLogs/System/Files/" + jsonObject.optString("question_name"), iv_question);
-//
-//            imageLoader.displayImage("file://" + Environment.getExternalStorageDirectory() + "/SystemLogs/System/Files/" + jsonObject.optString("option_a"), iv_option1);
-//
-//            imageLoader.displayImage("file://" + Environment.getExternalStorageDirectory() + "/SystemLogs/System/Files/" + jsonObject.optString("option_b"), iv_option2);
-//
-//            imageLoader.displayImage("file://" + Environment.getExternalStorageDirectory() + "/SystemLogs/System/Files/" + jsonObject.optString("option_c"), iv_option3);
-//
-//            imageLoader.displayImage("file://" + Environment.getExternalStorageDirectory() + "/SystemLogs/System/Files/" + jsonObject.optString("option_d"), iv_option4);
-//
+            StringBuilder html_content = new StringBuilder();
 
             try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
 
-                iv_question.setImageDrawable(null);
-                iv_option1.setImageDrawable(null);
-                iv_option2.setImageDrawable(null);
-                iv_option3.setImageDrawable(null);
-                iv_option4.setImageDrawable(null);
-
-                ImageLoader.getInstance().clearMemoryCache();
-                ImageLoader.getInstance().clearDiskCache();
-
+                while ((line = br.readLine()) != null) {
+                    html_content.append(line);
+                    html_content.append('\n');
+                }
+                br.close();
             } catch (Exception e) {
-
-                TraceUtils.logException(e);
-
+                e.printStackTrace();
             }
+            String my_qs_file = AESEncryptionDecryption.decrypt(html_content.toString());
+            String[] data_questions = my_qs_file.split("</html>");
+            iv_question.loadData(data_questions[0], "text/html", "utf-8");
+            boolean result = inRange(20, 25, Integer.parseInt(jsonObject.optString("sno")));
+            boolean result2 = inRange(50, 55, Integer.parseInt(jsonObject.optString("sno")));
+            boolean result3 = inRange(70, 75, Integer.parseInt(jsonObject.optString("sno")));
+            if (result||result2||result3){
+                rg_options.setVisibility(View.GONE);
+                ed_texx.setVisibility(View.VISIBLE);
+                layout.findViewById(R.id.option_ll).setVisibility(View.GONE);
+                if (jsonObject.optString("qanswer").length()==0){
+                    ed_texx.setText("");
+                }else{
+                    ed_texx.setText(jsonObject.optString(
+                            "qanswer"));
+                }
+            }else {
 
+                //byte[] bytes = html_content.toString().getBytes();
+                // String my_qs_file = new String(bytes, "UTF-8");
+                layout.findViewById(R.id.option_ll).setVisibility(View.VISIBLE);
+                rg_options.setVisibility(View.VISIBLE);
+                ed_texx.setVisibility(View.GONE);
 
-            String extFileDirPath = IMGPATH;
+                iv_option1.loadData(data_questions[1], "text/html", "utf-8");
+                iv_option2.loadData(data_questions[2], "text/html", "utf-8");
+                iv_option3.loadData(data_questions[3], "text/html", "utf-8");
+                iv_option4.loadData(data_questions[4], "text/html", "utf-8");
 
-            File externalFileDir = activity.getExternalFilesDir(null);
+                if (jsonObject.optString("qanswer").equalsIgnoreCase("a")) {
 
-            if (externalFileDir != null) {
+                    ((RadioButton) rg_options.findViewById(R.id.rb_first)).setChecked(true);
 
-                extFileDirPath = externalFileDir.getAbsolutePath() + "/";
+                } else if (jsonObject.optString("qanswer").equalsIgnoreCase("b")) {
 
+                    ((RadioButton) rg_options.findViewById(R.id.rb_second)).setChecked(true);
+
+                } else if (jsonObject.optString("qanswer").equalsIgnoreCase("c")) {
+
+                    ((RadioButton) rg_options.findViewById(R.id.rb_third)).setChecked(true);
+
+                } else if (jsonObject.optString("qanswer").equalsIgnoreCase("d")) {
+
+                    ((RadioButton) rg_options.findViewById(R.id.rb_fourth)).setChecked(true);
+
+                }
             }
-
-            String encPath = IMGPATH + jsonObject.optString("question_name");
-
-            String plnPath = extFileDirPath + "question.PNG";
-
-            boolean isValid = decryptCipher(encPath, plnPath);
-
-            if (isValid) {
-
-                imageLoader.displayImage("file://" + plnPath, iv_question);
-
-            }
-
-           /* options = jsonObject.optString("options");
-            opt1 = Integer.parseInt(String.valueOf(options.charAt(0)));
-            opt2 = Integer.parseInt(String.valueOf(options.charAt(1)));
-            opt3 = Integer.parseInt(String.valueOf(options.charAt(2)));
-            opt4 = Integer.parseInt(String.valueOf(options.charAt(3)));
-
-            opt[0] = jsonObject.optString("option_a");
-            opt[1] = jsonObject.optString("option_b");
-            opt[2] = jsonObject.optString("option_c");
-            opt[3] = jsonObject.optString("option_d");
-*/
-         /*   encPath = IMGPATH + opt[opt1 - 1];
-
-            plnPath = extFileDirPath + "option_a.PNG";
-
-            isValid = decryptCipher(encPath, plnPath);
-
-            if (isValid) {
-
-                imageLoader.displayImage("file://" + plnPath, iv_option1);
-
-            }
-
-            encPath = IMGPATH + opt[opt2 - 1];
-
-            plnPath = extFileDirPath + "option_b.PNG";
-
-            isValid = decryptCipher(encPath, plnPath);
-
-            if (isValid) {
-
-                imageLoader.displayImage("file://" + plnPath, iv_option2);
-
-            }
-
-            encPath = IMGPATH + opt[opt3 - 1];
-
-            plnPath = extFileDirPath + "option_c.PNG";
-
-            isValid = decryptCipher(encPath, plnPath);
-
-            if (isValid) {
-
-                imageLoader.displayImage("file://" + plnPath, iv_option3);
-
-            }
-
-            encPath = IMGPATH + opt[opt4 - 1];
-
-            plnPath = extFileDirPath + "option_d.PNG";
-
-            isValid = decryptCipher(encPath, plnPath);
-
-            if (isValid) {
-
-                imageLoader.displayImage("file://" + plnPath, iv_option4);
-
-            }*/
-            encPath = IMGPATH + jsonObject.optString("option_a");
-
-            plnPath = extFileDirPath + "option_a.PNG";
-
-            isValid = decryptCipher(encPath, plnPath);
-
-            if (isValid) {
-
-                imageLoader.displayImage("file://" + plnPath, iv_option1);
-
-            }
-
-            encPath = IMGPATH + jsonObject.optString("option_b");
-
-            plnPath = extFileDirPath + "option_b.PNG";
-
-            isValid = decryptCipher(encPath, plnPath);
-
-            if (isValid) {
-
-                imageLoader.displayImage("file://" + plnPath, iv_option2);
-
-            }
-
-            encPath = IMGPATH + jsonObject.optString("option_c");
-
-            plnPath = extFileDirPath + "option_c.PNG";
-
-            isValid = decryptCipher(encPath, plnPath);
-
-            if (isValid) {
-
-                imageLoader.displayImage("file://" + plnPath, iv_option3);
-
-            }
-
-            encPath = IMGPATH + jsonObject.optString("option_d");
-
-            plnPath = extFileDirPath + "option_d.PNG";
-
-            isValid = decryptCipher(encPath, plnPath);
-
-            if (isValid) {
-
-                imageLoader.displayImage("file://" + plnPath, iv_option4);
-
-            }
-
-            if (jsonObject.optString("qanswer").equalsIgnoreCase("a")) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_first)).setChecked(true);
-
-            } else if (jsonObject.optString("qanswer").equalsIgnoreCase("b")) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_second)).setChecked(true);
-
-            } else if (jsonObject.optString("qanswer").equalsIgnoreCase("c")) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_third)).setChecked(true);
-
-            } else if (jsonObject.optString("qanswer").equalsIgnoreCase("d")) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_fourth)).setChecked(true);
-
-            }
-
             /*if (jsonObject.optInt("qanswer") == 1) {
 
                 ((RadioButton) rg_options.findViewById(R.id.rb_first)).setChecked(true);

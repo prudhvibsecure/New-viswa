@@ -33,6 +33,7 @@ import com.adi.exam.SriVishwa;
 import com.adi.exam.adapters.QuestionNumberListingAdapter_Em;
 import com.adi.exam.callbacks.IFileUploadCallback;
 import com.adi.exam.callbacks.IItemHandler;
+import com.adi.exam.common.AESEncryptionDecryption;
 import com.adi.exam.common.AppPreferences;
 import com.adi.exam.common.AppSettings;
 import com.adi.exam.database.App_Table;
@@ -129,7 +130,7 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
     private String PATH = Environment.getExternalStorageDirectory().toString();
 
-   // private final String IMGPATH = PATH + "/System/allimages/";
+    // private final String IMGPATH = PATH + "/System/allimages/";
     private final String IMGPATH = PATH + "/System/allFiles/";
 
     private Dialog mDialog;
@@ -587,7 +588,7 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
                 case R.id.tv_savennext:
 
-                    if (currentExamId>adapter.getCount()){
+                    if (currentExamId > adapter.getCount()) {
                         return;
                     }
                     if (currentExamId != -1) {
@@ -631,8 +632,8 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
                         }
 
                         jsonObject.put("qanswer",qans);*/
-                        Object vv=layout.findViewById(selRatioId).getTag();
-                        jsonObject.put("qanswer",vv.toString() );
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
 
                         adapter.notifyItemChanged(currentExamId);
 
@@ -643,8 +644,8 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
                         }
                         if (currentExamId == adapter.getCount()) {
-                            showNextQuestion(currentExamId-1);
-                        }else {
+                            showNextQuestion(currentExamId - 1);
+                        } else {
                             showNextQuestion(currentExamId + 1);
                         }
 
@@ -655,7 +656,7 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
                 case R.id.tv_savenmarkforreview:
 
-                    if (currentExamId>adapter.getCount()){
+                    if (currentExamId > adapter.getCount()) {
                         return;
                     }
                     if (currentExamId == adapter.getCount()) {
@@ -710,10 +711,10 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
                         updateQuestionTime();
                         if (currentExamId == adapter.getCount()) {
-                            showNextQuestion(currentExamId-1);
-                        }else if (currentExamId>adapter.getCount()){
+                            showNextQuestion(currentExamId - 1);
+                        } else if (currentExamId > adapter.getCount()) {
                             Toast.makeText(activity, "Are you finished your exam..", Toast.LENGTH_SHORT).show();
-                        }else {
+                        } else {
                             showNextQuestion(currentExamId + 1);
                         }
 
@@ -723,12 +724,12 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
                 case R.id.tv_clearresponse:
 
-                    if (currentExamId>adapter.getCount()){
+                    if (currentExamId > adapter.getCount()) {
                         return;
                     }
-                    if (currentExamId==adapter.getCount()) {
+                    if (currentExamId == adapter.getCount()) {
                         rg_options.clearCheck();
-                        jsonObject = adapter.getItems().getJSONObject(currentExamId-1);
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId - 1);
                         jsonObject.put("qstate", 1);
                         jsonObject.put("qanswer", "");
 
@@ -752,7 +753,7 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
                 case R.id.tv_mfrn:
 
                     if (currentExamId == adapter.getCount()) {
-                       // Toast.makeText(activity, "Your exam preview is done..", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(activity, "Your exam preview is done..", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (currentExamId != -1) {
@@ -774,7 +775,7 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
                             showNextQuestion(currentExamId + 1);
 
-                        }else{
+                        } else {
 
                             int selRatioId = rg_options.getCheckedRadioButtonId();
 
@@ -808,13 +809,12 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
                         showNextQuestion(currentExamId);
                         return;
                     }
-                    if(currentExamId == 0)
-                    {
+                    if (currentExamId == 0) {
                         showNextQuestion(currentExamId);
                         return;
                     }
 
-                    if (currentExamId==adapter.getCount()){
+                    if (currentExamId == adapter.getCount()) {
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
                         if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
                             rg_options.clearCheck();
@@ -979,7 +979,7 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
             tv_questionno.setText(getString(R.string.questionno, jsonObject.optString("sno")));
 
-            String extFileDirPath = IMGPATH;
+           /* String extFileDirPath = IMGPATH;
 
             File externalFileDir = activity.getExternalFilesDir(null);
 
@@ -987,46 +987,63 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
                 extFileDirPath = externalFileDir.getAbsolutePath() + "/";
 
-            }
+            }*/
             String encPath = IMGPATH + jsonObject.optString("question_name");
 
-            String plnPath = extFileDirPath + "question_name.txt";
+//            String plnPath = extFileDirPath + "question_name.txt";
+//
+//            boolean isValid = decryptCipher(encPath, plnPath);
+//
+//            if (isValid) {
 
-            boolean isValid = decryptCipher(encPath, plnPath);
+            File file = new File(IMGPATH, jsonObject.optString("question_name"));
 
-            if (isValid) {
+            StringBuilder html_content = new StringBuilder();
 
-                File file = new File(IMGPATH,jsonObject.optString("question_name"));
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
 
-                StringBuilder html_content = new StringBuilder();
-
-                try {
-                    BufferedReader br = new BufferedReader(new FileReader(file));
-                    String line;
-
-                    while ((line = br.readLine()) != null) {
-                        html_content.append(line);
-                        html_content.append('\n');
-                    }
-                    br.close();
+                while ((line = br.readLine()) != null) {
+                    html_content.append(line);
+                    html_content.append('\n');
                 }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-                byte[] bytes = html_content.toString().getBytes();
-                String my_qs_file = new String(bytes, "UTF-8");
-                String [] data_questions=my_qs_file.split("</html>");
+                br.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //byte[] bytes = html_content.toString().getBytes();
+            // String my_qs_file = new String(bytes, "UTF-8");
+            String my_qs_file = AESEncryptionDecryption.decrypt(html_content.toString());
+            String[] data_questions = my_qs_file.split("</html>");
 
-                iv_question.loadData(data_questions[0],"text/html","utf-8");
-                iv_option1.loadData(data_questions[1],"text/html","utf-8");
-                iv_option2.loadData(data_questions[2],"text/html","utf-8");
-                iv_option3.loadData(data_questions[3],"text/html","utf-8");
-                iv_option4.loadData(data_questions[4],"text/html","utf-8");
+            iv_question.loadData(data_questions[0], "text/html", "utf-8");
+            iv_option1.loadData(data_questions[1], "text/html", "utf-8");
+            iv_option2.loadData(data_questions[2], "text/html", "utf-8");
+            iv_option3.loadData(data_questions[3], "text/html", "utf-8");
+            iv_option4.loadData(data_questions[4], "text/html", "utf-8");
 
+            if (jsonObject.optString("qanswer").equalsIgnoreCase("a")) {
+
+                ((RadioButton) rg_options.findViewById(R.id.rb_first)).setChecked(true);
+
+            } else if (jsonObject.optString("qanswer").equalsIgnoreCase("b")) {
+
+                ((RadioButton) rg_options.findViewById(R.id.rb_second)).setChecked(true);
+
+            } else if (jsonObject.optString("qanswer").equalsIgnoreCase("c")) {
+
+                ((RadioButton) rg_options.findViewById(R.id.rb_third)).setChecked(true);
+
+            } else if (jsonObject.optString("qanswer").equalsIgnoreCase("d")) {
+
+                ((RadioButton) rg_options.findViewById(R.id.rb_fourth)).setChecked(true);
 
             }
 
-           // iv_question.setImageResource(jsonObject.optInt("qid"));
+            //      }
+
+            // iv_question.setImageResource(jsonObject.optInt("qid"));
 
 
             int notvisited = 0;
@@ -1646,6 +1663,7 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
         }
 
     }
+
     private boolean decryptCipher(String localLogoPath, String tmpFilePath) {
 
         FileInputStream fis = null;
@@ -1656,15 +1674,35 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
         try {
 
-            fis = new FileInputStream(localLogoPath);
+            fis = new FileInputStream(tmpFilePath);
 
-            fos = new FileOutputStream(tmpFilePath);
+            fos = new FileOutputStream(localLogoPath);
 
             Cipher cipher = Cipher.getInstance("ARC4");
 
             cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec("filepickerapp".getBytes(), "ARC4"));
 
-            cis = new CipherInputStream(fis, cipher);
+            StringBuilder html_content = new StringBuilder();
+
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(localLogoPath));
+                String line;
+
+                while ((line = br.readLine()) != null) {
+                    html_content.append(line);
+                    html_content.append('\n');
+                }
+                br.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            byte[] bytes = html_content.toString().getBytes();
+            fos.write(bytes);
+            fos.flush();
+            fos.close();
+            fis.close();
+            cis.close();
+           /* cis = new CipherInputStream(fis, cipher);
 
             int b;
 
@@ -1684,7 +1722,7 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
             fos.close();
 
-            cis.close();
+            cis.close();*/
 
         } catch (Exception e) {
 

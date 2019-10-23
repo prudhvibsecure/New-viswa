@@ -133,15 +133,15 @@ public class SplashActivity extends AppCompatActivity implements IDialogCallback
 
         }
 */
-        if (AppPreferences.getInstance(this).getFromStore("User-Agent").length() == 0) {
-
-            WebView webview = new WebView(this);
-
-            AppPreferences.getInstance(this).addToStore("User-Agent", webview.getSettings().getUserAgentString() + "", false);
-
-            webview = null;
-
-        }
+//        if (AppPreferences.getInstance(this).getFromStore("User-Agent").length() == 0) {
+//
+//            WebView webview = new WebView(this);
+//
+//            AppPreferences.getInstance(this).addToStore("User-Agent", webview.getSettings().getUserAgentString() + "", false);
+//
+//            webview = null;
+//
+//        }
         boolean flag = AppPreferences.getInstance(this).getBooleanFromStore("exceldone");
         if (!flag) {
             File folder = new File(Environment.getExternalStorageDirectory(), ".allimages");

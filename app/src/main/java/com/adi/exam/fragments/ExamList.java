@@ -517,7 +517,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                                 JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                                 JSONObject reqObject = new JSONObject();
-                                if (jsonObject1.optString("jee_adv").equalsIgnoreCase("0")) {
+                              //  if (jsonObject1.optString("jee_adv").equalsIgnoreCase("0")) {
 
                                     reqObject.put("student_id", activity.getStudentDetails().optString("student_id"));
 
@@ -528,18 +528,18 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                                     post.disableProgress();
 
                                     post.userRequest(getString(R.string.plwait), 2, "getquestionpaper", reqObject.toString());
-                                }else {
-
-                                    reqObject.put("student_id", activity.getStudentDetails().optString("student_id"));
-
-                                    reqObject.put("question_paper_id", jsonObject1.optString("question_paper_id"));
-
-                                    HTTPPostTask post = new HTTPPostTask(activity, this);
-
-                                    post.disableProgress();
-
-                                    post.userRequest(getString(R.string.plwait), 4, "getquestionpaper_jadvance", reqObject.toString());
-                                }
+//                                }else {
+//
+//                                    reqObject.put("student_id", activity.getStudentDetails().optString("student_id"));
+//
+//                                    reqObject.put("question_paper_id", jsonObject1.optString("question_paper_id"));
+//
+//                                    HTTPPostTask post = new HTTPPostTask(activity, this);
+//
+//                                    post.disableProgress();
+//
+//                                    post.userRequest(getString(R.string.plwait), 4, "getquestionpaper_jadvance", reqObject.toString());
+//                                }
 
                             }
 
@@ -790,7 +790,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                     }
                     table.updateDownloadStatus_qs(jsonObject.optString("question_paper_id"), "1","QUESTIONPAPER");
 
-
+                    checkQuestionPaper();
                 }
 
             }

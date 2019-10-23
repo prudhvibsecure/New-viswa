@@ -4,7 +4,7 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-class AESEncryptionDecryption {
+public class AESEncryptionDecryption {
 
     private static final byte[] keyValue =
 
@@ -12,7 +12,7 @@ class AESEncryptionDecryption {
 
     private final static String HEX = "0123456789ABCDEF";
 
-    static String encrypt(String cleartext)
+    public  static String encrypt(String cleartext)
             throws Exception {
         byte[] rawKey = getRawKey();
         byte[] result = encrypt(rawKey, cleartext.getBytes());
@@ -20,7 +20,7 @@ class AESEncryptionDecryption {
         return toHex(result);
     }
 
-    static String decrypt(String encrypted)
+    public static String decrypt(String encrypted)
             throws Exception {
         byte[] enc = toByte(encrypted);
         byte[] result = decrypt(enc);
