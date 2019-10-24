@@ -21,7 +21,7 @@
         app:fontType="1" />
 
 
-    <ImageView
+    <WebView
         android:id="@+id/iv_qimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
