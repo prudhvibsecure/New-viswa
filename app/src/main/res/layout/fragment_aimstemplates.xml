@@ -518,7 +518,7 @@
                     <com.adi.exam.controls.CustomTextView
                         android:id="@+id/tv_submit"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@drawable/button_bg_submit"
                         android:gravity="center"
                         android:text="@string/submit"
@@ -530,7 +530,7 @@
                     <com.adi.exam.controls.CustomTextView
                         android:id="@+id/tv_instruct"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@drawable/button_bg_submit_blue"
                         android:gravity="center"
                         android:layout_weight="1"

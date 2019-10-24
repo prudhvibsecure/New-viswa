@@ -51,6 +51,20 @@
                 android:textColor="@android:color/white"
                 app:fontType="1" />
 
+
+            <TextView
+                android:id="@+id/tv_processing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:background="@drawable/button_bg_submit_orange"
+                android:gravity="center"
+                android:text="Loading..."
+                android:visibility="gone"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white" />
+
         </LinearLayout>
 
         <com.adi.exam.controls.CustomTextView

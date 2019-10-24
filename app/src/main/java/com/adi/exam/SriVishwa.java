@@ -312,44 +312,6 @@ public class SriVishwa extends AppCompatActivity
         apk.setPriority(1);
         registerReceiver(mBroadcastReceiverAttach, apk);
     }
-   /* private String getParagraph() {
-
-        String json = null;
-        try {
-
-            InputStream is = getAssets().open("paragraph.json");
-
-            int size = is.available();
-
-            byte[] buffer = new byte[size];
-
-            is.read(buffer);
-
-            is.close();
-
-            json = new String(buffer, "UTF-8");
-
-            JSONObject oo = new JSONObject(json);
-            if (oo.has("pri_paragraph")) {
-
-                JSONArray mmArray=oo.getJSONArray("pri_paragraph");
-
-                for (int i=0;i<mmArray.length();i++) {
-
-                    JSONObject object=mmArray.getJSONObject(i);
-                    String where_clause = "paragraph_id='" + object.optString("paragraph_id") + "'";
-                    app_table.checkNInsertARecord(object, "PARAGRAPS", where_clause);
-                }
-            }
-
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-
-    }*/
     public JSONObject getStudentDetails() {
 
         return studentDetails;

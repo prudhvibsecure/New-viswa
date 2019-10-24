@@ -255,6 +255,8 @@ public class ExamContentListingAdapter extends RecyclerView.Adapter<ExamContentL
 
         TextView tv_examtime;
 
+        TextView tv_processing;
+
         ContactViewHolder(View v) {
             super(v);
 
@@ -273,6 +275,8 @@ public class ExamContentListingAdapter extends RecyclerView.Adapter<ExamContentL
             tv_examdate = v.findViewById(R.id.tv_examdate);
 
             tv_examtime = v.findViewById(R.id.tv_examtime);
+
+            tv_processing = v.findViewById(R.id.tv_processing);
 
         }
     }

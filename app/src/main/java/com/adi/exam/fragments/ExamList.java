@@ -239,10 +239,6 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                                 getZipFolderFile(zip_file_name,question_details.optString("question_paper_id"));
 
-
-
-
-
                     }else {
 
 
