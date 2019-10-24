@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adi.exam.R;
+import com.adi.exam.common.AESEncryptionDecryption;
 import com.adi.exam.common.AppSettings;
 import com.adi.exam.utils.TraceUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -20,9 +22,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
@@ -94,8 +98,26 @@ public class AllQuestionsAdapter extends RecyclerView.Adapter<AllQuestionsAdapte
                 ImageLoader.getInstance().displayImage("file://" + plnPath, contactViewHolder.iv_qimage);
 
             }*/
-            imageLoader.displayImage(AppSettings.getInstance().getPropertyValue("download_img")+ jsonObject.optString("question_name"), contactViewHolder.iv_qimage);
+           // imageLoader.displayImage(AppSettings.getInstance().getPropertyValue("download_img")+ jsonObject.optString("question_name"), contactViewHolder.iv_qimage);
+            File file = new File(IMGPATH, jsonObject.optString("question_name"));
 
+            StringBuilder html_content = new StringBuilder();
+
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+
+                while ((line = br.readLine()) != null) {
+                    html_content.append(line);
+                    html_content.append('\n');
+                }
+                br.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            String my_qs_file = AESEncryptionDecryption.decrypt(html_content.toString());
+            String[] data_questions = my_qs_file.split("</html>");
+            contactViewHolder.iv_qimage.loadData(data_questions[0], "text/html", "utf-8");
         } catch (Exception e) {
 
             TraceUtils.logException(e);
@@ -148,13 +170,14 @@ public class AllQuestionsAdapter extends RecyclerView.Adapter<AllQuestionsAdapte
 
         TextView tv_qnumber;
 
-        ImageView iv_qimage;
+        WebView iv_qimage;
 
         ContactViewHolder(View v) {
             super(v);
 
             tv_qnumber = v.findViewById(R.id.tv_qnumber);
 
+           // iv_qimage = v.findViewById(R.id.iv_qimage);
             iv_qimage = v.findViewById(R.id.iv_qimage);
 
         }
