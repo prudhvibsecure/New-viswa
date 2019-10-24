@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,20 +28,26 @@ import com.adi.exam.adapters.AssignmentListingAdapter;
 import com.adi.exam.adapters.ExamContentListingAdapter;
 import com.adi.exam.callbacks.IItemHandler;
 import com.adi.exam.common.AppPreferences;
+import com.adi.exam.common.AppSettings;
 import com.adi.exam.database.App_Table;
 import com.adi.exam.database.Database;
 import com.adi.exam.database.PhoneComponent;
+import com.adi.exam.services.DownloadFileAsync;
 import com.adi.exam.tasks.HTTPPostTask;
+import com.adi.exam.tasks.ImageProcesser;
 import com.adi.exam.utils.TraceUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import ir.mahdi.mzip.zip.ZipArchive;
 
 public class AssignmentList extends ParentFragment implements View.OnClickListener, IItemHandler {
 
@@ -231,6 +239,15 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
                         return;
 
                     }
+                    JSONObject question_details = jsonObject1.getJSONObject("question_details");
+
+                    if (question_details.optString("down_status").equalsIgnoreCase("0")){
+
+                        final String zip_file_name= question_details.optString("zip_file_name");
+
+                        getZipFolderFile(zip_file_name,question_details.optString("question_paper_id"));
+
+                    }else {
 
                    /* JSONObject question_details = jsonObject1.getJSONObject("question_details");
                     String timestamp = new SimpleDateFormat("dd-MM-yyyy ")
@@ -240,26 +257,26 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
                     DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
                     Date date1 = (Date) formatter.parse(timestamp);*/
 
-                    //JSONObject question_details = jsonObject1.getJSONObject("question_details");
-                    String timestamp = new SimpleDateFormat("dd-MM-yyyy ")
-                            .format(new Date()) // get the current date as String
-                            .concat(jsonObject1.optString("from_time").trim()
-                            );
-                    DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
-                    Date date1 = (Date) formatter.parse(timestamp);
+                        //JSONObject question_details = jsonObject1.getJSONObject("question_details");
+                        String timestamp = new SimpleDateFormat("dd-MM-yyyy ")
+                                .format(new Date()) // get the current date as String
+                                .concat(jsonObject1.optString("from_time").trim()
+                                );
+                        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+                        Date date1 = (Date) formatter.parse(timestamp);
 
-                    long duration_secs = jsonObject1.optLong("duration_sec");
-                    long current_time = System.currentTimeMillis();//current time
-                    long from_time = date1.getTime();// from time
+                        long duration_secs = jsonObject1.optLong("duration_sec");
+                        long current_time = System.currentTimeMillis();//current time
+                        long from_time = date1.getTime();// from time
 
-                    if (from_time < current_time) {
-                        long left_time = current_time - from_time;
-                        left_over_time=duration_secs-(left_time/1000);
+                        if (from_time < current_time) {
+                            long left_time = current_time - from_time;
+                            left_over_time = duration_secs - (left_time / 1000);
 
-                    }
-                    jsonObject1.put("duration_sec", left_over_time);
+                        }
+                        jsonObject1.put("duration_sec", left_over_time);
 
-                   // JSONObject question_details = jsonObject1.getJSONObject("question_details");
+                        // JSONObject question_details = jsonObject1.getJSONObject("question_details");
 
                    /* String dateTime = jsonObject1.optString("exam_date").trim() + " " + jsonObject1.optString("from_time").trim();
 
@@ -401,7 +418,8 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
 
                     }*/
 
-                    activity.showAssignment(jsonObject1.toString());
+                        activity.showAssignment(jsonObject1.toString());
+                    }
 
                     break;
 
@@ -583,6 +601,20 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
 
                   //  updateOtherDetails(adapterContent.getItems());
 
+                }
+
+            }else if (requestId==99){
+                JSONObject jsonObject = new JSONObject(results.toString());
+                App_Table table = new App_Table(activity);
+                if (jsonObject.optString("statuscode").equalsIgnoreCase("200")){
+                    if (jsonObject.has("question_details")) {
+                        JSONArray question_details = jsonObject.getJSONArray("question_details");
+                        table.insertMultipleRecords(question_details, "QUESTIONS");
+
+                    }
+                    table.updateDownloadStatus_qs(jsonObject.optString("question_paper_id"), "1","QUESTIONPAPER");
+
+                    checkAssignment();
                 }
 
             }
@@ -829,5 +861,88 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
         }
         return array;
     }
+    private void getQuestionsZip(String qp_id) {
+        try {
+            JSONObject jsonObject = new JSONObject();
 
+            jsonObject.put("question_paper_id", qp_id);
+
+            HTTPPostTask post = new HTTPPostTask(activity, this);
+
+            post.disableProgress();
+
+            post.userRequest(getString(R.string.plwait), 99, "upload_question_papers", jsonObject.toString());
+
+        }catch (Exception e){
+            e.printStackTrace();}
+    }
+    private void getZipFolderFile(final String zip_file_name, final String qs_ids) {
+
+
+        String path_url= AppSettings.getInstance().getPropertyValue("rtf_zip_download")+zip_file_name+".zip";
+        File kps= new File(Environment.getExternalStorageDirectory() + "/"+zip_file_name);
+        if (!kps.exists()) {
+            kps.mkdir();
+        }
+        DownloadFileAsync download = new DownloadFileAsync(Environment.getExternalStorageDirectory() + "/"+zip_file_name+".zip", getActivity(), new DownloadFileAsync.PostDownload(){
+            @Override
+            public void downloadDone(File file) {
+                Log.i("ZIP", "file download completed");
+
+                ZipArchive zipArchive = new ZipArchive();
+                zipArchive.unzip(Environment.getExternalStorageDirectory() + "/"+zip_file_name+".zip",Environment.getExternalStorageDirectory() + "/allFiles","");
+                sendToEncrypt(Environment.getExternalStorageDirectory() + "/allFiles");
+                Log.i("ZIP", "file unzip completed");
+                // checkQuestionPaper();
+                getQuestionsZip(qs_ids);
+                Toast.makeText(getActivity(), "Download Complete", Toast.LENGTH_SHORT).show();
+            }
+        });
+        download.execute(path_url);
+    }
+    private void sendToEncrypt(final String path) {
+        try {
+
+            ImageProcesser imageProcesser = new ImageProcesser(getActivity(), new IItemHandler() {
+
+                @Override
+                public void onFinish(Object results, int requestId) {
+
+                    try {
+                        Log.i("enc","completed");
+                        File dir = new File(Environment.getExternalStorageDirectory() + "/allFiles");
+                        if (dir.isDirectory()) {
+                            String[] children = dir.list();
+                            if (children.length > 0) {
+                                for (int i = 0; i < children.length; i++) {
+                                    new File(dir, children[i]).delete();
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                @Override
+                public void onError(String errorCode, int requestId) {
+                    Toast.makeText(getActivity(), errorCode, Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onProgressChange(int requestId, Long... values) {
+
+                }
+
+            });
+
+
+            imageProcesser.startProcess(1, path);
+        } catch (Exception e) {
+
+            TraceUtils.logException(e);
+
+        }
+    }
 }
