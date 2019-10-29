@@ -52,13 +52,14 @@ public class DNotifyCloser extends Service {
                     if (exam_process.startsWith("0")) {
                         handleKioskMode();
                        // safeMode();
+                        try{
+                            sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
+                            Thread.sleep(INTERVAL);
+                        }  catch (Exception e){
+                            e.printStackTrace();
+                        }
+
                     }
-                 try{
-                    sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
-                     Thread.sleep(INTERVAL);
-                 }  catch (Exception e){
-                     e.printStackTrace();
-                 }
 
                 } while (running);
                 stopSelf();
@@ -67,10 +68,6 @@ public class DNotifyCloser extends Service {
 
         t.start();
         return Service.START_NOT_STICKY;
-    }
-
-    private void safeMode() {
-
     }
 
     private void handleKioskMode() {

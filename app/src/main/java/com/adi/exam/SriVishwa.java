@@ -559,7 +559,7 @@ public class SriVishwa extends AppCompatActivity
     }
 
     public void swiftFragments(ParentFragment frag, String tag) {
-
+        try {
         FragmentTransaction trans = manager.beginTransaction();
 
         tempFrag = (ParentFragment) manager.findFragmentByTag(tag);
@@ -568,12 +568,13 @@ public class SriVishwa extends AppCompatActivity
             if (tempFrag.isAdded() && tempFrag.isVisible())
                 return;
             else if (tempFrag.isAdded() && tempFrag.isHidden()) {
+               // if (fragStack.size() > 0) {
+                    trans.hide(fragStack.get(fragStack.size() - 1));
+                    trans.show(tempFrag);
 
-                trans.hide(fragStack.get(fragStack.size() - 1));
-                trans.show(tempFrag);
-
-                fragStack.remove(tempFrag);
-                fragStack.add(tempFrag);
+                    fragStack.remove(tempFrag);
+                    fragStack.add(tempFrag);
+               // }
 
             }
 
@@ -590,7 +591,7 @@ public class SriVishwa extends AppCompatActivity
             fragStack.push(frag);
         }
 
-        try {
+
 
             if (SriVishwaApp.isInterestingActivityVisible()) {
                 trans.commit();
@@ -2113,16 +2114,21 @@ public class SriVishwa extends AppCompatActivity
         });
         download.execute(path_url);
     }
-    @Override
+   /* @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (!hasFocus) {
-            sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
-
+            String exam_process= AppPreferences.getInstance(this).getFromStore("exam_on");
+            if (exam_process.startsWith("0")) {
+                sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
+            }
         }else{
-            sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
+            String exam_process= AppPreferences.getInstance(this).getFromStore("exam_on");
+            if (exam_process.startsWith("0")) {
+                sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
+            }
         }
-    }
+    }*/
     public boolean dispatchKeyEvent(KeyEvent keyEvent) {
 
         if (keyEvent.getKeyCode()==KeyEvent.KEYCODE_POWER){

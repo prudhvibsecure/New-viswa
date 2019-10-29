@@ -217,7 +217,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                 case R.id.tv_startexam:
 
-                    AppPreferences.getInstance(getActivity()).addToStore("exam_on","1",true);
+                    AppPreferences.getInstance(getActivity()).addToStore("exam_on","1",false);
                     JSONObject jsonObject1 = adapterContent.getItems().getJSONObject((int) view.getTag());
                     App_Table table = new App_Table(activity);
 

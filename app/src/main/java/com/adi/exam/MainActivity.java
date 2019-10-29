@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_main);
         Settings.System.canWrite(this);
         mDecorView = getWindow().getDecorView();
@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.ll_appicon).setOnClickListener(this);
        /* devicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         componentName = new ComponentName(this, MyPolicyReceiver.class);
-
         checkBoxAdmin = (CheckBox) findViewById(R.id.checkBoxAdmin);
         checkBoxAdmin.setOnCheckedChangeListener(this);*/
         boolean my_safe_mode=getPackageManager().isSafeMode();
@@ -95,11 +94,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDevicePolicyManager = (DevicePolicyManager) getSystemService(
                 Context.DEVICE_POLICY_SERVICE);
 
-       // mDevicePolicyManager.lockNow();
+        // mDevicePolicyManager.lockNow();
 
         mPackageManager = getPackageManager();
         //mDevicePolicyManager.addUserRestriction(mAdminComponentName, UserManager.DISALLOW_SAFE_BOOT);
-       // mDevicePolicyManager.clearDeviceOwnerApp(getPackageName());
+        // mDevicePolicyManager.clearDeviceOwnerApp(getPackageName());
 
         if (mDevicePolicyManager.isDeviceOwnerApp(getPackageName())) {
 
@@ -132,13 +131,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //  This API should accept user id. If the user entered password is correc then call be line  ---> stopLockTask();
         registerReceiver(batteryChangeReceiver, new IntentFilter(
                 Intent.ACTION_BATTERY_CHANGED));
+        AppPreferences.getInstance(this).addToStore("exam_on","0",true);
       /*  try{
             registerReceiver(apkBroadcaster, new IntentFilter(
                     "come.main.apks"));
         }catch (Exception e){
             e.printStackTrace();
         }*/
-       // startService(new Intent(this, DNotifyCloser.class));
+        // startService(new Intent(this, DNotifyCloser.class));
     }
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -154,13 +154,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     /*private void getEmails() {
         Pattern emailPattern = Patterns.EMAIL_ADDRESS;
-
         // Getting all registered Google Accounts;
         // Account[] accounts = AccountManager.get(this).getAccountsByType("com.google");
-
         // Getting all registered Accounts;
         Account[] accounts = AccountManager.get(this).getAccounts();
-
         for (Account account : accounts) {
             if (emailPattern.matcher(account.name).matches()) {
                 TraceUtils.logE("working fine", String.format("%s - %s", account.name, account.type));
@@ -247,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                PowerManager pm = (PowerManager)getSystemService(Service.POWER_SERVICE);
 //                pm.isPowerSaveMode();
 //                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-              //  manager.cancelAll();
+                //  manager.cancelAll();
             /*  Intent statusIntent=new Intent(Intent.ACTION_BATTERY_LOW);
                 sendBroadcast(statusIntent);*/
             }else{
@@ -261,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(batteryChangeReceiver);
-       // unregisterReceiver(apkBroadcaster);
+        // unregisterReceiver(apkBroadcaster);
     }
 
     @Override
@@ -392,10 +389,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onWindowFocusChanged(hasFocus);
         if (!hasFocus) {
             sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
-          //  sendBroadcast(new Intent("android.intent.action.ACTION_POWER_DISCONNECTED"));
+            //  sendBroadcast(new Intent("android.intent.action.ACTION_POWER_DISCONNECTED"));
         }else{
             sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
-           // sendBroadcast(new Intent("android.intent.action.ACTION_POWER_DISCONNECTED"));
+            // sendBroadcast(new Intent("android.intent.action.ACTION_POWER_DISCONNECTED"));
         }
     }
     public boolean dispatchKeyEvent(KeyEvent keyEvent) {
@@ -407,7 +404,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (this.blockedKeys.contains(Integer.valueOf(keyEvent.getKeyCode()))) {
             keyEvent.startTracking();
 
-          return true;
+            return true;
 
         }
         return super.dispatchKeyEvent(keyEvent);
@@ -447,7 +444,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   /*  private BroadcastReceiver apkBroadcaster=new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
             if (intent.getAction().startsWith("come.main.apks")){
                 String a_name=intent.getStringExtra("apkname");
                 stopLockTask();
@@ -459,14 +455,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String type = Utils.getMimeType(a_name);
                 String path = Environment.getExternalStorageDirectory()
                         .toString() + "/" + a_name.trim();
-
                 Uri paths = Uri.fromFile(new File(path));
                 Intent intent_n = new Intent(Intent.ACTION_VIEW);
                 intent_n.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent_n.setDataAndType(paths, type);
                 startActivity(intent_n);
             }
-
         }
     };*/
 

@@ -42,7 +42,7 @@ public class AllQuestionsAdapter extends RecyclerView.Adapter<AllQuestionsAdapte
 
     private String PATH = Environment.getExternalStorageDirectory().toString();
 
-    private final String IMGPATH = PATH + "/System/allimages/";
+    private final String IMGPATH = PATH + "/System/allFiles/";
 
     public AllQuestionsAdapter(Context context) {
 
@@ -73,8 +73,6 @@ public class AllQuestionsAdapter extends RecyclerView.Adapter<AllQuestionsAdapte
 
             }*/
             JSONObject jsonObject = array.getJSONObject(position);
-
-            Log.e("evry_object",jsonObject.toString());
 
             contactViewHolder.tv_qnumber.setText(mContext.getString(R.string.qnumber, jsonObject.optString("sno")));
 
@@ -119,7 +117,6 @@ public class AllQuestionsAdapter extends RecyclerView.Adapter<AllQuestionsAdapte
             String[] data_questions = my_qs_file.split("</html>");
             contactViewHolder.iv_qimage.loadData(data_questions[0], "text/html", "utf-8");
         } catch (Exception e) {
-
             TraceUtils.logException(e);
 
         }

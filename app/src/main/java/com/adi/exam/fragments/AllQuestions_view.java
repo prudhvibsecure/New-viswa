@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.adi.exam.R;
 import com.adi.exam.SriVishwa;
@@ -86,7 +87,9 @@ public class AllQuestions_view extends ParentFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
 
         RecyclerView rv_content_list = layout.findViewById(R.id.rv_content_list);
-
+       SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.swipeRefreshLayout);
+       mSwipeRefreshLayout.setEnabled(false);
+       mSwipeRefreshLayout.setRefreshing(false);
         rv_content_list.setLayoutManager(layoutManager);
 
         rv_content_list.setItemAnimator(new DefaultItemAnimator());

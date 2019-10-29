@@ -878,12 +878,16 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
             // String my_qs_file = new String(bytes, "UTF-8");
             String my_qs_file = AESEncryptionDecryption.decrypt(html_content.toString());
             String[] data_questions = my_qs_file.split("</html>");
-
-            iv_question.loadData(data_questions[0], "text/html", "utf-8");
-            iv_option1.loadData(data_questions[1], "text/html", "utf-8");
-            iv_option2.loadData(data_questions[2], "text/html", "utf-8");
-            iv_option3.loadData(data_questions[3], "text/html", "utf-8");
-            iv_option4.loadData(data_questions[4], "text/html", "utf-8");
+            iv_question.clearHistory();
+            iv_option1.clearHistory();
+            iv_option2.clearHistory();
+            iv_option3.clearHistory();
+            iv_option4.clearHistory();
+            iv_question.loadDataWithBaseURL("",data_questions[0], "text/html", "utf-8",null);
+            iv_option1.loadDataWithBaseURL("",data_questions[1], "text/html", "utf-8",null);
+            iv_option2.loadDataWithBaseURL("",data_questions[2], "text/html", "utf-8",null);
+            iv_option3.loadDataWithBaseURL("",data_questions[3], "text/html", "utf-8",null);
+            iv_option4.loadDataWithBaseURL("",data_questions[4], "text/html", "utf-8",null);
 
 
 

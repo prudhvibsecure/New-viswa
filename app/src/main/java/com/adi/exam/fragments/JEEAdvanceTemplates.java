@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -1386,11 +1387,18 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                 para_title.setVisibility(View.GONE);
 
             }
-            iv_questionimg.loadData(data_questions[0], "text/html", "utf-8");
-            iv_option1.loadData(data_questions[1], "text/html", "utf-8");
-            iv_option2.loadData(data_questions[2], "text/html", "utf-8");
-            iv_option3.loadData(data_questions[3], "text/html", "utf-8");
-            iv_option4.loadData(data_questions[4], "text/html", "utf-8");
+            iv_questionimg.clearHistory();
+            iv_question.clearHistory();
+            iv_option1.clearHistory();
+            iv_option2.clearHistory();
+            iv_option3.clearHistory();
+            iv_option4.clearHistory();
+           // iv_questionimg.loadData(data_questions[0], "text/html", "utf-8");
+            iv_questionimg.loadDataWithBaseURL("",data_questions[0], "text/html", "utf-8",null);
+            iv_option1.loadDataWithBaseURL("",data_questions[1], "text/html", "utf-8",null);
+            iv_option2.loadDataWithBaseURL("",data_questions[2], "text/html", "utf-8",null);
+            iv_option3.loadDataWithBaseURL("",data_questions[3], "text/html", "utf-8",null);
+            iv_option4.loadDataWithBaseURL("",data_questions[4], "text/html", "utf-8",null);
  //           encPath = IMGPATH + jsonObject.optString("option_a");
 //
 //            plnPath = extFileDirPath + "option_a.PNG";
@@ -1602,7 +1610,38 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                 }
 
             }
-
+            iv_questionimg.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    view.clearHistory();
+                }
+            });
+            iv_option1.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    view.clearHistory();
+                }
+            });iv_option2.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    view.clearHistory();
+                }
+            });iv_option3.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    view.clearHistory();
+                }
+            });iv_option4.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    view.clearHistory();
+                }
+            });
             int notvisited = 0;
 
             int notanswered = 0;

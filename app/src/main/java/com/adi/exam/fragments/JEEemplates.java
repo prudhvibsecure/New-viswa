@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -647,7 +648,11 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
         return lesson_id;
     }
-
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mFragListener = null;
+    }
     @Override
     public void onClick(View v) {
         //qstate = //0 = not visited, 1 = not answered, 2 = answered, 3 = marked for review, 4 = answered and marked for review
@@ -719,19 +724,35 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                     }
                     if (currentExamId != -1) {
                         //  question_no++;
-
                         int selRatioId = rg_options.getCheckedRadioButtonId();
-
-                        if (selRatioId == -1) {
-
-                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
-
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        jsonObject.put("qstate", 2);
+                        boolean result = inRange(19, 24, currentExamId);
+                        boolean result2 = inRange(49, 54, currentExamId);
+                        boolean result3 = inRange(69, 74, currentExamId);
+                        if (result||result2||result3) {
+                        String ck=ed_texx.getText().toString();
+                        if (ck.length()==0){
+                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psas));
                             return;
                         }
+                            jsonObject.put("qanswer",ck );
+                        }else {
 
-                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
-                        jsonObject.put("qstate", 2);
+                            if (selRatioId == -1) {
+
+                                activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+
+                                return;
+                            }
+                            Object vv=layout.findViewById(selRatioId).getTag();
+                            jsonObject.put("qanswer",vv.toString() );
+                        }
+                       // Object vv=layout.findViewById(selRatioId).getTag();
+
+
+
 
                         /*String selected = (String) layout.findViewById(selRatioId).getTag();
                         int index = options.indexOf(selected);
@@ -758,8 +779,8 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                         }
 
                         jsonObject.put("qanswer",qans);*/
-                        Object vv=layout.findViewById(selRatioId).getTag();
-                        jsonObject.put("qanswer",vv.toString() );
+
+
 
                         adapter.notifyItemChanged(currentExamId);
 
@@ -790,19 +811,31 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                         return;
                     }
                     if (currentExamId != -1) {
-                        question_no++;
                         int selRatioId = rg_options.getCheckedRadioButtonId();
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        jsonObject.put("qstate", 4);
+                        boolean result = inRange(19, 24, currentExamId);
+                        boolean result2 = inRange(49, 54, currentExamId);
+                        boolean result3 = inRange(69, 74, currentExamId);
+                        if (result||result2||result3) {
+                            String ck=ed_texx.getText().toString();
+                            if (ck.length()==0){
+                                activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psas));
+                                return;
+                            }
+                            jsonObject.put("qanswer", ck);
+                        }else {
+                            if (selRatioId == -1) {
 
-                        if (selRatioId == -1) {
+                                activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
 
-                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
-
-                            return;
+                                return;
+                            }
+                            jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
                         }
 
-                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
-                        jsonObject.put("qstate", 4);
+
 
                         /*String selected = (String) layout.findViewById(selRatioId).getTag();
                         int index = options.indexOf(selected);
@@ -829,7 +862,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                         }
 
                         jsonObject.put("qanswer",qans);*/
-                        jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
 
                         adapter.notifyItemChanged(currentExamId);
 
@@ -865,6 +898,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                         return;
                     }
                     rg_options.clearCheck();
+                    ed_texx.setText("");
                     //  }
                     jsonObject = adapter.getItems().getJSONObject(currentExamId);
                     jsonObject.put("qstate", 1);
@@ -1111,11 +1145,13 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
             }
             String my_qs_file = AESEncryptionDecryption.decrypt(html_content.toString());
             String[] data_questions = my_qs_file.split("</html>");
-            iv_question.loadData(data_questions[0], "text/html", "utf-8");
+
+            iv_question.loadDataWithBaseURL("",data_questions[0], "text/html", "utf-8",null);
             boolean result = inRange(20, 25, Integer.parseInt(jsonObject.optString("sno")));
             boolean result2 = inRange(50, 55, Integer.parseInt(jsonObject.optString("sno")));
             boolean result3 = inRange(70, 75, Integer.parseInt(jsonObject.optString("sno")));
             if (result||result2||result3){
+
                 rg_options.setVisibility(View.GONE);
                 ed_texx.setVisibility(View.VISIBLE);
                 layout.findViewById(R.id.option_ll).setVisibility(View.GONE);
@@ -1133,10 +1169,10 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                 rg_options.setVisibility(View.VISIBLE);
                 ed_texx.setVisibility(View.GONE);
 
-                iv_option1.loadData(data_questions[1], "text/html", "utf-8");
-                iv_option2.loadData(data_questions[2], "text/html", "utf-8");
-                iv_option3.loadData(data_questions[3], "text/html", "utf-8");
-                iv_option4.loadData(data_questions[4], "text/html", "utf-8");
+                iv_option1.loadDataWithBaseURL("",data_questions[1], "text/html", "utf-8",null);
+                iv_option2.loadDataWithBaseURL("",data_questions[2], "text/html", "utf-8",null);
+                iv_option3.loadDataWithBaseURL("",data_questions[3], "text/html", "utf-8",null);
+                iv_option4.loadDataWithBaseURL("",data_questions[4], "text/html", "utf-8",null);
 
                 if (jsonObject.optString("qanswer").equalsIgnoreCase("a")) {
 
@@ -1156,6 +1192,49 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
                 }
             }
+            iv_question.clearHistory();
+            iv_question.clearCache(true);
+            iv_question.destroyDrawingCache();
+            iv_option1.clearHistory();
+            iv_option1.clearCache(true);
+            iv_option2.clearHistory();
+            iv_option2.clearCache(true);
+            iv_option3.clearHistory();
+            iv_option3.clearCache(true);
+            iv_option4.clearHistory();
+            iv_option4.clearCache(true);
+            iv_question.setWebViewClient(new WebViewClient() {
+                                         @Override
+                                         public void onPageFinished(WebView view, String url) {
+                                             super.onPageFinished(view, url);
+                                             view.clearHistory();
+                                         }
+                                     });
+            iv_option1.setWebViewClient(new WebViewClient() {
+                                         @Override
+                                         public void onPageFinished(WebView view, String url) {
+                                             super.onPageFinished(view, url);
+                                             view.clearHistory();
+                                         }
+                                     });iv_option2.setWebViewClient(new WebViewClient() {
+                                         @Override
+                                         public void onPageFinished(WebView view, String url) {
+                                             super.onPageFinished(view, url);
+                                             view.clearHistory();
+                                         }
+                                     });iv_option3.setWebViewClient(new WebViewClient() {
+                                         @Override
+                                         public void onPageFinished(WebView view, String url) {
+                                             super.onPageFinished(view, url);
+                                             view.clearHistory();
+                                         }
+                                     });iv_option4.setWebViewClient(new WebViewClient() {
+                                         @Override
+                                         public void onPageFinished(WebView view, String url) {
+                                             super.onPageFinished(view, url);
+                                             view.clearHistory();
+                                         }
+                                     });
             /*if (jsonObject.optInt("qanswer") == 1) {
 
                 ((RadioButton) rg_options.findViewById(R.id.rb_first)).setChecked(true);
