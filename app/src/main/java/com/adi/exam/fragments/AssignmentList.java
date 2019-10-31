@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.adi.exam.R;
 import com.adi.exam.SriVishwa;
@@ -67,6 +68,8 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
 
     private long left_over_time=0;
 
+    private SwipeRefreshLayout mSwipeRefreshLayout = null;
+
     public AssignmentList() {
         // Required empty public constructor
     }
@@ -110,6 +113,18 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
         adapterContent.setOnClickListener(this);
 
         rv_content_list.setAdapter(adapterContent);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorPrimaryDark,
+                R.color.colorPrimaryDark, R.color.colorPrimaryDark, R.color.colorPrimaryDark);
+        mSwipeRefreshLayout.setEnabled(false);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                checkAssignment();
+            }
+        });
 
         if (isNetworkAvailable()) {
 
@@ -239,13 +254,13 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
                         return;
 
                     }
-                    JSONObject question_details = jsonObject1.getJSONObject("question_details");
+                  //  JSONObject question_details = jsonObject1.getJSONObject("question_details");
 
-                    if (question_details.optString("down_status").equalsIgnoreCase("0")){
+                    if (jsonObject1.optString("down_status").equalsIgnoreCase("0")){
 
-                        final String zip_file_name= question_details.optString("zip_file_name");
+                        final String zip_file_name= jsonObject1.optString("zip_file_name");
 
-                        getZipFolderFile(zip_file_name,question_details.optString("question_paper_id"));
+                        getZipFolderFile(zip_file_name,jsonObject1.optString("assignment_id"));
 
                     }else {
 
@@ -523,6 +538,8 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
                 tv_content_txt.setVisibility(View.VISIBLE);
 
             } else if (requestId == 2) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                mSwipeRefreshLayout.setEnabled(true);
 
                 JSONObject jsonObject = new JSONObject(results.toString());
 
@@ -541,8 +558,10 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                             String iwhereClause = "assignment_id = '" + jsonObject1.optString("assignment_id") + "'";
-
-                            table.checkNInsertARecord(jsonObject1, "ASSIGNMENT", iwhereClause);
+                            boolean isRecordAvailable = table.isRecordExits(iwhereClause, "ASSIGNMENT");
+                            if (!isRecordAvailable) {
+                                table.checkNInsertARecord(jsonObject1, "ASSIGNMENT", iwhereClause);
+                            }
 
                         }
 
@@ -612,7 +631,7 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
                         table.insertMultipleRecords(question_details, "QUESTIONS");
 
                     }
-                    table.updateDownloadStatus_qs(jsonObject.optString("question_paper_id"), "1","QUESTIONPAPER");
+                    table.updateDownloadStatus_qs1(jsonObject.optString("assignment_id"), "1","ASSIGNMENT");
 
                     checkAssignment();
                 }
@@ -629,7 +648,8 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
 
     @Override
     public void onError(String errorCode, int requestId) {
-
+        mSwipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setEnabled(true);
     }
 
     private void updateOtherDetails(final JSONArray jsonArray) throws Exception {
@@ -815,6 +835,8 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
                                     obj.put("questions", cursor.getString(cursor.getColumnIndex("questions")));
                                     obj.put("exam_time", cursor.getString(cursor.getColumnIndex("exam_time")));
                                     obj.put("duration_sec", cursor.getString(cursor.getColumnIndex("duration_sec")));
+                                    obj.put("zip_file_name", cursor.getString(cursor.getColumnIndex("zip_file_name")));
+                                    obj.put("down_status", cursor.getString(cursor.getColumnIndex("down_status")));
                                     //obj.put("question_details", obj1);
 
                                     String dateTime = cursor.getString(cursor.getColumnIndex("exam_date")).trim() + " " + cursor.getString(cursor.getColumnIndex("to_time")).trim();
@@ -865,13 +887,13 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
         try {
             JSONObject jsonObject = new JSONObject();
 
-            jsonObject.put("question_paper_id", qp_id);
+            jsonObject.put("assignment_id", qp_id);
 
             HTTPPostTask post = new HTTPPostTask(activity, this);
 
             post.disableProgress();
 
-            post.userRequest(getString(R.string.plwait), 99, "upload_question_papers", jsonObject.toString());
+            post.userRequest(getString(R.string.plwait), 99, "question_files", jsonObject.toString());
 
         }catch (Exception e){
             e.printStackTrace();}

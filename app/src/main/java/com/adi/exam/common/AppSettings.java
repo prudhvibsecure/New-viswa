@@ -85,6 +85,8 @@ public class AppSettings {
 
             properties.setProperty("rtf_zip_download", BASE_PATH + "assets/upload/rtf_zip/");
 
+            properties.setProperty("question_files", BASE_PATH + "question_files/get_assignmnet_questions");
+
         } catch (Exception e) {
 
             TraceUtils.logException(e);

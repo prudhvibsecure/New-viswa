@@ -552,7 +552,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="@dimen/_5sdp">
+                android:padding="@dimen/_2sdp">
 
                 <LinearLayout
                     android:id="@+id/profile"
@@ -560,11 +560,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/cardview_light_background"
                     android:orientation="horizontal"
-                    android:padding="@dimen/_12sdp">
+                    android:padding="@dimen/_9sdp">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:src="@mipmap/ic_add_m" />
 
@@ -576,7 +576,7 @@
                         android:gravity="center"
                         android:text="@string/username"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="14dp" />
+                        android:textSize="13dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -717,8 +717,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="@dimen/_4sdp"
-                    android:visibility="gone">
+                    android:padding="@dimen/_4sdp">
 
                     <com.adi.exam.controls.CustomTextView
                         android:id="@+id/tv_amfrcnt"
@@ -738,7 +737,7 @@
                         android:paddingLeft="@dimen/_5sdp"
                         android:text="@string/amfr"
                         android:textColor="@color/lightGray"
-                        android:textSize="13sp"
+                        android:textSize="11sp"
                         app:fontType="1" />
 
                 </LinearLayout>

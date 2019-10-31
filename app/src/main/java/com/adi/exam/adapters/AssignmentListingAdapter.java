@@ -145,22 +145,29 @@ public class AssignmentListingAdapter extends RecyclerView.Adapter<AssignmentLis
             Date c = Calendar.getInstance().getTime();
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             String c_date = df.format(c);
-            if (c_date.equals(jsonObject.optString("exam_date").trim())) {
-                // contactViewHolder.tv_startexam.setEnabled(true);
-                boolean result = inRange(tkl, tk2, time);
-                if (result) {
-                    contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
-                    contactViewHolder.tv_startexam.setEnabled(true);
-                    contactViewHolder.tv_startexam.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_bg_submit));
+
+            if (jsonObject.optString("down_status").equalsIgnoreCase("0")){
+                contactViewHolder.tv_startexam.setText("Download");
+            }else {
+
+                contactViewHolder.tv_startexam.setText("Start");
+                if (c_date.equals(jsonObject.optString("exam_date").trim())) {
+                    // contactViewHolder.tv_startexam.setEnabled(true);
+                    boolean result = inRange(tkl, tk2, time);
+                    if (result) {
+                        contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
+                        contactViewHolder.tv_startexam.setEnabled(true);
+                        contactViewHolder.tv_startexam.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_bg_submit));
+                    } else {
+                        contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
+                        contactViewHolder.tv_startexam.setEnabled(false);
+                        contactViewHolder.tv_startexam.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_bg_submit_disable));
+                    }
                 } else {
                     contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
                     contactViewHolder.tv_startexam.setEnabled(false);
                     contactViewHolder.tv_startexam.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_bg_submit_disable));
                 }
-            } else {
-                contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
-                contactViewHolder.tv_startexam.setEnabled(false);
-                contactViewHolder.tv_startexam.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_bg_submit_disable));
             }
 
         } catch (Exception e) {

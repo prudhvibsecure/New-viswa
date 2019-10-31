@@ -1130,6 +1130,24 @@ public class App_Table {
 
         }
 
+    }  public void updateDownloadStatus_qs1(String qs_id, String status,String table) {
+
+        if (database != null) {
+
+            SQLiteDatabase db = database.getWritableDatabase();
+
+            String iwhereClause = "assignment_id=" + Integer.parseInt(qs_id);
+
+            ContentValues cv = new ContentValues();
+
+            cv.put("down_status", status);
+
+            db.update(table, cv, iwhereClause, null);
+
+            db.close();
+
+        }
+
     }
 
     public String getQuestionFileName(int question_id) {

@@ -38,7 +38,7 @@ public class Database extends SQLiteOpenHelper {
 
     private String COURSES_TABLE = "CREATE TABLE COURSES(courses_id INTEGER, course TEXT, course_name TEXT, course_subjects TEXT)";
 
-    private String ASSIGNMENT_TABLE = "CREATE TABLE ASSIGNMENT(assignment_id INTEGER, assignment_name TEXT, subject TEXT, course TEXT, course_name TEXT, section TEXT, lessons TEXT, topics TEXT, exam_date TEXT, from_time TEXT, to_time TEXT, duration TEXT, no_of_questions TEXT, marks_per_question TEXT, questions TEXT,exam_time TEXT,duration_sec TEXT)";
+    private String ASSIGNMENT_TABLE = "CREATE TABLE ASSIGNMENT(assignment_id INTEGER, assignment_name TEXT, subject TEXT, course TEXT, course_name TEXT, section TEXT, lessons TEXT, topics TEXT, exam_date TEXT, from_time TEXT, to_time TEXT, duration TEXT, no_of_questions TEXT, marks_per_question TEXT, questions TEXT,exam_time TEXT,duration_sec TEXT,zip_file_name TEXT,down_status TEXT)";
 
     private String ASSIGNMENTRESULTS_TABLE = "CREATE TABLE ASSIGNMENTRESULTS(assignment_result_id INTEGER, assignment_id INTEGER, student_id INTEGER, total_questions TEXT, total_questions_attempted TEXT, no_of_correct_answers TEXT, score TEXT, question_no INTEGER, subject TEXT)";
 

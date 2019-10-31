@@ -513,7 +513,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                                 JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                                 JSONObject reqObject = new JSONObject();
-                              //  if (jsonObject1.optString("jee_adv").equalsIgnoreCase("0")) {
+                                if (jsonObject1.optString("jee_adv").equalsIgnoreCase("0")) {
 
                                     reqObject.put("student_id", activity.getStudentDetails().optString("student_id"));
 
@@ -524,18 +524,18 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                                     post.disableProgress();
 
                                     post.userRequest(getString(R.string.plwait), 2, "getquestionpaper", reqObject.toString());
-//                                }else {
-//
-//                                    reqObject.put("student_id", activity.getStudentDetails().optString("student_id"));
-//
-//                                    reqObject.put("question_paper_id", jsonObject1.optString("question_paper_id"));
-//
-//                                    HTTPPostTask post = new HTTPPostTask(activity, this);
-//
-//                                    post.disableProgress();
-//
-//                                    post.userRequest(getString(R.string.plwait), 4, "getquestionpaper_jadvance", reqObject.toString());
-//                                }
+                                }else {
+
+                                    reqObject.put("student_id", activity.getStudentDetails().optString("student_id"));
+
+                                    reqObject.put("question_paper_id", jsonObject1.optString("question_paper_id"));
+
+                                    HTTPPostTask post = new HTTPPostTask(activity, this);
+
+                                    post.disableProgress();
+
+                                    post.userRequest(getString(R.string.plwait), 4, "getquestionpaper_jadvance", reqObject.toString());
+                                }
 
                             }
 
@@ -690,8 +690,11 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                             String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") + "'";
 
-                            table.checkNInsertARecord(jsonObject1, "EXAM", iwhereClause);
-
+                          //  table.checkNInsertARecord(jsonObject1, "EXAM", iwhereClause);
+                            boolean isRecordAvailable = table.isRecordExits(iwhereClause, "EXAM");
+                            if (!isRecordAvailable) {
+                                table.checkNInsertARecord(jsonObject1, "EXAM", iwhereClause);
+                            }
                         }
 
                     }
@@ -706,8 +709,11 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                             String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") + "' AND question_paper_id = '" + jsonObject1.optString("question_paper_id") + "'";
 
-                            table.checkNInsertARecord(jsonObject1, "QUESTIONPAPER", iwhereClause);
-
+                          //  table.checkNInsertARecord(jsonObject1, "QUESTIONPAPER", iwhereClause);
+                            boolean isRecordAvailable = table.isRecordExits(iwhereClause, "QUESTIONPAPER");
+                            if (!isRecordAvailable) {
+                                table.checkNInsertARecord(jsonObject1, "QUESTIONPAPER", iwhereClause);
+                            }
                         }
 
                     }
@@ -722,7 +728,11 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                             String iwhereClause = "student_question_paper_id = '" + jsonObject1.optString("student_question_paper_id") + "' AND question_paper_id = '" + jsonObject1.optString("question_paper_id") + "'";
 
-                            table.checkNInsertARecord(jsonObject1, "STUDENTQUESTIONPAPER", iwhereClause);
+//                            table.checkNInsertARecord(jsonObject1, "STUDENTQUESTIONPAPER", iwhereClause);
+                            boolean isRecordAvailable = table.isRecordExits(iwhereClause, "STUDENTQUESTIONPAPER");
+                            if (!isRecordAvailable) {
+                                table.checkNInsertARecord(jsonObject1, "STUDENTQUESTIONPAPER", iwhereClause);
+                            }
 
                         }
 
@@ -734,8 +744,10 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                         JSONObject jsonObject1 = exam_details.getJSONObject(0);
                         String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") +  "'";
-                        table.checkNInsertARecord_vv(question_ids.toString(), "JEEQS", iwhereClause,jsonObject1.optString("exam_id"));
-
+                        boolean isRecordAvailable = table.isRecordExits(iwhereClause, "JEEQS");
+                        if (!isRecordAvailable) {
+                          table.checkNInsertARecord_vv(question_ids.toString(), "JEEQS", iwhereClause, jsonObject1.optString("exam_id"));
+                        }
                     }
 
                     --mCount;

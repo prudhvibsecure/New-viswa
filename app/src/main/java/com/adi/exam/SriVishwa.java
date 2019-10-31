@@ -690,7 +690,7 @@ public class SriVishwa extends AppCompatActivity
 
             } else if (jsonObject.optString("course").equalsIgnoreCase("5")) { //NEET
 
-                swiftFragments(ExamTemplates.newInstance(data), "examtemplate");
+                swiftFragments(NEETemplates.newInstance(data), "examtemplate");
 
             } else if (jsonObject.optString("course").equalsIgnoreCase("6")) { //AIIMS
                 swiftFragments(AIIMSemplates.newInstance(data), "examtemplate");
@@ -793,6 +793,9 @@ public class SriVishwa extends AppCompatActivity
                     }
 
                     if (pf instanceof ExamTemplates) {
+                        return true;
+                    }
+                    if (pf instanceof JEEAdvanceTemplates) {
                         return true;
                     }
 
