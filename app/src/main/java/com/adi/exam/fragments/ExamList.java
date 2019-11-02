@@ -50,7 +50,7 @@ import java.util.Locale;
 
 import ir.mahdi.mzip.zip.ZipArchive;
 
-public class ExamList extends ParentFragment implements View.OnClickListener, IItemHandler {
+public class ExamList extends ParentFragment implements View.OnClickListener, IItemHandler, ExamContentListingAdapter.ExamListListener {
 
     //TODO: error handling -> make use of tv_content_txt
 
@@ -113,7 +113,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
         rv_content_list.addItemDecoration(did);
 
-        adapterContent = new ExamContentListingAdapter(activity);
+        adapterContent = new ExamContentListingAdapter(activity,this);
 
         adapterContent.setOnClickListener(this);
 
@@ -499,6 +499,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                 JSONObject jsonObject = new JSONObject(results.toString());
 
                 if (jsonObject.optString("statuscode").equalsIgnoreCase("200")) {
+                    tv_content_txt.setVisibility(View.GONE);
 
                     if (jsonObject.has("question_paper_details")) {
 
@@ -542,18 +543,19 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                             return;
 
                         }
-                        else
-                        {
-                            //Toast.makeText(activity, "No Data Found", Toast.LENGTH_SHORT).show();
+                        else {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            mSwipeRefreshLayout.setEnabled(true);
+                            tv_content_txt.setVisibility(View.VISIBLE);
                         }
 
                     }
 
+                }else{
+                    tv_content_txt.setVisibility(View.VISIBLE);
                 }
 
                 progressBar.setVisibility(View.GONE);
-
-              //  tv_content_txt.setVisibility(View.VISIBLE);
 
             } else if (requestId == 2) {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -1148,6 +1150,74 @@ e.printStackTrace();}
 
 
             imageProcesser.startProcess(1, path);
+        } catch (Exception e) {
+
+            TraceUtils.logException(e);
+
+        }
+    }
+
+    @Override
+    public void onRowClicked(JSONObject jsonObject, int position, TextView tv_processing,TextView tv_start) {
+        try {
+
+
+
+                    AppPreferences.getInstance(getActivity()).addToStore("exam_on","1",false);
+                    JSONObject jsonObject1 = jsonObject;
+                    App_Table table = new App_Table(activity);
+
+                    String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") + "'";
+                    boolean isRecordExits = table.isRecordExits(iwhereClause, "STUDENTEXAMRESULT");
+
+                    if (isRecordExits) {
+
+                        activity.showokPopUp(R.drawable.pop_ic_failed, "", activity.getString(R.string.yhadwte));
+
+                        return;
+
+                    }
+                    JSONObject question_details = jsonObject1.getJSONObject("question_details");
+
+                    if (question_details.optString("down_status").equalsIgnoreCase("0")){
+
+                        tv_processing.setVisibility(View.VISIBLE);
+                        tv_start.setVisibility(View.GONE);
+
+                        final String zip_file_name= question_details.optString("zip_file_name");
+
+                        getZipFolderFile(zip_file_name,question_details.optString("question_paper_id"));
+
+                    }else {
+
+                        tv_processing.setVisibility(View.GONE);
+                        tv_start.setVisibility(View.VISIBLE);
+                        String timestamp = new SimpleDateFormat("dd-MM-yyyy ")
+                                .format(new Date()) // get the current date as String
+                                .concat(question_details.optString("from_time").trim()
+                                );
+                        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+                        Date date1 = (Date) formatter.parse(timestamp);
+
+                        long duration_secs = jsonObject1.optLong("duration_sec");
+                        long current_time = System.currentTimeMillis();//current time
+                        long from_time = date1.getTime();// from time
+
+
+                        Date date2 = formatter.parse(timestamp);
+                        if (from_time < current_time) {
+                            long left_time = current_time - from_time;
+
+                            left_over_time = duration_secs - (left_time / 1000);
+
+
+                        }
+                        jsonObject1.put("duration_sec", left_over_time);
+
+                        activity.showInstructionsScreen(jsonObject1, true);
+                    }
+
+
         } catch (Exception e) {
 
             TraceUtils.logException(e);

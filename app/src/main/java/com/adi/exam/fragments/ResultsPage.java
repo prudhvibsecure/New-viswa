@@ -258,8 +258,9 @@ public class ResultsPage extends ParentFragment implements IItemHandler, View.On
     private void showExamSummary(JSONObject jsonObject) {
 
         try {
+            int scrore=jsonObject.optInt("score");
 
-            tv_scoore.setText(activity.getString(R.string.score, jsonObject.optString("score")));
+            tv_scoore.setText(activity.getString(R.string.score,String.valueOf(scrore )));
 
             tv_caval.setText(jsonObject.optString("no_of_correct_answers", "0"));
 

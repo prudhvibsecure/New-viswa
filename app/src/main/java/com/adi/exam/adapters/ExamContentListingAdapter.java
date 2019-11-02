@@ -39,13 +39,17 @@ public class ExamContentListingAdapter extends RecyclerView.Adapter<ExamContentL
 
     private Context mContext;
 
-    public ExamContentListingAdapter(Context context) {
+    private ExamListListener listListener;
+
+    public ExamContentListingAdapter(Context context,ExamListListener listListener) {
 
         generator = ColorGenerator.MATERIAL;
 
         builder = TextDrawable.builder().beginConfig().toUpperCase().textColor(Color.WHITE).endConfig().round();
 
         mContext = context;
+
+        this.listListener = listListener;
 
     }
 
@@ -101,9 +105,9 @@ public class ExamContentListingAdapter extends RecyclerView.Adapter<ExamContentL
 
             contactViewHolder.tv_subjects.setText(mContext.getString(R.string.subjects, jsonObject.optString("subjects").trim()));
 
-            contactViewHolder.tv_startexam.setOnClickListener(onClickListener);
-
-            contactViewHolder.tv_startexam.setTag(position);
+//            contactViewHolder.tv_startexam.setOnClickListener(onClickListener);
+//
+//            contactViewHolder.tv_startexam.setTag(position);
 
             int color = generator.getColor(title);
 
@@ -157,9 +161,10 @@ public class ExamContentListingAdapter extends RecyclerView.Adapter<ExamContentL
 
                 if (question_details.optString("down_status").equalsIgnoreCase("0")){
                     contactViewHolder.tv_startexam.setText("Download");
+                    contactViewHolder.tv_processing.setVisibility(View.GONE);
                 }else{
                     contactViewHolder.tv_startexam.setText("Start");
-
+                    contactViewHolder.tv_processing.setVisibility(View.GONE);
                     if (c_date.equals(exdt)) {
                         boolean result = inRange(tkl, tk2, time);
                         if (result) {
@@ -178,14 +183,8 @@ public class ExamContentListingAdapter extends RecyclerView.Adapter<ExamContentL
                         // contactViewHolder.tv_startexam.setEnabled(false);
                     }
                 }
-
-//                if (time >= tkl && tk2<=time) {
-//                    contactViewHolder.tv_startexam.setVisibility(View.VISIBLE);
-//                } else {
-//                    contactViewHolder.tv_startexam.setVisibility(View.GONE);
-//                }
             }
-
+            applyClickEvents(contactViewHolder, jsonObject, position,contactViewHolder.tv_processing,contactViewHolder.tv_startexam);
         } catch (Exception e) {
 
             TraceUtils.logException(e);
@@ -193,6 +192,20 @@ public class ExamContentListingAdapter extends RecyclerView.Adapter<ExamContentL
         }
 
     }
+
+    private void applyClickEvents(ContactViewHolder contactViewHolder, final JSONObject jsonObject,final int position,final TextView tv_processing,final TextView tv_start) {
+        contactViewHolder.tv_startexam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    listListener.onRowClicked(jsonObject, position,tv_processing,tv_start);
+                } catch (Exception e) {
+
+                }
+            }
+        });
+    }
+
     boolean inRange(long low, long high, long x)
     {
         return ((x-high)*(x-low) <= 0);
@@ -280,5 +293,8 @@ public class ExamContentListingAdapter extends RecyclerView.Adapter<ExamContentL
 
         }
     }
+    public interface ExamListListener {
 
+        void onRowClicked(JSONObject jsonObject, int position, TextView tv_processing,TextView tv_start);
+    }
 }

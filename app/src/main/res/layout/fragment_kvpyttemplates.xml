@@ -126,12 +126,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <WebView
                         android:id="@+id/iv_question"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/app_name"
                         android:padding="@dimen/_5sdp"
@@ -139,7 +139,7 @@
 
                     <WebView
                         android:id="@+id/iv_questionimg"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/app_name"
                         android:padding="@dimen/_5sdp"
@@ -147,7 +147,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -164,7 +164,7 @@
 
                         <WebView
                             android:id="@+id/iv_option1"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/app_name"
@@ -175,7 +175,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -192,7 +192,7 @@
 
                         <WebView
                             android:id="@+id/iv_option2"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/app_name"
@@ -203,7 +203,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -220,7 +220,7 @@
 
                         <WebView
                             android:id="@+id/iv_option3"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/app_name"
@@ -231,7 +231,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -248,7 +248,7 @@
 
                         <WebView
                             android:id="@+id/iv_option4"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/app_name"

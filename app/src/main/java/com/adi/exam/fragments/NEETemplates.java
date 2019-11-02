@@ -217,6 +217,7 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
 
         iv_option4 = layout.findViewById(R.id.iv_option4);
 
+        tv_questionno = layout.findViewById(R.id.tv_questionno);
 
         tv_notvisitedcnt = layout.findViewById(R.id.tv_notvisitedcnt);
 
