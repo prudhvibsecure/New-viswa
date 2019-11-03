@@ -172,27 +172,6 @@ public class LoginActivity extends AppCompatActivity implements IItemHandler {
 
     }
 
-    private void getZip() {
-
-//        String path_url="https://bsecuresoftechsolutions.com/viswa_dev/assets/upload/zip_questions/zip_1567678720.zip";
-//        File kps= new File(Environment.getExternalStorageDirectory() + "/APP");
-//        if (!kps.exists()) {
-//            kps.mkdir();
-//        }
-//        DownloadFileAsync download = new DownloadFileAsync(Environment.getExternalStorageDirectory() + "/APS.zip", this, new DownloadFileAsync.PostDownload(){
-//            @Override
-//            public void downloadDone(File file) {
-//                Log.i("ZIP", "file download completed");
-//
-//                ZipArchive zipArchive = new ZipArchive();
-//                zipArchive.unzip(Environment.getExternalStorageDirectory() + "/APS.zip",Environment.getExternalStorageDirectory() + "/APP","");
-//
-//                Log.i("ZIP", "file unzip completed");
-//            }
-//        });
-//        download.execute(path_url);
-    }
-
     OnClickListener onClick = new OnClickListener() {
 
         @Override

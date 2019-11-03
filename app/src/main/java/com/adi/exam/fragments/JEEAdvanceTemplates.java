@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adi.exam.R;
 import com.adi.exam.SriVishwa;
 import com.adi.exam.adapters.QuestionNumberListingAdapter;
+import com.adi.exam.adapters.QuestionNumberListingAdapter_Em;
 import com.adi.exam.callbacks.IFileUploadCallback;
 import com.adi.exam.callbacks.IItemHandler;
 import com.adi.exam.common.AESEncryptionDecryption;
@@ -78,7 +79,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
     private Dialog mDialog;
 
-    private QuestionNumberListingAdapter adapter;
+    private QuestionNumberListingAdapter_Em adapter;
 
     private TextView tv_questionno;
 
@@ -265,7 +266,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
         tl_sections = layout.findViewById(R.id.tl_sections);
 
-        adapter = new QuestionNumberListingAdapter(activity);
+        adapter = new QuestionNumberListingAdapter_Em(activity);
 
         adapter.setOnClickListener(this);
 
@@ -727,7 +728,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                     currentExamId = position;
                     JSONObject jsonObject = adapter.getItems().getJSONObject(position);
                     if (jsonObject.optString("qstate").equalsIgnoreCase("2")) {
-                        v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_answered));
+                        v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_anse));
                         //  v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_answered));
                     } else if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
                         if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
@@ -741,7 +742,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                             ed_texx.setText("");
                         }
                         jsonObject.put("qstate", 1);
-                        v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_not_answered));
+                        v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_preve));
                         // v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_not_answered));
                     } else if (jsonObject.optString("qstate").equalsIgnoreCase("3")) {
                         jsonObject.put("qstate", 3);
@@ -763,7 +764,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                             ed_texx.setText("");
                         }
                         jsonObject.put("qstate", 1);
-                        v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_not_answered));
+                        v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_preve));
                         //  v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_not_answered));
                     }
                     adapter.notifyItemChanged(position);

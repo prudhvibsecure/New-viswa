@@ -70,7 +70,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
     private long time = 0;
 
-    private  long left_over_time=0;
+    private long left_over_time = 0;
 
     private SwipeRefreshLayout mSwipeRefreshLayout = null;
 
@@ -113,7 +113,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
         rv_content_list.addItemDecoration(did);
 
-        adapterContent = new ExamContentListingAdapter(activity,this);
+        adapterContent = new ExamContentListingAdapter(activity, this);
 
         adapterContent.setOnClickListener(this);
 
@@ -166,8 +166,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                 //updateOtherDetails(adapterContent.getItems());
 
-            } else
-            {
+            } else {
                 Toast.makeText(activity, "No Data Found", Toast.LENGTH_SHORT).show();
             }
 
@@ -217,7 +216,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                 case R.id.tv_startexam:
 
-                    AppPreferences.getInstance(getActivity()).addToStore("exam_on","1",false);
+                    AppPreferences.getInstance(getActivity()).addToStore("exam_on", "1", false);
                     JSONObject jsonObject1 = adapterContent.getItems().getJSONObject((int) view.getTag());
                     App_Table table = new App_Table(activity);
 
@@ -233,13 +232,13 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                     }
                     JSONObject question_details = jsonObject1.getJSONObject("question_details");
 
-                    if (question_details.optString("down_status").equalsIgnoreCase("0")){
+                    if (question_details.optString("down_status").equalsIgnoreCase("0")) {
 
-                        final String zip_file_name= question_details.optString("zip_file_name");
+                        final String zip_file_name = question_details.optString("zip_file_name");
 
-                                getZipFolderFile(zip_file_name,question_details.optString("question_paper_id"));
+                        getZipFolderFile(zip_file_name, question_details.optString("question_paper_id"));
 
-                    }else {
+                    } else {
 
 
                         String timestamp = new SimpleDateFormat("dd-MM-yyyy ")
@@ -525,7 +524,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                                     post.disableProgress();
 
                                     post.userRequest(getString(R.string.plwait), 2, "getquestionpaper", reqObject.toString());
-                                }else {
+                                } else {
 
                                     reqObject.put("student_id", activity.getStudentDetails().optString("student_id"));
 
@@ -542,8 +541,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                             return;
 
-                        }
-                        else {
+                        } else {
                             mSwipeRefreshLayout.setRefreshing(false);
                             mSwipeRefreshLayout.setEnabled(true);
                             tv_content_txt.setVisibility(View.VISIBLE);
@@ -551,7 +549,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                     }
 
-                }else{
+                } else {
                     tv_content_txt.setVisibility(View.VISIBLE);
                 }
 
@@ -625,8 +623,8 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                         JSONArray question_ids = jsonObject.getJSONArray("question_ids");
 
                         JSONObject jsonObject1 = exam_details.getJSONObject(0);
-                        String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") +  "'";
-                        table.checkNInsertARecord_vv(question_ids.toString(), "JEEQS", iwhereClause,jsonObject1.optString("exam_id"));
+                        String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") + "'";
+                        table.checkNInsertARecord_vv(question_ids.toString(), "JEEQS", iwhereClause, jsonObject1.optString("exam_id"));
 
                     }
 
@@ -654,8 +652,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                             //updateOtherDetails(adapterContent.getItems());
 
-                        } else
-                        {
+                        } else {
                             //Toast.makeText(activity, "No Data Found", Toast.LENGTH_SHORT).show();
                         }
 
@@ -685,7 +682,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                 }
 
-            }else if (requestId == 4) {
+            } else if (requestId == 4) {
                 mSwipeRefreshLayout.setRefreshing(false);
                 mSwipeRefreshLayout.setEnabled(true);
                 JSONObject jsonObject = new JSONObject(results.toString());
@@ -703,7 +700,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                             String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") + "'";
 
-                          //  table.checkNInsertARecord(jsonObject1, "EXAM", iwhereClause);
+                            //  table.checkNInsertARecord(jsonObject1, "EXAM", iwhereClause);
                             boolean isRecordAvailable = table.isRecordExits(iwhereClause, "EXAM");
                             if (!isRecordAvailable) {
                                 table.checkNInsertARecord(jsonObject1, "EXAM", iwhereClause);
@@ -722,7 +719,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                             String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") + "' AND question_paper_id = '" + jsonObject1.optString("question_paper_id") + "'";
 
-                          //  table.checkNInsertARecord(jsonObject1, "QUESTIONPAPER", iwhereClause);
+                            //  table.checkNInsertARecord(jsonObject1, "QUESTIONPAPER", iwhereClause);
                             boolean isRecordAvailable = table.isRecordExits(iwhereClause, "QUESTIONPAPER");
                             if (!isRecordAvailable) {
                                 table.checkNInsertARecord(jsonObject1, "QUESTIONPAPER", iwhereClause);
@@ -756,10 +753,10 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                         JSONArray question_ids = jsonObject.getJSONArray("question_ids");
 
                         JSONObject jsonObject1 = exam_details.getJSONObject(0);
-                        String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") +  "'";
+                        String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") + "'";
                         boolean isRecordAvailable = table.isRecordExits(iwhereClause, "JEEQS");
                         if (!isRecordAvailable) {
-                          table.checkNInsertARecord_vv(question_ids.toString(), "JEEQS", iwhereClause, jsonObject1.optString("exam_id"));
+                            table.checkNInsertARecord_vv(question_ids.toString(), "JEEQS", iwhereClause, jsonObject1.optString("exam_id"));
                         }
                     }
 
@@ -800,16 +797,16 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
                 tv_content_txt.setVisibility(View.VISIBLE);
 
-            }else if (requestId==99){
+            } else if (requestId == 99) {
                 JSONObject jsonObject = new JSONObject(results.toString());
                 App_Table table = new App_Table(activity);
-                if (jsonObject.optString("statuscode").equalsIgnoreCase("200")){
+                if (jsonObject.optString("statuscode").equalsIgnoreCase("200")) {
                     if (jsonObject.has("question_details")) {
                         JSONArray question_details = jsonObject.getJSONArray("question_details");
                         table.insertMultipleRecords(question_details, "QUESTIONS");
 
                     }
-                    table.updateDownloadStatus_qs(jsonObject.optString("question_paper_id"), "1","QUESTIONPAPER");
+                    table.updateDownloadStatus_qs(jsonObject.optString("question_paper_id"), "1", "QUESTIONPAPER");
 
                     checkQuestionPaper();
                 }
@@ -1074,6 +1071,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
         post.userRequest(getString(R.string.plwait), 1, "checkqustionpaper", jsonObject.toString());
     }
+
     @Override
     public void onPause() {
 
@@ -1083,45 +1081,49 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
 
         activityManager.moveTaskToFront(getActivity().getTaskId(), 0);
     }
+
     private void getQuestionsZip(String qp_id) {
-    try {
-         JSONObject jsonObject = new JSONObject();
+        try {
+            JSONObject jsonObject = new JSONObject();
 
-         jsonObject.put("question_paper_id", qp_id);
+            jsonObject.put("question_paper_id", qp_id);
 
-         HTTPPostTask post = new HTTPPostTask(activity, this);
+            HTTPPostTask post = new HTTPPostTask(activity, this);
 
-         post.disableProgress();
+            post.disableProgress();
 
-         post.userRequest(getString(R.string.plwait), 99, "upload_question_papers", jsonObject.toString());
+            post.userRequest(getString(R.string.plwait), 99, "upload_question_papers", jsonObject.toString());
 
-    }catch (Exception e){
-e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
     private void getZipFolderFile(final String zip_file_name, final String qs_ids) {
 
 
-        String path_url= AppSettings.getInstance().getPropertyValue("rtf_zip_download")+zip_file_name+".zip";
-        File kps= new File(Environment.getExternalStorageDirectory() + "/"+zip_file_name);
+        String path_url = AppSettings.getInstance().getPropertyValue("rtf_zip_download") + zip_file_name + ".zip";
+        File kps = new File(Environment.getExternalStorageDirectory() + "/" + zip_file_name);
         if (!kps.exists()) {
             kps.mkdir();
         }
-        DownloadFileAsync download = new DownloadFileAsync(Environment.getExternalStorageDirectory() + "/"+zip_file_name+".zip", getActivity(), new DownloadFileAsync.PostDownload(){
+        DownloadFileAsync download = new DownloadFileAsync(Environment.getExternalStorageDirectory() + "/" + zip_file_name + ".zip", getActivity(), new DownloadFileAsync.PostDownload() {
             @Override
             public void downloadDone(File file) {
                 Log.i("ZIP", "file download completed");
 
                 ZipArchive zipArchive = new ZipArchive();
-                zipArchive.unzip(Environment.getExternalStorageDirectory() + "/"+zip_file_name+".zip",Environment.getExternalStorageDirectory() + "/allFiles","");
+                zipArchive.unzip(Environment.getExternalStorageDirectory() + "/" + zip_file_name + ".zip", Environment.getExternalStorageDirectory() + "/allFiles", "");
                 sendToEncrypt(Environment.getExternalStorageDirectory() + "/allFiles");
                 Log.i("ZIP", "file unzip completed");
-               // checkQuestionPaper();
+                // checkQuestionPaper();
                 getQuestionsZip(qs_ids);
                 Toast.makeText(getActivity(), "Download Complete", Toast.LENGTH_SHORT).show();
             }
         });
         download.execute(path_url);
     }
+
     private void sendToEncrypt(final String path) {
         try {
 
@@ -1131,7 +1133,7 @@ e.printStackTrace();}
                 public void onFinish(Object results, int requestId) {
 
                     try {
-                        Log.i("enc","completed");
+                        Log.i("enc", "completed");
                         File dir = new File(Environment.getExternalStorageDirectory() + "/allFiles");
                         if (dir.isDirectory()) {
                             String[] children = dir.list();
@@ -1169,64 +1171,63 @@ e.printStackTrace();}
     }
 
     @Override
-    public void onRowClicked(JSONObject jsonObject, int position, TextView tv_processing,TextView tv_start) {
+    public void onRowClicked(JSONObject jsonObject, int position, TextView tv_processing, TextView tv_start) {
         try {
 
 
+            AppPreferences.getInstance(getActivity()).addToStore("exam_on", "1", false);
+            JSONObject jsonObject1 = jsonObject;
+            App_Table table = new App_Table(activity);
 
-                    AppPreferences.getInstance(getActivity()).addToStore("exam_on","1",false);
-                    JSONObject jsonObject1 = jsonObject;
-                    App_Table table = new App_Table(activity);
+            String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") + "'";
+            boolean isRecordExits = table.isRecordExits(iwhereClause, "STUDENTEXAMRESULT");
 
-                    String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") + "'";
-                    boolean isRecordExits = table.isRecordExits(iwhereClause, "STUDENTEXAMRESULT");
+            if (isRecordExits) {
 
-                    if (isRecordExits) {
+                activity.showokPopUp(R.drawable.pop_ic_failed, "", activity.getString(R.string.yhadwte));
 
-                        activity.showokPopUp(R.drawable.pop_ic_failed, "", activity.getString(R.string.yhadwte));
+                return;
 
-                        return;
+            }
+            JSONObject question_details = jsonObject1.getJSONObject("question_details");
 
-                    }
-                    JSONObject question_details = jsonObject1.getJSONObject("question_details");
+            if (question_details.optString("down_status").equalsIgnoreCase("0")) {
 
-                    if (question_details.optString("down_status").equalsIgnoreCase("0")){
+                tv_processing.setVisibility(View.VISIBLE);
+                tv_start.setVisibility(View.GONE);
 
-                        tv_processing.setVisibility(View.VISIBLE);
-                        tv_start.setVisibility(View.GONE);
+                final String zip_file_name = question_details.optString("zip_file_name");
 
-                        final String zip_file_name= question_details.optString("zip_file_name");
+                getZipFolderFile(zip_file_name, question_details.optString("question_paper_id"));
 
-                        getZipFolderFile(zip_file_name,question_details.optString("question_paper_id"));
+            } else {
 
-                    }else {
+                tv_processing.setVisibility(View.GONE);
+                tv_start.setVisibility(View.VISIBLE);
+                String timestamp = new SimpleDateFormat("dd-MM-yyyy ")
+                        .format(new Date()) // get the current date as String
+                        .concat(question_details.optString("from_time").trim()
+                        );
+                DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+                Date date1 = (Date) formatter.parse(timestamp);
 
-                        tv_processing.setVisibility(View.GONE);
-                        tv_start.setVisibility(View.VISIBLE);
-                        String timestamp = new SimpleDateFormat("dd-MM-yyyy ")
-                                .format(new Date()) // get the current date as String
-                                .concat(question_details.optString("from_time").trim()
-                                );
-                        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
-                        Date date1 = (Date) formatter.parse(timestamp);
-
-                        long duration_secs = jsonObject1.optLong("duration_sec");
-                        long current_time = System.currentTimeMillis();//current time
-                        long from_time = date1.getTime();// from time
-
-
-                        Date date2 = formatter.parse(timestamp);
-                        if (from_time < current_time) {
-                            long left_time = current_time - from_time;
-
-                            left_over_time = duration_secs - (left_time / 1000);
+                long duration_secs = jsonObject1.optLong("duration_sec");
+                long current_time = System.currentTimeMillis();//current time
+                long from_time = date1.getTime();// from time
 
 
-                        }
-                        jsonObject1.put("duration_sec", left_over_time);
+                Date date2 = formatter.parse(timestamp);
+                if (from_time < current_time) {
+                    long left_time = current_time - from_time;
 
-                        activity.showInstructionsScreen(jsonObject1, true);
-                    }
+                    left_over_time = duration_secs - (left_time / 1000);
+
+
+                }
+                jsonObject1.put("duration_sec", left_over_time);
+
+                activity.showInstructionsScreen(jsonObject1, true);
+            }
 
 
         } catch (Exception e) {

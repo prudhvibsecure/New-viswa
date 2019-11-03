@@ -390,7 +390,7 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
 
-        mFragListener.onFragmentInteraction(examName, false);
+        mFragListener.onFragmentInteraction(data.optString("exam_name"), false);
 
     }
 
@@ -398,7 +398,7 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mFragListener.onFragmentInteraction(examName, false);
+        mFragListener.onFragmentInteraction(data.optString("exam_name"), false);
 
     }
 
