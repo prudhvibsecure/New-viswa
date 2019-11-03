@@ -393,7 +393,7 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
 
                 activity.setAllQuestions(adapter.getItems());
 
-                activity.showAllQuestions();
+                //activity.showAllQuestions();
 
                 break;
         }
@@ -590,7 +590,24 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
 
                 case R.id.tv_savennext:
 
-                    if (currentExamId>adapter.getCount()){
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount()-1;
+
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (selRatioId == -1) {
+
+                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+
+                            return;
+                        }
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        jsonObject.put("qstate", 2);
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
+                        adapter.notifyItemChanged(currentExamId);
+
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
                         return;
                     }
                     if (currentExamId != -1) {
@@ -608,34 +625,8 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                         jsonObject.put("qstate", 2);
-
-                        /*String selected = (String) layout.findViewById(selRatioId).getTag();
-                        int index = options.indexOf(selected);
-                        String option = String.valueOf(opt[index]);
-                        String qans = "";
-                        if(jsonObject.optString("option_a").equalsIgnoreCase(option))
-                        {
-                            qans = "a";
-                        }
-
-                        if(jsonObject.optString("option_b").equalsIgnoreCase(option))
-                        {
-                            qans = "b";
-                        }
-
-                        if(jsonObject.optString("option_c").equalsIgnoreCase(option))
-                        {
-                            qans = "c";
-                        }
-
-                        if(jsonObject.optString("option_d").equalsIgnoreCase(option))
-                        {
-                            qans = "d";
-                        }
-
-                        jsonObject.put("qanswer",qans);*/
-                        Object vv=layout.findViewById(selRatioId).getTag();
-                        jsonObject.put("qanswer",vv.toString() );
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
 
                         adapter.notifyItemChanged(currentExamId);
 
@@ -646,8 +637,8 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
 
                         }
                         if (currentExamId == adapter.getCount()) {
-                            showNextQuestion(currentExamId-1);
-                        }else {
+                            showNextQuestion(currentExamId - 1);
+                        } else {
                             showNextQuestion(currentExamId + 1);
                         }
 
@@ -658,15 +649,29 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
 
                 case R.id.tv_savenmarkforreview:
 
-                    if (currentExamId>adapter.getCount()){
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount()-1;
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (selRatioId == -1) {
+
+                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+
+                            return;
+                        }
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        jsonObject.put("qstate", 4);
+                        jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                        adapter.notifyItemChanged(currentExamId);
+
+                        rg_options.clearCheck();
+
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
                         return;
                     }
-                    if (currentExamId == adapter.getCount()) {
-                        Toast.makeText(activity, "Are you finished your exam..", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+
                     if (currentExamId != -1) {
-                        question_no++;
                         int selRatioId = rg_options.getCheckedRadioButtonId();
 
                         if (selRatioId == -1) {
@@ -680,31 +685,6 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
 
                         jsonObject.put("qstate", 4);
 
-                        /*String selected = (String) layout.findViewById(selRatioId).getTag();
-                        int index = options.indexOf(selected);
-                        String option = String.valueOf(opt[index]);
-                        String qans = "";
-                        if(jsonObject.optString("option_a").equalsIgnoreCase(option))
-                        {
-                            qans = "a";
-                        }
-
-                        if(jsonObject.optString("option_b").equalsIgnoreCase(option))
-                        {
-                            qans = "b";
-                        }
-
-                        if(jsonObject.optString("option_c").equalsIgnoreCase(option))
-                        {
-                            qans = "c";
-                        }
-
-                        if(jsonObject.optString("option_d").equalsIgnoreCase(option))
-                        {
-                            qans = "d";
-                        }
-
-                        jsonObject.put("qanswer",qans);*/
                         jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
 
                         adapter.notifyItemChanged(currentExamId);
@@ -713,10 +693,10 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
 
                         updateQuestionTime();
                         if (currentExamId == adapter.getCount()) {
-                            showNextQuestion(currentExamId-1);
-                        }else if (currentExamId>adapter.getCount()){
-                            // Toast.makeText(activity, "Are you finished your exam..", Toast.LENGTH_SHORT).show();
-                        }else {
+                            showNextQuestion(currentExamId - 1);
+                        } else if (currentExamId > adapter.getCount()) {
+                            Toast.makeText(activity, "Are you finished your exam..", Toast.LENGTH_SHORT).show();
+                        } else {
                             showNextQuestion(currentExamId + 1);
                         }
 
@@ -727,11 +707,12 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
                 case R.id.tv_clearresponse:
 
                     if (currentExamId>adapter.getCount()){
+                        currentExamId=adapter.getCount();
                         return;
                     }
-                    if (currentExamId==adapter.getCount()) {
+                    if (currentExamId == adapter.getCount()) {
                         rg_options.clearCheck();
-                        jsonObject = adapter.getItems().getJSONObject(currentExamId-1);
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId - 1);
                         jsonObject.put("qstate", 1);
                         jsonObject.put("qanswer", "");
 
@@ -749,17 +730,30 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
                     adapter.notifyItemChanged(currentExamId);
                     updateQuestionTime();
 
+
                     break;
 
                 case R.id.tv_mfrn:
 
-                    if (currentExamId>adapter.getCount()){
-                        return;
-                    }
-                    if (currentExamId == adapter.getCount()) {
-                        Toast.makeText(activity, "Your exam preview is done..", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount();
+
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
+
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                            jsonObject.put("qstate", 3);
+
+                            jsonObject.put("qanswer", "");
+
+                            adapter.notifyItemChanged(currentExamId);
+
+                            rg_options.clearCheck();
+
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId);
+                        }
                     if (currentExamId != -1) {
 
                         //question_no++;
@@ -772,9 +766,7 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
                         jsonObject.put("qanswer", "");
 
                         adapter.notifyItemChanged(currentExamId);
-//                        if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
-//                            rg_options.clearCheck();
-//                        }
+
                         rg_options.clearCheck();
 
                         updateQuestionTime();
@@ -787,29 +779,28 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
 
                 case R.id.tv_back:
 
-                    /*if (currentExamId == -1)
-                        return;*/
                     if (currentExamId == -1) {
                         currentExamId = 0;
                         showNextQuestion(currentExamId);
                         return;
                     }
-                    if(currentExamId == 0)
-                    {
+                    if (currentExamId == 0) {
                         showNextQuestion(currentExamId);
                         return;
                     }
 
-                    if (currentExamId==adapter.getCount()){
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount();
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
                         if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
                             rg_options.clearCheck();
                             jsonObject.put("qstate", 1);
                             jsonObject.put("qanswer", "");
                         }
-                        adapter.notifyItemChanged(currentExamId);
+
                         updateQuestionTime();
-                        showNextQuestion(currentExamId - 1);
+                        showNextQuestion( currentExamId-1);
+                        adapter.notifyItemChanged(currentExamId);
                         return;
                     }
 
@@ -867,9 +858,22 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
                 case R.id.tv_next:
 
                     if (currentExamId >= adapter.getCount()) {
+                        currentExamId= adapter.getCount();
+
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                        if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
+
+                            jsonObject.put("qstate", 1);
+
+                        }
+
+                        adapter.notifyItemChanged(currentExamId);
+                        rg_options.clearCheck();
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
                         return;
                     }
-                    //question_no++;
                     jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                     if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
@@ -883,7 +887,6 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
                     updateQuestionTime();
 
                     showNextQuestion(currentExamId + 1);
-
                     break;
 
             }

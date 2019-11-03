@@ -38,13 +38,16 @@ public class AssignmentListingAdapter extends RecyclerView.Adapter<AssignmentLis
 
     private Context mContext;
 
-    public AssignmentListingAdapter(Context context) {
+    private AssignmentListListener listListener;
+
+    public AssignmentListingAdapter(Context context,AssignmentListListener listListener) {
 
         generator = ColorGenerator.MATERIAL;
 
         builder = TextDrawable.builder().beginConfig().toUpperCase().textColor(Color.WHITE).endConfig().round();
 
         mContext = context;
+        this.listListener = listListener;
 
     }
 
@@ -100,9 +103,9 @@ public class AssignmentListingAdapter extends RecyclerView.Adapter<AssignmentLis
 
             contactViewHolder.tv_subjects.setText(mContext.getString(R.string.subjects, jsonObject.optString("subject").trim()));
 
-            contactViewHolder.tv_startexam.setOnClickListener(onClickListener);
-
-            contactViewHolder.tv_startexam.setTag(position);
+//            contactViewHolder.tv_startexam.setOnClickListener(onClickListener);
+//
+//            contactViewHolder.tv_startexam.setTag(position);
 
             contactViewHolder.tv_examdate.setText(mContext.getString(R.string.date, jsonObject.optString("exam_date").trim()));
 
@@ -169,7 +172,7 @@ public class AssignmentListingAdapter extends RecyclerView.Adapter<AssignmentLis
                     contactViewHolder.tv_startexam.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_bg_submit_disable));
                 }
             }
-
+            applyClickEvents(contactViewHolder, jsonObject, position,contactViewHolder.tv_processing,contactViewHolder.tv_startexam);
         } catch (Exception e) {
 
             TraceUtils.logException(e);
@@ -177,7 +180,18 @@ public class AssignmentListingAdapter extends RecyclerView.Adapter<AssignmentLis
         }
 
     }
+    private void applyClickEvents(ContactViewHolder contactViewHolder, final JSONObject jsonObject, final int position, final TextView tv_processing, final TextView tv_start) {
+        contactViewHolder.tv_startexam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    listListener.onRowClicked(jsonObject, position,tv_processing,tv_start);
+                } catch (Exception e) {
 
+                }
+            }
+        });
+    }
     boolean inRange(long low, long high, long x) {
         return ((x - high) * (x - low) <= 0);
     }
@@ -240,6 +254,8 @@ public class AssignmentListingAdapter extends RecyclerView.Adapter<AssignmentLis
 
         TextView tv_examtime;
 
+        TextView tv_processing;
+
         ContactViewHolder(View v) {
             super(v);
 
@@ -259,7 +275,13 @@ public class AssignmentListingAdapter extends RecyclerView.Adapter<AssignmentLis
 
             tv_examtime = v.findViewById(R.id.tv_examtime);
 
+            tv_processing = v.findViewById(R.id.tv_processing);
+
         }
+    }
+    public interface AssignmentListListener {
+
+        void onRowClicked(JSONObject jsonObject, int position, TextView tv_processing,TextView tv_start);
     }
 
 }

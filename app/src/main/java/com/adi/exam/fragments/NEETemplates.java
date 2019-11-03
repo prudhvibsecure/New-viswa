@@ -445,7 +445,24 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                     break;
                 case R.id.tv_savennext:
 
-                    if (currentExamId>adapter.getCount()){
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount()-1;
+
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (selRatioId == -1) {
+
+                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+
+                            return;
+                        }
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        jsonObject.put("qstate", 2);
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
+                        adapter.notifyItemChanged(currentExamId);
+
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
                         return;
                     }
                     if (currentExamId != -1) {
@@ -463,34 +480,8 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                         jsonObject.put("qstate", 2);
-
-                        /*String selected = (String) layout.findViewById(selRatioId).getTag();
-                        int index = options.indexOf(selected);
-                        String option = String.valueOf(opt[index]);
-                        String qans = "";
-                        if(jsonObject.optString("option_a").equalsIgnoreCase(option))
-                        {
-                            qans = "a";
-                        }
-
-                        if(jsonObject.optString("option_b").equalsIgnoreCase(option))
-                        {
-                            qans = "b";
-                        }
-
-                        if(jsonObject.optString("option_c").equalsIgnoreCase(option))
-                        {
-                            qans = "c";
-                        }
-
-                        if(jsonObject.optString("option_d").equalsIgnoreCase(option))
-                        {
-                            qans = "d";
-                        }
-
-                        jsonObject.put("qanswer",qans);*/
-                        Object vv=layout.findViewById(selRatioId).getTag();
-                        jsonObject.put("qanswer",vv.toString() );
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
 
                         adapter.notifyItemChanged(currentExamId);
 
@@ -501,25 +492,25 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
 
                         }
                         if (currentExamId == adapter.getCount()) {
-                            showNextQuestion(currentExamId-1);
-                        }else {
+                            showNextQuestion(currentExamId - 1);
+                        } else {
                             showNextQuestion(currentExamId + 1);
                         }
 
 
                     }
 
-
                     break;
 
                 case R.id.tv_clearresponse:
 
                     if (currentExamId>adapter.getCount()){
+                        currentExamId=adapter.getCount();
                         return;
                     }
-                    if (currentExamId==adapter.getCount()) {
+                    if (currentExamId == adapter.getCount()) {
                         rg_options.clearCheck();
-                        jsonObject = adapter.getItems().getJSONObject(currentExamId-1);
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId - 1);
                         jsonObject.put("qstate", 1);
                         jsonObject.put("qanswer", "");
 
@@ -541,11 +532,23 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
 
                 case R.id.tv_mfrn:
 
-                    if (currentExamId>adapter.getCount()){
-                        return;
-                    }
-                    if (currentExamId == adapter.getCount()) {
-                        Toast.makeText(activity, "Your exam preview is done..", Toast.LENGTH_SHORT).show();
+                    if (currentExamId>=adapter.getCount()){
+
+                        currentExamId=adapter.getCount();
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                        jsonObject.put("qstate", 3);
+
+                        jsonObject.put("qanswer", "");
+
+                        adapter.notifyItemChanged(currentExamId);
+                        rg_options.clearCheck();
+
+                        updateQuestionTime();
+
+                        showNextQuestion(currentExamId );
                         return;
                     }
                     if (currentExamId != -1) {
@@ -560,9 +563,7 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                         jsonObject.put("qanswer", "");
 
                         adapter.notifyItemChanged(currentExamId);
-//                        if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
-//                            rg_options.clearCheck();
-//                        }
+
                         rg_options.clearCheck();
 
                         updateQuestionTime();
@@ -573,6 +574,26 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                     break;
 
                 case R.id.tv_submit:
+                    mDialog = new Dialog(getActivity());
+                    mDialog.setContentView(R.layout.popup_message_ok);
+                    mDialog.show();
+                    mDialog.findViewById(R.id.tv_ok).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDialog.dismiss();
+                            showResults();
+                        }
+                    });
+                    ((TextView) mDialog.findViewById(R.id.tv_title)).setText(R.string.nonettitle);
+                    ((TextView) mDialog.findViewById(R.id.tv_message)).setText(R.string.sbs);
+                    mDialog.findViewById(R.id.tv_cancel).setVisibility(View.VISIBLE);
+                    mDialog.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDialog.dismiss();
+                        }
+                    });
+
                     break;
 
             }
@@ -1053,23 +1074,6 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-//                json= new JSONObject();
-//                json.put("student_question_time_id","");
-//                json.put("student_id",activity.getStudentDetails().optInt("student_id"));
-//                json.put("exam_id", data.optInt("exam_id"));
-//                json.put("question_no",jsonObject.optString("sno"));
-//                json.put("question_id",jsonObject.optString("question_id"));
-//                json.put("topic_id",jsonObject.optString("topic_id"));
-//                json.put("lesson_id","");
-//                json.put("subject","");
-//                json.put("given_option",jsonObject.optString("qstate"));
-//                json.put("correct_option",jsonObject.optString("answer"));
-//                json.put("result",jsonObject.optString("answer"));
-//                json.put("question_time",60);
-//                json.put("no_of_clicks","");
-//                json.put("marked_for_review",jsonObject.optString("qstate"));
-//                array.put(json);
-
                 //qstate = //0 = not visited, 1 = not answered, 2 = answered, 3 = marked for review, 4 = answered and marked for review
                 if (jsonObject.optString("qstate").equalsIgnoreCase("3")) {
 
@@ -1158,20 +1162,6 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
             STUDENTEXAMRESULT.put("percentage", "");
             STUDENTEXAMRESULT.put("accuracy", "");
             STUDENTEXAMRESULT.put("exam_type", "");
-
-
-//            backup_result.put("student_exam_result_id", student_exam_result_id);
-//            backup_result.put("student_id", activity.getStudentDetails().optInt("student_id"));
-//            backup_result.put("exam_id", data.optInt("exam_id"));
-//            backup_result.put("exam_name", data.optString("exam_name"));
-//            backup_result.put("exam_date", question_details.optString("exam_date"));
-//            backup_result.put("total_questions", adapter.getCount() + "");
-//            backup_result.put("total_questions_attempted", total_questions_attempted + "");
-//            backup_result.put("no_of_correct_answers", no_of_correct_answers + "");
-//            backup_result.put("score", score + "");
-//            backup_result.put("percentage", "");
-//            backup_result.put("accuracy", "");
-//            backup_result.put("exam_type", "");
 
 
             App_Table table = new App_Table(activity);

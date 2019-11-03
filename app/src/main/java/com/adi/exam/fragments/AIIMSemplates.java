@@ -587,7 +587,24 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
 
                 case R.id.tv_savennext:
 
-                    if (currentExamId>adapter.getCount()){
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount()-1;
+
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (selRatioId == -1) {
+
+                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+
+                            return;
+                        }
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        jsonObject.put("qstate", 2);
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
+                        adapter.notifyItemChanged(currentExamId);
+
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
                         return;
                     }
                     if (currentExamId != -1) {
@@ -605,34 +622,8 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                         jsonObject.put("qstate", 2);
-
-                        /*String selected = (String) layout.findViewById(selRatioId).getTag();
-                        int index = options.indexOf(selected);
-                        String option = String.valueOf(opt[index]);
-                        String qans = "";
-                        if(jsonObject.optString("option_a").equalsIgnoreCase(option))
-                        {
-                            qans = "a";
-                        }
-
-                        if(jsonObject.optString("option_b").equalsIgnoreCase(option))
-                        {
-                            qans = "b";
-                        }
-
-                        if(jsonObject.optString("option_c").equalsIgnoreCase(option))
-                        {
-                            qans = "c";
-                        }
-
-                        if(jsonObject.optString("option_d").equalsIgnoreCase(option))
-                        {
-                            qans = "d";
-                        }
-
-                        jsonObject.put("qanswer",qans);*/
-                        Object vv=layout.findViewById(selRatioId).getTag();
-                        jsonObject.put("qanswer",vv.toString() );
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
 
                         adapter.notifyItemChanged(currentExamId);
 
@@ -643,8 +634,8 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
 
                         }
                         if (currentExamId == adapter.getCount()) {
-                            showNextQuestion(currentExamId-1);
-                        }else {
+                            showNextQuestion(currentExamId - 1);
+                        } else {
                             showNextQuestion(currentExamId + 1);
                         }
 
@@ -655,15 +646,29 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
 
                 case R.id.tv_savenmarkforreview:
 
-                    if (currentExamId>adapter.getCount()){
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount()-1;
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (selRatioId == -1) {
+
+                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+
+                            return;
+                        }
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        jsonObject.put("qstate", 4);
+                        jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                        adapter.notifyItemChanged(currentExamId);
+
+                        rg_options.clearCheck();
+
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
                         return;
                     }
-                    if (currentExamId == adapter.getCount()) {
-                        Toast.makeText(activity, "Are you finished your exam..", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+
                     if (currentExamId != -1) {
-                        question_no++;
                         int selRatioId = rg_options.getCheckedRadioButtonId();
 
                         if (selRatioId == -1) {
@@ -677,31 +682,6 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
 
                         jsonObject.put("qstate", 4);
 
-                        /*String selected = (String) layout.findViewById(selRatioId).getTag();
-                        int index = options.indexOf(selected);
-                        String option = String.valueOf(opt[index]);
-                        String qans = "";
-                        if(jsonObject.optString("option_a").equalsIgnoreCase(option))
-                        {
-                            qans = "a";
-                        }
-
-                        if(jsonObject.optString("option_b").equalsIgnoreCase(option))
-                        {
-                            qans = "b";
-                        }
-
-                        if(jsonObject.optString("option_c").equalsIgnoreCase(option))
-                        {
-                            qans = "c";
-                        }
-
-                        if(jsonObject.optString("option_d").equalsIgnoreCase(option))
-                        {
-                            qans = "d";
-                        }
-
-                        jsonObject.put("qanswer",qans);*/
                         jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
 
                         adapter.notifyItemChanged(currentExamId);
@@ -710,19 +690,21 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
 
                         updateQuestionTime();
                         if (currentExamId == adapter.getCount()) {
-                            showNextQuestion(currentExamId-1);
-                        }else if (currentExamId>adapter.getCount()){
-                            // Toast.makeText(activity, "Are you finished your exam..", Toast.LENGTH_SHORT).show();
-                        }else {
+                            showNextQuestion(currentExamId - 1);
+                        } else if (currentExamId > adapter.getCount()) {
+                            Toast.makeText(activity, "Are you finished your exam..", Toast.LENGTH_SHORT).show();
+                        } else {
                             showNextQuestion(currentExamId + 1);
                         }
 
                     }
+
                     break;
 
                 case R.id.tv_clearresponse:
 
                     if (currentExamId>adapter.getCount()){
+                        currentExamId=adapter.getCount();
                         return;
                     }
                     if (currentExamId==adapter.getCount()) {
@@ -733,7 +715,7 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
 
                         adapter.notifyItemChanged(currentExamId);
                         updateQuestionTime();
-                        showNextQuestion(currentExamId);
+//                        showNextQuestion(currentExamId);
                         return;
                     }
                     rg_options.clearCheck();
@@ -750,11 +732,24 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
 
                 case R.id.tv_mfrn:
 
-                    if (currentExamId>adapter.getCount()){
-                        return;
-                    }
-                    if (currentExamId == adapter.getCount()) {
-                        Toast.makeText(activity, "Your exam preview is done..", Toast.LENGTH_SHORT).show();
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount();
+
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
+
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                            jsonObject.put("qstate", 3);
+
+                            jsonObject.put("qanswer", "");
+
+                            adapter.notifyItemChanged(currentExamId);
+                            rg_options.clearCheck();
+
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId - 1);
+
                         return;
                     }
                     if (currentExamId != -1) {
@@ -806,11 +801,11 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
                     break;
 
                 case R.id.tv_instruct:
-
+                    activity.showInstructionsScreen(data, false);
                     break;
 
                 case R.id.tv_paper:
-
+                    activity.allQuestions_view(adapter.getItems());
                     break;
                 case R.id.tv_profile:
 

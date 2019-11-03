@@ -1,5 +1,6 @@
 package com.adi.exam.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.Cursor;
@@ -82,7 +83,7 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
     private View layout;
 
     private SriVishwa activity;
-
+    private Dialog mDialog;
     private RecyclerView rv_ques_nums;
 
     private QuestionNumberListingAdapter adapter;
@@ -405,7 +406,7 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
 
                 activity.setAllQuestions(adapter.getItems());
 
-                activity.showAllQuestions();
+              //  activity.showAllQuestions();
 
                 break;
         }
@@ -473,7 +474,7 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
 
                     iwhereClause = "exam_id = '" + data.optString("exam_id") + "' AND question_id = '" + jsonObject.optInt("question_id") + "' AND student_question_time_id = '" + jsonObject1.optInt("student_question_time_id") + "'";
 
-                    table.updateRecord(jsonObject1, "STUDENTQUESTIONTIME", iwhereClause);
+                    table.checkNInsertARecord(jsonObject1, "STUDENTQUESTIONTIME", iwhereClause);
 
                     return;
                 }
@@ -602,14 +603,29 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
 
                 case R.id.tv_savennext:
 
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount()-1;
+
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (selRatioId == -1) {
+
+                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+
+                            return;
+                        }
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        jsonObject.put("qstate", 2);
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
+                        adapter.notifyItemChanged(currentExamId);
+
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
+                        return;
+                    }
                     if (currentExamId != -1) {
                         //  question_no++;
 
-                        if (currentExamId == adapter.getCount()) {
-
-                            return;
-
-                        }
                         int selRatioId = rg_options.getCheckedRadioButtonId();
 
                         if (selRatioId == -1) {
@@ -622,20 +638,23 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                         jsonObject.put("qstate", 2);
-
-                        jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
 
                         adapter.notifyItemChanged(currentExamId);
 
+
+                        updateQuestionTime();
                         if (jsonObject.optInt("sno") < adapter.getItemCount()) {
                             rg_options.clearCheck();
 
                         }
+                        if (currentExamId == adapter.getCount()) {
+                            showNextQuestion(currentExamId - 1);
+                        } else {
+                            showNextQuestion(currentExamId + 1);
+                        }
 
-                        updateQuestionTime();
-
-
-                        showNextQuestion(currentExamId + 1);
 
                     }
 
@@ -643,12 +662,29 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
 
                 case R.id.tv_savenmarkforreview:
 
-                    if (currentExamId == adapter.getCount()) {
-                        Toast.makeText(activity, "Are you finished your exam..", Toast.LENGTH_SHORT).show();
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount()-1;
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (selRatioId == -1) {
+
+                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+
+                            return;
+                        }
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        jsonObject.put("qstate", 4);
+                        jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                        adapter.notifyItemChanged(currentExamId);
+
+                        rg_options.clearCheck();
+
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
                         return;
                     }
+
                     if (currentExamId != -1) {
-                        question_no++;
                         int selRatioId = rg_options.getCheckedRadioButtonId();
 
                         if (selRatioId == -1) {
@@ -669,15 +705,34 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
                         rg_options.clearCheck();
 
                         updateQuestionTime();
-
-                        showNextQuestion(currentExamId + 1);
+                        if (currentExamId == adapter.getCount()) {
+                            showNextQuestion(currentExamId - 1);
+                        } else if (currentExamId > adapter.getCount()) {
+                            Toast.makeText(activity, "Are you finished your exam..", Toast.LENGTH_SHORT).show();
+                        } else {
+                            showNextQuestion(currentExamId + 1);
+                        }
 
                     }
-
                     break;
 
                 case R.id.tv_clearresponse:
 
+                    if (currentExamId>adapter.getCount()){
+                        currentExamId=adapter.getCount();
+                        return;
+                    }
+                    if (currentExamId == adapter.getCount()) {
+                        rg_options.clearCheck();
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId - 1);
+                        jsonObject.put("qstate", 1);
+                        jsonObject.put("qanswer", "");
+
+                        adapter.notifyItemChanged(currentExamId);
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
+                        return;
+                    }
                     rg_options.clearCheck();
                     //  }
                     jsonObject = adapter.getItems().getJSONObject(currentExamId);
@@ -687,14 +742,29 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
                     adapter.notifyItemChanged(currentExamId);
                     updateQuestionTime();
 
-
                     break;
 
                 case R.id.tv_mfrn:
 
 
-                    if (currentExamId == adapter.getCount()) {
-                        Toast.makeText(activity, "Your exam preview is done..", Toast.LENGTH_SHORT).show();
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount();
+
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
+
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                            jsonObject.put("qstate", 4);
+
+                            jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                            adapter.notifyItemChanged(currentExamId);
+
+                            rg_options.clearCheck();
+
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId);
                         return;
                     }
                     if (currentExamId != -1) {
@@ -724,11 +794,33 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
 
                 case R.id.tv_back:
 
-                    /*if (currentExamId == -1)
-                        return;*/
-
-                    if (currentExamId == -1)
+                    if (currentExamId == -1) {
+                        currentExamId = 0;
+                        showNextQuestion(currentExamId);
                         return;
+                    }
+                    if (currentExamId == 0) {
+                        showNextQuestion(currentExamId);
+                        return;
+                    }
+
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount();
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
+                            rg_options.clearCheck();
+                            jsonObject.put("qstate", 1);
+                            jsonObject.put("qanswer", "");
+                        }
+
+                        updateQuestionTime();
+                        showNextQuestion( currentExamId-1);
+                        adapter.notifyItemChanged(currentExamId);
+                        return;
+                    }
+
+
+                    showNextQuestion(currentExamId - 1);
                     jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                     if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
@@ -736,11 +828,10 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
                         jsonObject.put("qstate", 1);
                         jsonObject.put("qanswer", "");
                     }
-                    question_no--;
+
                     adapter.notifyItemChanged(currentExamId);
                     updateQuestionTime();
 
-                    showNextQuestion(currentExamId - 1);
                     if (currentExamId == 0) {
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
                         if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
@@ -755,15 +846,48 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
                     break;
 
                 case R.id.tv_submit:
-                    //  activity.onKeyDown(4,null);
-                    showResults();
-
+                    mDialog = new Dialog(getActivity());
+                    mDialog.setContentView(R.layout.popup_message_ok);
+                    mDialog.show();
+                    mDialog.findViewById(R.id.tv_ok).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDialog.dismiss();
+                            showResults();
+                        }
+                    });
+                    ((TextView) mDialog.findViewById(R.id.tv_title)).setText(R.string.nonettitle);
+                    ((TextView) mDialog.findViewById(R.id.tv_message)).setText(R.string.sbs);
+                    mDialog.findViewById(R.id.tv_cancel).setVisibility(View.VISIBLE);
+                    mDialog.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDialog.dismiss();
+                        }
+                    });
                     break;
 
                 case R.id.tv_next:
 
 
-                    question_no++;
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId= adapter.getCount();
+
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                        if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
+
+                            jsonObject.put("qstate", 1);
+
+                        }
+
+                        adapter.notifyItemChanged(currentExamId);
+                        rg_options.clearCheck();
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
+                        return;
+                    }
+                    //question_no++;
                     jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                     if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {

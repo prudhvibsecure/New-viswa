@@ -619,6 +619,17 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                         }
 
                     }
+                    if (jsonObject.has("question_ids")) {
+                        JSONArray exam_details = jsonObject.getJSONArray("exam_details");
+
+                        JSONArray question_ids = jsonObject.getJSONArray("question_ids");
+
+                        JSONObject jsonObject1 = exam_details.getJSONObject(0);
+                        String iwhereClause = "exam_id = '" + jsonObject1.optString("exam_id") +  "'";
+                        table.checkNInsertARecord_vv(question_ids.toString(), "JEEQS", iwhereClause,jsonObject1.optString("exam_id"));
+
+                    }
+
 
                     --mCount;
 

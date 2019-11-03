@@ -1,5 +1,6 @@
 package com.adi.exam.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.Cursor;
@@ -136,6 +137,8 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
     private int opt1, opt2, opt3, opt4;
 
     String[] opt = new String[4];
+
+    private Dialog mDialog;
 
     public BITSATTemplates() {
         // Required empty public constructor
@@ -440,14 +443,29 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
                     break;
                 case R.id.tv_savennext:
 
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount()-1;
+
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (selRatioId == -1) {
+
+                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+
+                            return;
+                        }
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        jsonObject.put("qstate", 2);
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
+                        adapter.notifyItemChanged(currentExamId);
+
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
+                        return;
+                    }
                     if (currentExamId != -1) {
                         //  question_no++;
 
-                        if (currentExamId == adapter.getCount()) {
-
-                            return;
-
-                        }
                         int selRatioId = rg_options.getCheckedRadioButtonId();
 
                         if (selRatioId == -1) {
@@ -460,51 +478,44 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                         jsonObject.put("qstate", 2);
-
-                        String selected = (String) layout.findViewById(selRatioId).getTag();
-                        int index = options.indexOf(selected);
-                        String option = String.valueOf(opt[index]);
-                        String qans = "";
-                        if(jsonObject.optString("option_a").equalsIgnoreCase(option))
-                        {
-                            qans = "a";
-                        }
-
-                        if(jsonObject.optString("option_b").equalsIgnoreCase(option))
-                        {
-                            qans = "b";
-                        }
-
-                        if(jsonObject.optString("option_c").equalsIgnoreCase(option))
-                        {
-                            qans = "c";
-                        }
-
-                        if(jsonObject.optString("option_d").equalsIgnoreCase(option))
-                        {
-                            qans = "d";
-                        }
-
-                        jsonObject.put("qanswer",qans);
-                        //jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
 
                         adapter.notifyItemChanged(currentExamId);
 
+
+                        updateQuestionTime();
                         if (jsonObject.optInt("sno") < adapter.getItemCount()) {
                             rg_options.clearCheck();
 
                         }
+                        if (currentExamId == adapter.getCount()) {
+                            showNextQuestion(currentExamId - 1);
+                        } else {
+                            showNextQuestion(currentExamId + 1);
+                        }
 
-                        updateQuestionTime();
-
-
-                        showNextQuestion(currentExamId + 1);
 
                     }
                     break;
 
                 case R.id.tv_clearresponse:
 
+                    if (currentExamId>adapter.getCount()){
+                        currentExamId=adapter.getCount();
+                        return;
+                    }
+                    if (currentExamId == adapter.getCount()) {
+                        rg_options.clearCheck();
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId - 1);
+                        jsonObject.put("qstate", 1);
+                        jsonObject.put("qanswer", "");
+
+                        adapter.notifyItemChanged(currentExamId);
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
+                        return;
+                    }
                     rg_options.clearCheck();
                     //  }
                     jsonObject = adapter.getItems().getJSONObject(currentExamId);
@@ -513,12 +524,27 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
 
                     adapter.notifyItemChanged(currentExamId);
                     updateQuestionTime();
+
                     break;
 
                 case R.id.tv_mfrn:
 
-                    if (currentExamId == adapter.getCount()) {
-                        Toast.makeText(activity, "Your exam preview is done..", Toast.LENGTH_SHORT).show();
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount();
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                        jsonObject.put("qstate", 3);
+
+                        jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                        adapter.notifyItemChanged(currentExamId);
+                        rg_options.clearCheck();
+
+                        updateQuestionTime();
+
+                        showNextQuestion(currentExamId);
                         return;
                     }
                     if (currentExamId != -1) {
@@ -533,9 +559,7 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
                         jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
 
                         adapter.notifyItemChanged(currentExamId);
-//                        if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
-//                            rg_options.clearCheck();
-//                        }
+
                         rg_options.clearCheck();
 
                         updateQuestionTime();
@@ -548,7 +572,26 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
 
                 case R.id.tv_submit:
 
-                    showResults();
+                    mDialog = new Dialog(getActivity());
+                    mDialog.setContentView(R.layout.popup_message_ok);
+                    mDialog.show();
+                    mDialog.findViewById(R.id.tv_ok).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDialog.dismiss();
+                            showResults();
+                        }
+                    });
+                    ((TextView) mDialog.findViewById(R.id.tv_title)).setText(R.string.nonettitle);
+                    ((TextView) mDialog.findViewById(R.id.tv_message)).setText(R.string.sbs);
+                    mDialog.findViewById(R.id.tv_cancel).setVisibility(View.VISIBLE);
+                    mDialog.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDialog.dismiss();
+                        }
+                    });
+
                     break;
 
             }
@@ -702,54 +745,6 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
         return lesson_id;
     }
 
-    private JSONArray getQuestionNum() {
-
-        JSONArray jsonArray = new JSONArray();
-
-        try {
-
-            for (int i = 0; i < 60; i++) {
-
-                JSONObject jsonObject = new JSONObject();
-
-                jsonObject.put("qstate", 0); //0 = not visited, 1 = not answered, 2 = answered, 3 = marked review, 4 = answered and marked for review
-
-                String resourceName = "q"+(i+1);
-
-                int drawableResourceId = this.getResources().getIdentifier(resourceName, "drawable", activity.getPackageName());
-
-                jsonObject.put("qid", drawableResourceId);
-
-                jsonObject.put("qimages", "");
-
-                int drawableOptionResourceId = this.getResources().getIdentifier(resourceName, "drawable", activity.getPackageName());
-
-                JSONArray jsonArray1 = new JSONArray();
-                //jsonArray1.put(R.drawable.opm32a);
-                //jsonArray1.put(R.drawable.opm32b);
-                //jsonArray1.put(R.drawable.opm32c);
-                //jsonArray1.put(R.drawable.opm58a);
-
-                jsonObject.put("qoptions", jsonArray1);
-
-                jsonObject.put("qanswer", "");
-
-                jsonObject.put("sno", i + 1);
-
-                jsonArray.put(jsonObject);
-
-            }
-
-        } catch (Exception e) {
-
-            TraceUtils.logException(e);
-
-        }
-
-        return jsonArray;
-
-    }
-
     private void showNextQuestion (int position) {
 
         try {
@@ -862,24 +857,6 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
                 ((RadioButton) rg_options.findViewById(R.id.rb_fourth)).setChecked(true);
 
             }
-
-            /*if (jsonObject.optInt("qanswer") == 1) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_first)).setChecked(true);
-
-            } else if (jsonObject.optInt("qanswer") == 2) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_second)).setChecked(true);
-
-            } else if (jsonObject.optInt("qanswer") == 3) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_third)).setChecked(true);
-
-            } else if (jsonObject.optInt("qanswer") == 4) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_fourth)).setChecked(true);
-
-            }*/
 
             int notvisited = 0;
 

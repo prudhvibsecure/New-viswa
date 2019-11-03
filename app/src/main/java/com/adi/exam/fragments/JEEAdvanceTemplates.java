@@ -132,8 +132,6 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
     private Date edate, sdate;
 
-    AssetManager assetManager;
-
     private static String FILE_NAME;
 
     private boolean isVisible = false;
@@ -145,6 +143,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
     App_Table table;
 
     String path;
+
     private String PATH = Environment.getExternalStorageDirectory().toString();
 
     private final String IMGPATH = PATH + "/System/allFiles/";
@@ -774,9 +773,8 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                     break;
 
                 case R.id.tv_savennext:
-
-                    if (currentExamId != -1) {
-                        //  question_no++;
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId = adapter.getCount() - 1;
                         int selRatioId = rg_options.getCheckedRadioButtonId();
                         if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
 
@@ -807,57 +805,6 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                             }
                         }
 
-//                        if(tabPosition_sub==0) {
-//
-//
-//                            if (tabPosition == 0) {
-//
-//                                JSONObject question_details = data.getJSONObject("question_details");
-//                                type_ID = table.getTypeID(question_details.optString("question_paper_id"), 1, subjectsArray[tabPosition_sub]);
-//
-//                            } else if (tabPosition == 1) {
-//                                JSONObject question_details = data.getJSONObject("question_details");
-//                                type_ID = table.getTypeID(question_details.optString("question_paper_id"), 2, subjectsArray[tabPosition_sub]);
-//
-//                            } else if (tabPosition == 2) {
-//                                JSONObject question_details = data.getJSONObject("question_details");
-//                                type_ID = table.getTypeID(question_details.optString("question_paper_id"), 3, subjectsArray[tabPosition_sub]);
-//
-//                            }
-//                        }else if (tabPosition_sub==1) {
-//
-//                                if (tabPosition == 0) {
-//
-//                                    JSONObject question_details = data.getJSONObject("question_details");
-//                                    type_ID = table.getTypeID(question_details.optString("question_paper_id"), 1, subjectsArray[tabPosition_sub]);
-//
-//                                } else if (tabPosition == 1) {
-//                                    JSONObject question_details = data.getJSONObject("question_details");
-//                                    type_ID = table.getTypeID(question_details.optString("question_paper_id"), 2, subjectsArray[tabPosition_sub]);
-//
-//                                } else if (tabPosition == 2) {
-//                                    JSONObject question_details = data.getJSONObject("question_details");
-//                                    type_ID = table.getTypeID(question_details.optString("question_paper_id"), 3, subjectsArray[tabPosition_sub]);
-//
-//                                }
-//
-//                        }else {
-//                            if (tabPosition == 0) {
-//
-//                                JSONObject question_details = data.getJSONObject("question_details");
-//                                type_ID = table.getTypeID(question_details.optString("question_paper_id"), 1, subjectsArray[tabPosition_sub]);
-//
-//                            } else if (tabPosition == 1) {
-//                                JSONObject question_details = data.getJSONObject("question_details");
-//                                type_ID = table.getTypeID(question_details.optString("question_paper_id"), 2, subjectsArray[tabPosition_sub]);
-//
-//                            } else if (tabPosition == 2) {
-//                                JSONObject question_details = data.getJSONObject("question_details");
-//                                type_ID = table.getTypeID(question_details.optString("question_paper_id"), 3, subjectsArray[tabPosition_sub]);
-//
-//                            }
-//
-//                        }
                         if (currentExamId == adapter.getCount()) {
 
                             return;
@@ -868,14 +815,6 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
                         if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
 
-
-//                            if (selRatioId == -1) {
-//
-//                                activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
-//
-//                                return;
-//                            }
-
                             jsonObject.put("qstate", 2);
 
                             jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
@@ -883,15 +822,19 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                         } else if (type_ID.equalsIgnoreCase("2")) {
 
                             if (checkBox1.isChecked()) {
+                                Total="";
                                 Total = "a";
                             }
                             if (checkBox2.isChecked()) {
+                                Total="";
                                 Total = "b";
                             }
-                           if (checkBox3.isChecked()) {
+                            if (checkBox3.isChecked()) {
+                                Total="";
                                 Total = "c";
                             }
-                           if (checkBox4.isChecked()) {
+                            if (checkBox4.isChecked()) {
+                                Total="";
                                 Total = "d";
                             }
                             if (checkBox1.isChecked() && checkBox2.isChecked()) {
@@ -911,12 +854,167 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                                 Total = "a" + "," + "d";
 
                             }
-                             if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "c";
+
+                            }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "d";
+
+
+                            }
+                            if (checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "b" + "," + "c" + "," + "d";
+
+
+                            }
+                            if (checkBox2.isChecked() && checkBox3.isChecked()) {
+                                Total = "";
+                                Total = "b" + "," + "c";
+
+
+                            }
+                            if (checkBox2.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "b" + "," + "d";
+
+
+                            }
+                            if (checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "c" + "," + "d";
+
+
+                            }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
                                 Total = "";
                                 Total = "a" + "," + "b" + "," + "c" + "," + "d";
 
 
                             }
+                            jsonObject.put("qstate", 2);
+
+                            jsonObject.put("qanswer", Total);
+
+                        } else if (type_ID.equalsIgnoreCase("3")) {
+
+
+                            jsonObject.put("qstate", 2);
+
+                            jsonObject.put("qanswer", ed_texx.getText().toString().trim());
+                        } else {
+
+                            jsonObject.put("qstate", 2);
+
+                            jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+                        }
+
+                        adapter.notifyItemChanged(currentExamId);
+
+                        if (jsonObject.optInt("sno") < adapter.getItemCount()) {
+                            if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
+                                rg_options.clearCheck();
+                            } else if (type_ID.equalsIgnoreCase("2")) {
+                                checkBox1.setChecked(false);
+                                checkBox2.setChecked(false);
+                                checkBox3.setChecked(false);
+                                checkBox4.setChecked(false);
+                            } else if (type_ID.equalsIgnoreCase("3")) {
+                                ed_texx.setText("");
+                            }
+
+                        }
+
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
+
+
+                    }
+                    if (currentExamId != -1) {
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
+
+                            if (selRatioId == -1) {
+
+                                activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+
+                                return;
+                            }
+                        }else if (type_ID.equalsIgnoreCase("2")) {
+                            boolean check = checkBox1.isChecked() || checkBox2.isChecked() || checkBox3.isChecked() || checkBox4.isChecked();
+                            if (check == false) {
+                                activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+                                return;
+                            }
+                        }else {
+                            if (ed_texx.length() == 0) {
+                                activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psas));
+                                return;
+                            }
+                        }
+                        allquestions = table.getAllQuestionView(data.optInt("exam_id"));
+                        jsonArray = new JSONArray(allquestions);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject ood = jsonArray.getJSONObject(i);
+                            if (currentExamId == i) {
+                                type_ID = ood.optString("type_id");
+                            }
+                        }
+
+                        if (currentExamId == adapter.getCount()) {
+
+                            return;
+
+                        }
+
+
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
+
+                            jsonObject.put("qstate", 2);
+
+                            jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                        } else if (type_ID.equalsIgnoreCase("2")) {
+
+                            if (checkBox1.isChecked()) {
+                                Total="";
+                                Total = "a";
+                            }
+                            if (checkBox2.isChecked()) {
+                                Total="";
+                                Total = "b";
+                            }
+                           if (checkBox3.isChecked()) {
+                               Total="";
+                                Total = "c";
+                            }
+                           if (checkBox4.isChecked()) {
+                               Total="";
+                                Total = "d";
+                            }
+                            if (checkBox1.isChecked() && checkBox2.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b";
+
+
+                            }
+                            if (checkBox1.isChecked() && checkBox3.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "c";
+
+
+                            }
+                            if (checkBox1.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "d";
+
+                            }
+
                             if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
                                 Total = "";
                                 Total = "a" + "," + "b" + "," + "c";
@@ -952,6 +1050,12 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
 
                             }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "c" + "," + "d";
+
+
+                            }
                             jsonObject.put("qstate", 2);
 
                             jsonObject.put("qanswer", Total);
@@ -964,12 +1068,6 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                             jsonObject.put("qanswer", ed_texx.getText().toString().trim());
                         } else {
 
-                           /* if (selRatioId == -1) {
-
-                                activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
-
-                                return;
-                            }*/
                             jsonObject.put("qstate", 2);
 
                             jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
@@ -1024,11 +1122,8 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                     break;
 
                 case R.id.tv_mfrn:
-                    if (currentExamId == adapter.getCount()) {
-                       // Toast.makeText(activity, "Your exam preview is done..", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (currentExamId != -1) {
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount();
                         allquestions = table.getAllQuestionView(data.optInt("exam_id"));
                         jsonArray = new JSONArray(allquestions);
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -1040,28 +1135,32 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
                         if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
 
-                                int selRatioId = rg_options.getCheckedRadioButtonId();
-                                if (selRatioId != -1) {
-                                    jsonObject.put("qstate", 4);
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
+                            if (selRatioId != -1) {
+                                jsonObject.put("qstate", 4);
 
-                                    jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
-                                } else {
-                                    jsonObject.put("qstate", 3);
+                                jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+                            } else {
+                                jsonObject.put("qstate", 3);
 
-                                    jsonObject.put("qanswer", "");
-                                }
+                                jsonObject.put("qanswer", "");
+                            }
 
                         } else if (type_ID.equalsIgnoreCase("2")) {
                             if (checkBox1.isChecked()) {
+                                Total="";
                                 Total = "a";
                             }
                             if (checkBox2.isChecked()) {
+                                Total="";
                                 Total = "b";
                             }
                             if (checkBox3.isChecked()) {
+                                Total="";
                                 Total = "c";
                             }
                             if (checkBox4.isChecked()) {
+                                Total="";
                                 Total = "d";
                             }
                             if (checkBox1.isChecked() && checkBox2.isChecked()) {
@@ -1081,12 +1180,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                                 Total = "a" + "," + "d";
 
                             }
-                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
-                                Total = "";
-                                Total = "a" + "," + "b" + "," + "c" + "," + "d";
 
-
-                            }
                             if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
                                 Total = "";
                                 Total = "a" + "," + "b" + "," + "c";
@@ -1122,6 +1216,10 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
 
                             }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "c" + "," + "d";
+                            }
                             if (TextUtils.isEmpty(Total)) {
                                 jsonObject.put("qstate", 3);
                             }else{
@@ -1132,6 +1230,139 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                         } else if (type_ID.equalsIgnoreCase("3")) {
                             if (ed_texx.getText().toString().length()==0) {
 
+                                jsonObject.put("qstate", 3);
+
+                                jsonObject.put("qanswer", ed_texx.getText().toString().trim());
+                            }else{
+                                jsonObject.put("qstate", 4);
+
+                                jsonObject.put("qanswer", ed_texx.getText().toString().trim());
+                            }
+                        }
+                        adapter.notifyItemChanged(currentExamId);
+
+                        if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
+                            rg_options.clearCheck();
+                        } else if (type_ID.equalsIgnoreCase("2")) {
+                            checkBox1.setChecked(false);
+                            checkBox2.setChecked(false);
+                            checkBox3.setChecked(false);
+                            checkBox4.setChecked(false);
+                        } else if (type_ID.equalsIgnoreCase("3")) {
+                            ed_texx.setText("");
+                        }
+
+                        updateQuestionTime();
+
+                        showNextQuestion(currentExamId);
+                        return;
+                    }
+                    if (currentExamId != -1) {
+                        allquestions = table.getAllQuestionView(data.optInt("exam_id"));
+                        jsonArray = new JSONArray(allquestions);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject ood = jsonArray.getJSONObject(i);
+                            if (currentExamId == i) {
+                                type_ID = ood.optString("type_id");
+                            }
+                        }
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
+
+                                int selRatioId = rg_options.getCheckedRadioButtonId();
+                                if (selRatioId != -1) {
+                                    jsonObject.put("qstate", 4);
+
+                                    jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+                                } else {
+                                    jsonObject.put("qstate", 3);
+
+                                    jsonObject.put("qanswer", "");
+                                }
+
+                        } else if (type_ID.equalsIgnoreCase("2")) {
+                            if (checkBox1.isChecked()) {
+                                Total="";
+                                Total = "a";
+                            }
+                            if (checkBox2.isChecked()) {
+                                Total="";
+                                Total = "b";
+                            }
+                            if (checkBox3.isChecked()) {
+                                Total="";
+                                Total = "c";
+                            }
+                            if (checkBox4.isChecked()) {
+                                Total="";
+                                Total = "d";
+                            }
+                            if (checkBox1.isChecked() && checkBox2.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b";
+
+
+                            }
+                            if (checkBox1.isChecked() && checkBox3.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "c";
+
+
+                            }
+                            if (checkBox1.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "d";
+
+                            }
+
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "c";
+
+                            }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "d";
+
+
+                            }
+                            if (checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "b" + "," + "c" + "," + "d";
+
+
+                            }
+                            if (checkBox2.isChecked() && checkBox3.isChecked()) {
+                                Total = "";
+                                Total = "b" + "," + "c";
+
+
+                            }
+                            if (checkBox2.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "b" + "," + "d";
+
+
+                            }
+                            if (checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "c" + "," + "d";
+
+
+                            }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "c" + "," + "d";
+                            }
+                            if (TextUtils.isEmpty(Total)) {
+                                jsonObject.put("qstate", 3);
+                            }else{
+                                jsonObject.put("qstate", 4);
+                            }
+
+                            jsonObject.put("qanswer", Total);
+                        } else if (type_ID.equalsIgnoreCase("3")) {
+                            if (ed_texx.getText().toString().length()==0) {
 
                                 jsonObject.put("qstate", 3);
 
@@ -1293,63 +1524,10 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
             String my_qs_file =AESEncryptionDecryption.decrypt(html_content.toString());
                     //
             String[] data_questions = my_qs_file.split("</html>");
-//            iv_question.setImageResource(jsonObject.optInt("qid"));
-//
-//            try {
-//
-//                iv_question.setImageDrawable(null);
-//                iv_questionimg.setImageDrawable(null);
-//                iv_questionimg2.setImageDrawable(null);
-//                iv_option1.setImageDrawable(null);
-//                iv_option2.setImageDrawable(null);
-//                iv_option3.setImageDrawable(null);
-//                iv_option4.setImageDrawable(null);
-//
-//                ImageLoader.getInstance().clearMemoryCache();
-//                ImageLoader.getInstance().clearDiskCache();
-//
-//            } catch (Exception e) {
-//
-//                TraceUtils.logException(e);
-//
-//            }
 
-//            String extFileDirPath = IMGPATH;
-//
-//            File externalFileDir = activity.getExternalFilesDir(null);
-//
-//            if (externalFileDir != null) {
-//
-//                extFileDirPath = externalFileDir.getAbsolutePath() + "/";
-//
-//            }
-//
-//            String encPath = IMGPATH + jsonObject.optString("question_name");
-//
-//            String plnPath = extFileDirPath + "question.PNG";
-//
-//            boolean isValid = decryptCipher(encPath, plnPath);
-//
-//            if (isValid) {
-//
-//                imageLoader.displayImage("file://" + plnPath, iv_question);
-//
-//            }
             if (type_ID.equalsIgnoreCase("4")){
                 iv_questionimg.setVisibility(View.VISIBLE);
                 para_title.setVisibility(View.VISIBLE);
-//                encPath = IMGPATH + jsonObject.optString("paragraph");
-//
-//                plnPath = extFileDirPath + "paragraph.PNG";
-//
-//                isValid = decryptCipher(encPath, plnPath);
-//
-//                if (isValid) {
-//
-//                    imageLoader.displayImage("file://" + plnPath, iv_questionimg);
-//
-//                }
-
             }else{
                 iv_questionimg.setVisibility(View.GONE);
                 para_title.setVisibility(View.GONE);
@@ -1368,53 +1546,6 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
             iv_option2.loadDataWithBaseURL("",data_questions[2], "text/html", "utf-8",null);
             iv_option3.loadDataWithBaseURL("",data_questions[3], "text/html", "utf-8",null);
             iv_option4.loadDataWithBaseURL("",data_questions[4], "text/html", "utf-8",null);
- //           encPath = IMGPATH + jsonObject.optString("option_a");
-//
-//            plnPath = extFileDirPath + "option_a.PNG";
-//
-//            isValid = decryptCipher(encPath, plnPath);
-//
-//            if (isValid) {
-//
-//                imageLoader.displayImage("file://" + plnPath, iv_option1);
-//
-//            }
-//
-//            encPath = IMGPATH + jsonObject.optString("option_b");
-//
-//            plnPath = extFileDirPath + "option_b.PNG";
-//
-//            isValid = decryptCipher(encPath, plnPath);
-//
-//            if (isValid) {
-//
-//                imageLoader.displayImage("file://" + plnPath, iv_option2);
-//
-//            }
-//
-//            encPath = IMGPATH + jsonObject.optString("option_c");
-//
-//            plnPath = extFileDirPath + "option_c.PNG";
-//
-//            isValid = decryptCipher(encPath, plnPath);
-//
-//            if (isValid) {
-//
-//                imageLoader.displayImage("file://" + plnPath, iv_option3);
-//
-//            }
-//
-//            encPath = IMGPATH + jsonObject.optString("option_d");
-//
-//            plnPath = extFileDirPath + "option_d.PNG";
-//
-//            isValid = decryptCipher(encPath, plnPath);
-//
-//            if (isValid) {
-//
-//                imageLoader.displayImage("file://" + plnPath, iv_option4);
-//
-//            }
             if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
                 layout.findViewById(R.id.opt_four).setVisibility(View.GONE);
                 layout.findViewById(R.id.mult_ll).setVisibility(View.GONE);

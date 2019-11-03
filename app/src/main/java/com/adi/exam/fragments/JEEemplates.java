@@ -897,7 +897,6 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
                         adapter.notifyItemChanged(currentExamId);
                         updateQuestionTime();
-                        showNextQuestion(currentExamId);
                         return;
                     }
                     rg_options.clearCheck();
@@ -931,9 +930,6 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                         jsonObject.put("qanswer", "");
 
                         adapter.notifyItemChanged(currentExamId);
-//                        if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
-//                            rg_options.clearCheck();
-//                        }
                         rg_options.clearCheck();
 
                         updateQuestionTime();

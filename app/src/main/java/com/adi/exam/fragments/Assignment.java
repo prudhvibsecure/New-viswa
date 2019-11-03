@@ -393,7 +393,24 @@ public class Assignment extends ParentFragment implements View.OnClickListener, 
 
                 case R.id.tv_savennext:
 
-                    if (currentExamId>adapter.getCount()){
+                    if (currentExamId>=adapter.getCount()){
+                        currentExamId=adapter.getCount()-1;
+
+                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (selRatioId == -1) {
+
+                            activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psao));
+
+                            return;
+                        }
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        jsonObject.put("qstate", 2);
+                        Object vv = layout.findViewById(selRatioId).getTag();
+                        jsonObject.put("qanswer", vv.toString());
+                        adapter.notifyItemChanged(currentExamId);
+
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
                         return;
                     }
                     if (currentExamId != -1) {
@@ -411,32 +428,6 @@ public class Assignment extends ParentFragment implements View.OnClickListener, 
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                         jsonObject.put("qstate", 2);
-
-                        /*String selected = (String) layout.findViewById(selRatioId).getTag();
-                        int index = options.indexOf(selected);
-                        String option = String.valueOf(opt[index]);
-                        String qans = "";
-                        if(jsonObject.optString("option_a").equalsIgnoreCase(option))
-                        {
-                            qans = "a";
-                        }
-
-                        if(jsonObject.optString("option_b").equalsIgnoreCase(option))
-                        {
-                            qans = "b";
-                        }
-
-                        if(jsonObject.optString("option_c").equalsIgnoreCase(option))
-                        {
-                            qans = "c";
-                        }
-
-                        if(jsonObject.optString("option_d").equalsIgnoreCase(option))
-                        {
-                            qans = "d";
-                        }
-
-                        jsonObject.put("qanswer",qans);*/
                         Object vv=layout.findViewById(selRatioId).getTag();
                         jsonObject.put("qanswer",vv.toString() );
 
@@ -463,6 +454,7 @@ public class Assignment extends ParentFragment implements View.OnClickListener, 
                 case R.id.tv_clearresponse:
 
                     if (currentExamId>adapter.getCount()){
+                        currentExamId=adapter.getCount();
                         return;
                     }
                     if (currentExamId==adapter.getCount()) {
@@ -496,13 +488,23 @@ public class Assignment extends ParentFragment implements View.OnClickListener, 
                         showNextQuestion(currentExamId);
                         return;
                     }
-                    if(currentExamId == 0)
-                    {
+                    if (currentExamId == 0) {
                         showNextQuestion(currentExamId);
                         return;
                     }
-                    if (currentExamId==adapter.getCount()){
-                        showNextQuestion(currentExamId - 1);
+
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount();
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
+                            rg_options.clearCheck();
+                            jsonObject.put("qstate", 1);
+                            jsonObject.put("qanswer", "");
+                        }
+
+                        updateQuestionTime();
+                        showNextQuestion( currentExamId-1);
+                        adapter.notifyItemChanged(currentExamId);
                         return;
                     }
 
@@ -560,10 +562,21 @@ public class Assignment extends ParentFragment implements View.OnClickListener, 
 
                 case R.id.tv_next:
 
-                    if (currentExamId==-1){
-                        return;
-                    }
                     if (currentExamId >= adapter.getCount()) {
+                        currentExamId= adapter.getCount();
+
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                        if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
+
+                            jsonObject.put("qstate", 1);
+
+                        }
+
+                        adapter.notifyItemChanged(currentExamId);
+                        rg_options.clearCheck();
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
                         return;
                     }
                     //question_no++;
