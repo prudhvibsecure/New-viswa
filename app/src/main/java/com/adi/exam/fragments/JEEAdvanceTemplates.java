@@ -855,24 +855,6 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                                 Total = "a" + "," + "d";
 
                             }
-
-                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
-                                Total = "";
-                                Total = "a" + "," + "b" + "," + "c";
-
-                            }
-                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox4.isChecked()) {
-                                Total = "";
-                                Total = "a" + "," + "b" + "," + "d";
-
-
-                            }
-                            if (checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
-                                Total = "";
-                                Total = "b" + "," + "c" + "," + "d";
-
-
-                            }
                             if (checkBox2.isChecked() && checkBox3.isChecked()) {
                                 Total = "";
                                 Total = "b" + "," + "c";
@@ -888,6 +870,29 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                             if (checkBox3.isChecked() && checkBox4.isChecked()) {
                                 Total = "";
                                 Total = "c" + "," + "d";
+
+
+                            }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "c";
+
+                            }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "d";
+
+
+                            }
+                            if (checkBox1.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "c" + "," + "d";
+
+
+                            }
+                            if (checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "b" + "," + "c" + "," + "d";
 
 
                             }
@@ -1015,7 +1020,24 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                                 Total = "a" + "," + "d";
 
                             }
+                            if (checkBox2.isChecked() && checkBox3.isChecked()) {
+                                Total = "";
+                                Total = "b" + "," + "c";
 
+
+                            }
+                            if (checkBox2.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "b" + "," + "d";
+
+
+                            }
+                            if (checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "c" + "," + "d";
+
+
+                            }
                             if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
                                 Total = "";
                                 Total = "a" + "," + "b" + "," + "c";
@@ -1027,30 +1049,19 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
 
                             }
+                            if (checkBox1.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "c" + "," + "d";
+
+
+                            }
                              if (checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
                                 Total = "";
                                 Total = "b" + "," + "c" + "," + "d";
 
 
                             }
-                             if (checkBox2.isChecked() && checkBox3.isChecked()) {
-                                Total = "";
-                                Total = "b" + "," + "c";
 
-
-                            }
-                             if (checkBox2.isChecked() && checkBox4.isChecked()) {
-                                Total = "";
-                                Total = "b" + "," + "d";
-
-
-                            }
-                             if (checkBox3.isChecked() && checkBox4.isChecked()) {
-                                Total = "";
-                                Total = "c" + "," + "d";
-
-
-                            }
                             if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
                                 Total = "";
                                 Total = "a" + "," + "b" + "," + "c" + "," + "d";
@@ -1181,24 +1192,6 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                                 Total = "a" + "," + "d";
 
                             }
-
-                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
-                                Total = "";
-                                Total = "a" + "," + "b" + "," + "c";
-
-                            }
-                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox4.isChecked()) {
-                                Total = "";
-                                Total = "a" + "," + "b" + "," + "d";
-
-
-                            }
-                            if (checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
-                                Total = "";
-                                Total = "b" + "," + "c" + "," + "d";
-
-
-                            }
                             if (checkBox2.isChecked() && checkBox3.isChecked()) {
                                 Total = "";
                                 Total = "b" + "," + "c";
@@ -1217,6 +1210,36 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
 
                             }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "c";
+
+                            }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "d";
+
+
+                            }
+                            if (checkBox1.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "c" + "," + "d";
+
+
+                            }
+                            if (checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "b" + "," + "c" + "," + "d";
+
+
+                            }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "d";
+
+
+                            }
+
                             if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
                                 Total = "";
                                 Total = "a" + "," + "b" + "," + "c" + "," + "d";
@@ -1315,24 +1338,6 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                                 Total = "a" + "," + "d";
 
                             }
-
-                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
-                                Total = "";
-                                Total = "a" + "," + "b" + "," + "c";
-
-                            }
-                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox4.isChecked()) {
-                                Total = "";
-                                Total = "a" + "," + "b" + "," + "d";
-
-
-                            }
-                            if (checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
-                                Total = "";
-                                Total = "b" + "," + "c" + "," + "d";
-
-
-                            }
                             if (checkBox2.isChecked() && checkBox3.isChecked()) {
                                 Total = "";
                                 Total = "b" + "," + "c";
@@ -1351,6 +1356,30 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
 
                             }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "c";
+
+                            }
+                            if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "b" + "," + "d";
+
+
+                            }
+                            if (checkBox1.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "a" + "," + "c" + "," + "d";
+
+
+                            }
+                            if (checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
+                                Total = "";
+                                Total = "b" + "," + "c" + "," + "d";
+
+
+                            }
+
                             if (checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked()) {
                                 Total = "";
                                 Total = "a" + "," + "b" + "," + "c" + "," + "d";
