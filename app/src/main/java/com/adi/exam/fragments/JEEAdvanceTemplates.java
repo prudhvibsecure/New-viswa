@@ -558,7 +558,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
                 activity.setAllQuestions(adapter.getItems());
 
-                activity.showAllQuestions();
+               // activity.showAllQuestions();
 
                 break;
         }
@@ -2017,9 +2017,9 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
             int no_of_correct_answers = 0;
 
-            double marks_per_question = data.optDouble("marks_per_question");
+            String marks_per_question = data.optString("marks_per_question");
 
-            double negative_marks = data.optDouble("negative_marks");
+            String negative_marks = data.optString("negative_marks");
 
             double score = 0;
 
@@ -2074,6 +2074,14 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
                 String answer = jsonObject.optString("answer");
 
+                String marks_per_question_s[]=marks_per_question.split(",");
+
+                String negative_marks_s[]=negative_marks.split(",");
+
+                double marks_per_question1=Double.parseDouble(marks_per_question_s[0]);
+
+                double negative_marks1=Double.parseDouble(negative_marks_s[0]);
+
                 if (qanswer.trim().length() > 0) {
 
                     ++total_questions_attempted;
@@ -2082,11 +2090,11 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
                         ++no_of_correct_answers;
 
-                        score = score + marks_per_question;
+                        score = score + marks_per_question1;
 
                     } else {
 
-                        score = score - negative_marks;
+                        score = score - negative_marks1;
 
                     }
 

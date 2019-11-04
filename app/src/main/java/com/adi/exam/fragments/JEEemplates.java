@@ -980,12 +980,12 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
                         if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
                             rg_options.clearCheck();
-                            jsonObject.put("qstate", 1);
+                            jsonObject.put("qstate", 0);
                             jsonObject.put("qanswer", "");
                         }
                         adapter.notifyItemChanged(currentExamId);
                         updateQuestionTime();
-                        showNextQuestion( currentExamId);
+                        showNextQuestion(currentExamId);
 
                         return;
                     }

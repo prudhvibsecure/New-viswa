@@ -1118,7 +1118,7 @@ public class ExamList extends ParentFragment implements View.OnClickListener, II
                 Log.i("ZIP", "file unzip completed");
                 // checkQuestionPaper();
                 getQuestionsZip(qs_ids);
-                Toast.makeText(getActivity(), "Download Complete", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), "Download Complete", Toast.LENGTH_SHORT).show();
             }
         });
         download.execute(path_url);

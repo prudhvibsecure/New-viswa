@@ -151,9 +151,11 @@ public class AssignmentListingAdapter extends RecyclerView.Adapter<AssignmentLis
 
             if (jsonObject.optString("down_status").equalsIgnoreCase("0")){
                 contactViewHolder.tv_startexam.setText("Download");
+                contactViewHolder.tv_processing.setVisibility(View.GONE);
             }else {
 
                 contactViewHolder.tv_startexam.setText("Start");
+                contactViewHolder.tv_processing.setVisibility(View.GONE);
                 if (c_date.equals(jsonObject.optString("exam_date").trim())) {
                     // contactViewHolder.tv_startexam.setEnabled(true);
                     boolean result = inRange(tkl, tk2, time);

@@ -925,9 +925,9 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
 
             int no_of_correct_answers = 0;
 
-            double marks_per_question = data.optDouble("marks_per_question");
+            String marks_per_question = data.optString("marks_per_question");
 
-            double negative_marks = data.optDouble("negative_marks");
+            String negative_marks = data.optString("negative_marks");
 
             double score = 0;
 
@@ -946,23 +946,6 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-//                json= new JSONObject();
-//                json.put("student_question_time_id","");
-//                json.put("student_id",activity.getStudentDetails().optInt("student_id"));
-//                json.put("exam_id", data.optInt("exam_id"));
-//                json.put("question_no",jsonObject.optString("sno"));
-//                json.put("question_id",jsonObject.optString("question_id"));
-//                json.put("topic_id",jsonObject.optString("topic_id"));
-//                json.put("lesson_id","");
-//                json.put("subject","");
-//                json.put("given_option",jsonObject.optString("qstate"));
-//                json.put("correct_option",jsonObject.optString("answer"));
-//                json.put("result",jsonObject.optString("answer"));
-//                json.put("question_time",60);
-//                json.put("no_of_clicks","");
-//                json.put("marked_for_review",jsonObject.optString("qstate"));
-//                array.put(json);
 
                 //qstate = //0 = not visited, 1 = not answered, 2 = answered, 3 = marked for review, 4 = answered and marked for review
                 if (jsonObject.optString("qstate").equalsIgnoreCase("3")) {
@@ -999,6 +982,14 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
 
                 String answer = jsonObject.optString("answer");
 
+                String marks_per_question_s[]=marks_per_question.split(",");
+
+                String negative_marks_s[]=negative_marks.split(",");
+
+                double marks_per_question1=Double.parseDouble(marks_per_question_s[0]);
+
+                double negative_marks1=Double.parseDouble(negative_marks_s[0]);
+
                 if (qanswer.trim().length() > 0) {
 
                     ++total_questions_attempted;
@@ -1007,11 +998,11 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
 
                         ++no_of_correct_answers;
 
-                        score = score + marks_per_question;
+                        score = score + marks_per_question1;
 
                     } else {
 
-                        score = score - negative_marks;
+                        score = score - negative_marks1;
 
                     }
 
@@ -1051,19 +1042,6 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
             STUDENTEXAMRESULT.put("accuracy", "");
             STUDENTEXAMRESULT.put("exam_type", "");
 
-
-//            backup_result.put("student_exam_result_id", student_exam_result_id);
-//            backup_result.put("student_id", activity.getStudentDetails().optInt("student_id"));
-//            backup_result.put("exam_id", data.optInt("exam_id"));
-//            backup_result.put("exam_name", data.optString("exam_name"));
-//            backup_result.put("exam_date", question_details.optString("exam_date"));
-//            backup_result.put("total_questions", adapter.getCount() + "");
-//            backup_result.put("total_questions_attempted", total_questions_attempted + "");
-//            backup_result.put("no_of_correct_answers", no_of_correct_answers + "");
-//            backup_result.put("score", score + "");
-//            backup_result.put("percentage", "");
-//            backup_result.put("accuracy", "");
-//            backup_result.put("exam_type", "");
 
 
             App_Table table = new App_Table(activity);
