@@ -976,33 +976,19 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                         return;
                     }
                     if (currentExamId >= adapter.getCount()) {
-                        currentExamId=adapter.getCount();
+                        currentExamId=adapter.getCount()-1;
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
                         if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
                             rg_options.clearCheck();
                             jsonObject.put("qstate", 1);
                             jsonObject.put("qanswer", "");
                         }
-
-                        updateQuestionTime();
-                        showNextQuestion( currentExamId-1);
                         adapter.notifyItemChanged(currentExamId);
+                        updateQuestionTime();
+                        showNextQuestion( currentExamId);
+
                         return;
                     }
-//                    if (currentExamId==adapter.getCount()){
-//                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
-//                        if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
-//                            rg_options.clearCheck();
-//                            jsonObject.put("qstate", 1);
-//                            jsonObject.put("qanswer", "");
-//                        }
-//                        adapter.notifyItemChanged(currentExamId);
-//                        updateQuestionTime();
-//                        showNextQuestion(currentExamId - 1);
-//                        return;
-//                    }
-
-
                     showNextQuestion(currentExamId - 1);
                     jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
@@ -1282,23 +1268,6 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                                              view.clearHistory();
                                          }
                                      });
-            /*if (jsonObject.optInt("qanswer") == 1) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_first)).setChecked(true);
-
-            } else if (jsonObject.optInt("qanswer") == 2) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_second)).setChecked(true);
-
-            } else if (jsonObject.optInt("qanswer") == 3) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_third)).setChecked(true);
-
-            } else if (jsonObject.optInt("qanswer") == 4) {
-
-                ((RadioButton) rg_options.findViewById(R.id.rb_fourth)).setChecked(true);
-
-            }*/
 
             int notvisited = 0;
 
@@ -1529,9 +1498,9 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
             int no_of_correct_answers = 0;
 
-            double marks_per_question = data.optDouble("marks_per_question");
+            String marks_per_question = data.optString("marks_per_question");
 
-            double negative_marks = data.optDouble("negative_marks");
+            String negative_marks = data.optString("negative_marks");
 
             double score = 0;
 
@@ -1585,7 +1554,16 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
                 String answer = jsonObject.optString("answer");
 
+                String marks_per_question_s[]=marks_per_question.split(",");
+
+                String negative_marks_s[]=negative_marks.split(",");
+
+                double marks_per_question1=Double.parseDouble(marks_per_question_s[0]);
+
+                double negative_marks1=Double.parseDouble(negative_marks_s[0]);
+
                 if (qanswer.trim().length() > 0) {
+
 
                     ++total_questions_attempted;
 
@@ -1593,11 +1571,18 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
                         ++no_of_correct_answers;
 
-                        score = score + marks_per_question;
+                        score = score + marks_per_question1;
 
                     } else {
 
-                        score = score - negative_marks;
+                        boolean result = inRange(21, 25, Integer.parseInt(jsonObject.optString("sno")));
+                        boolean result2 = inRange(46, 50, Integer.parseInt(jsonObject.optString("sno")));
+                        boolean result3 = inRange(71, 75, Integer.parseInt(jsonObject.optString("sno")));
+                        if (result||result2||result3){
+
+                        }else {
+                            score = score - negative_marks1;
+                        }
 
                     }
 

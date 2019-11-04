@@ -491,12 +491,8 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                             rg_options.clearCheck();
 
                         }
-                        if (currentExamId == adapter.getCount()) {
-                            showNextQuestion(currentExamId - 1);
-                        } else {
-                            showNextQuestion(currentExamId + 1);
-                        }
 
+                        showNextQuestion(currentExamId + 1);
 
                     }
 
@@ -533,42 +529,80 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                 case R.id.tv_mfrn:
 
                     if (currentExamId>=adapter.getCount()){
-
                         currentExamId=adapter.getCount();
-                        int selRatioId = rg_options.getCheckedRadioButtonId();
 
-                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
+                        RadioButton b = (RadioButton)layout. findViewById(selRatioId);
+                        if (b==null) {
 
-                        jsonObject.put("qstate", 3);
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
-                        jsonObject.put("qanswer", "");
+                            jsonObject.put("qstate", 3);
 
-                        adapter.notifyItemChanged(currentExamId);
-                        rg_options.clearCheck();
+                            jsonObject.put("qanswer", "");
 
-                        updateQuestionTime();
+                            adapter.notifyItemChanged(currentExamId);
 
-                        showNextQuestion(currentExamId );
+                            rg_options.clearCheck();
+
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId);
+
+                        } else {
+
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                            jsonObject.put("qstate", 4);
+
+                            jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                            adapter.notifyItemChanged(currentExamId);
+                            rg_options.clearCheck();
+
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId);
+                        }
                         return;
                     }
                     if (currentExamId != -1) {
 
                         //question_no++;
-                        int selRatioId = rg_options.getCheckedRadioButtonId();
 
-                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
+                            RadioButton b = (RadioButton)layout. findViewById(selRatioId);
+                        if (b==null) {
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
-                        jsonObject.put("qstate", 3);
+                            jsonObject.put("qstate", 3);
 
-                        jsonObject.put("qanswer", "");
+                            jsonObject.put("qanswer", "");
 
-                        adapter.notifyItemChanged(currentExamId);
+                            adapter.notifyItemChanged(currentExamId);
 
-                        rg_options.clearCheck();
+                            rg_options.clearCheck();
 
-                        updateQuestionTime();
+                            updateQuestionTime();
 
-                        showNextQuestion(currentExamId + 1);
+                            showNextQuestion(currentExamId + 1);
+
+                        } else {
+
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                            jsonObject.put("qstate", 4);
+
+                            jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                            adapter.notifyItemChanged(currentExamId);
+
+                            rg_options.clearCheck();
+
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId + 1);
+                        }
 
                     }
                     break;
@@ -603,54 +637,6 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
             TraceUtils.logException(e);
 
         }
-
-    }
-
-    private JSONArray getQuestionNum() {
-
-        JSONArray jsonArray = new JSONArray();
-
-        try {
-
-            for (int i = 0; i < 60; i++) {
-
-                JSONObject jsonObject = new JSONObject();
-
-                jsonObject.put("qstate", 0); //0 = not visited, 1 = not answered, 2 = answered, 3 = marked review, 4 = answered and marked for review
-
-                String resourceName = "q"+(i+1);
-
-                int drawableResourceId = this.getResources().getIdentifier(resourceName, "drawable", activity.getPackageName());
-
-                jsonObject.put("qid", drawableResourceId);
-
-                jsonObject.put("qimages", "");
-
-                int drawableOptionResourceId = this.getResources().getIdentifier(resourceName, "drawable", activity.getPackageName());
-
-                JSONArray jsonArray1 = new JSONArray();
-                //jsonArray1.put(R.drawable.opm32a);
-                //jsonArray1.put(R.drawable.opm32b);
-                //jsonArray1.put(R.drawable.opm32c);
-                //jsonArray1.put(R.drawable.opm58a);
-
-                jsonObject.put("qoptions", jsonArray1);
-
-                jsonObject.put("qanswer", "");
-
-                jsonObject.put("sno", i + 1);
-
-                jsonArray.put(jsonObject);
-
-            }
-
-        } catch (Exception e) {
-
-            TraceUtils.logException(e);
-
-        }
-
-        return jsonArray;
 
     }
 

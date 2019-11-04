@@ -805,17 +805,17 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
                     }
 
                     if (currentExamId >= adapter.getCount()) {
-                        currentExamId=adapter.getCount();
+                        currentExamId=adapter.getCount()-1;
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
                         if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
                             rg_options.clearCheck();
                             jsonObject.put("qstate", 1);
                             jsonObject.put("qanswer", "");
                         }
-
-                        updateQuestionTime();
-                        showNextQuestion( currentExamId-1);
                         adapter.notifyItemChanged(currentExamId);
+                        updateQuestionTime();
+                        showNextQuestion( currentExamId);
+
                         return;
                     }
 

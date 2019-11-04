@@ -322,6 +322,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:tag="a"
                             android:text="1)" />
 
                         <RadioButton
@@ -329,6 +330,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:tag="b"
                             android:text="2)" />
 
                         <RadioButton
@@ -336,6 +338,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:tag="c"
                             android:text="3)" />
 
                         <RadioButton
@@ -343,6 +346,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:tag="d"
                             android:text="4)" />
 
                     </RadioGroup>
