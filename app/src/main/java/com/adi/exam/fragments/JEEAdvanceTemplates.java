@@ -2,6 +2,7 @@ package com.adi.exam.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,6 +30,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adi.exam.MainActivity;
 import com.adi.exam.R;
 import com.adi.exam.SriVishwa;
 import com.adi.exam.adapters.QuestionNumberListingAdapter;
@@ -556,7 +558,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
             case R.id.action_aq:
 
-                activity.setAllQuestions(adapter.getItems());
+                activity.allQuestions_view(adapter.getItems());
 
                // activity.showAllQuestions();
 
@@ -2013,120 +2015,6 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
         try {
 
-            int total_questions_attempted = 0;
-
-            int no_of_correct_answers = 0;
-
-            String marks_per_question = data.optString("marks_per_question");
-
-            String negative_marks = data.optString("negative_marks");
-
-            double score = 0;
-
-            int total_not_answered = 0;
-
-            int total_marked_for_review = 0;
-
-            int total_not_visited = 0;
-
-            int total_answered_and_marked_for_review = 0;
-
-            int total_visited = 0;
-
-            JSONArray jsonArray = adapter.getItems();
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                //qstate = //0 = not visited, 1 = not answered, 2 = answered, 3 = marked for review, 4 = answered and marked for review
-                if (jsonObject.optString("qstate").equalsIgnoreCase("3")) {
-
-                    ++total_marked_for_review;
-
-                }
-
-                if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
-
-                    ++total_not_visited;
-
-                }
-
-                if (!jsonObject.optString("qstate").equalsIgnoreCase("0")) {
-
-                    ++total_visited;
-
-                }
-
-                if (jsonObject.optString("qstate").equalsIgnoreCase("4")) {
-
-                    ++total_answered_and_marked_for_review;
-
-                }
-
-                if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
-
-                    ++total_not_answered;
-
-                }
-
-                String qanswer = jsonObject.optString("qanswer");
-
-                String answer = jsonObject.optString("answer");
-
-                String marks_per_question_s[]=marks_per_question.split(",");
-
-                String negative_marks_s[]=negative_marks.split(",");
-
-                double marks_per_question1=Double.parseDouble(marks_per_question_s[0]);
-
-                double negative_marks1=Double.parseDouble(negative_marks_s[0]);
-
-                if (qanswer.trim().length() > 0) {
-
-                    ++total_questions_attempted;
-
-                    if (qanswer.toLowerCase().equalsIgnoreCase(answer.toLowerCase())) {
-
-                        ++no_of_correct_answers;
-
-                        score = score + marks_per_question1;
-
-                    } else {
-
-                        score = score - negative_marks1;
-
-                    }
-
-                }
-
-            }
-
-            data.put("total_not_answered", total_not_answered);
-
-            data.put("total_marked_for_review", total_marked_for_review);
-
-            data.put("total_not_visited", total_not_visited);
-
-            data.put("total_answered_and_marked_for_review", total_answered_and_marked_for_review);
-
-            JSONObject question_details = data.getJSONObject("question_details");
-
-            JSONObject STUDENTEXAMRESULT = new JSONObject();
-            JSONObject backup_result = new JSONObject();
-
-            //double x = System.currentTimeMillis();
-            long student_exam_result_id = System.currentTimeMillis();
-            STUDENTEXAMRESULT.put("student_exam_result_id", student_exam_result_id);
-            STUDENTEXAMRESULT.put("student_id", activity.getStudentDetails().optInt("student_id"));
-            STUDENTEXAMRESULT.put("exam_id", data.optInt("exam_id"));
-            STUDENTEXAMRESULT.put("exam_name", data.optString("exam_name"));
-            STUDENTEXAMRESULT.put("exam_date", question_details.optString("exam_date"));
-            STUDENTEXAMRESULT.put("total_questions", adapter.getCount() + "");
-            STUDENTEXAMRESULT.put("total_questions_attempted", total_questions_attempted + "");
-            STUDENTEXAMRESULT.put("no_of_correct_answers", no_of_correct_answers + "");
-            STUDENTEXAMRESULT.put("score", score + "");
-
             App_Table table = new App_Table(activity);
 
 
@@ -2139,30 +2027,19 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
             fos = getActivity().openFileOutput(FILE_NAME, MODE_PRIVATE);
 
             fos.write(json.toString().getBytes());
-
             path = getActivity().getFilesDir().getAbsolutePath() + "/" + FILE_NAME;
-            table.insertFileData(data.optInt("exam_id"), FILE_NAME, path);
-            long val = table.insertSingleRecords(STUDENTEXAMRESULT, "STUDENTEXAMRESULT");
-
-            if (val > 0) {
-
-                activity.setAllQuestions(jsonArray);
-
-                activity.showExamSubmitConfirmationPage(data, student_exam_result_id, 1);
-
-                startUploadBackUp(path, FILE_NAME);
-
-                return;
-
-            }
-
-            activity.showokPopUp(R.drawable.pop_ic_failed, activity.getString(R.string.errorTxt), activity.getString(R.string.isr));
+            startUploadBackUp(path, FILE_NAME);
+            Intent str=new Intent(getActivity(), MainActivity.class);
+            startActivity(str);
+            Toast.makeText(getActivity(), "Exam Submitted successfully...", Toast.LENGTH_SHORT).show();
+          //  activity.showokPopUp(R.drawable.pop_ic_failed, activity.getString(R.string.errorTxt), activity.getString(R.string.isr));
 
         } catch (Exception e) {
 
             TraceUtils.logException(e);
 
         }
+     activity.onKeyDown(4,null);
 
     }
 

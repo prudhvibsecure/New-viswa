@@ -980,7 +980,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
                         if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
                             rg_options.clearCheck();
-                            jsonObject.put("qstate", 0);
+                            jsonObject.put("qstate", 1);
                             jsonObject.put("qanswer", "");
                         }
                         adapter.notifyItemChanged(currentExamId);
@@ -993,6 +993,11 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                     jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                     if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
+                        rg_options.clearCheck();
+                        jsonObject.put("qstate", 1);
+                        jsonObject.put("qanswer", "");
+                    }
+                    if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
                         rg_options.clearCheck();
                         jsonObject.put("qstate", 1);
                         jsonObject.put("qanswer", "");

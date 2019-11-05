@@ -500,7 +500,7 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
                 JSONObject jsonObject = new JSONObject(results.toString());
 
                 if (jsonObject.optString("statuscode").equalsIgnoreCase("200")) {
-
+                    tv_content_txt.setVisibility(View.GONE);
                     if (jsonObject.has("assignment_ids")) {
 
                         String assignment_ids = jsonObject.optString("assignment_ids").trim();
@@ -525,17 +525,23 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
 
                             return;
 
+                        }else{
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            mSwipeRefreshLayout.setEnabled(true);
+                            tv_content_txt.setVisibility(View.VISIBLE);
                         }
 
                     }
 
                 }else {
-                    Toast.makeText(activity, "No Data Found", Toast.LENGTH_SHORT).show();
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mSwipeRefreshLayout.setEnabled(true);
+                    tv_content_txt.setVisibility(View.VISIBLE);
                 }
 
                 progressBar.setVisibility(View.GONE);
 
-                tv_content_txt.setVisibility(View.VISIBLE);
+               // tv_content_txt.setVisibility(View.VISIBLE);
 
             } else if (requestId == 2) {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -597,6 +603,10 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
 
                                 //updateOtherDetails(adapterContent.getItems());
 
+                            }else{
+                                mSwipeRefreshLayout.setRefreshing(false);
+                                mSwipeRefreshLayout.setEnabled(true);
+                                tv_content_txt.setVisibility(View.VISIBLE);
                             }
                        // }
 
@@ -917,7 +927,7 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
                 Log.i("ZIP", "file unzip completed");
                 // checkQuestionPaper();
                 getQuestionsZip(qs_ids);
-                Toast.makeText(getActivity(), "Download Complete", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), "Download Complete", Toast.LENGTH_SHORT).show();
             }
         });
         download.execute(path_url);

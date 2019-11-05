@@ -813,7 +813,11 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
                         jsonObject.put("qstate", 1);
                         jsonObject.put("qanswer", "");
                     }
-
+                    if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
+                        rg_options.clearCheck();
+                        jsonObject.put("qstate", 1);
+                        jsonObject.put("qanswer", "");
+                    }
                     adapter.notifyItemChanged(currentExamId);
                     updateQuestionTime();
 

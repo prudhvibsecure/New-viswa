@@ -76,20 +76,20 @@ public class AllQuestions_view extends ParentFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View layout = inflater.inflate(R.layout.fragment_examlist, container, false);
+        View layout = inflater.inflate(R.layout.question_list_layout, container, false);
 
-        progressBar = layout.findViewById(R.id.pb_content_bar);
+      //  progressBar = layout.findViewById(R.id.pb_content_bar);
 
-        tv_content_txt = layout.findViewById(R.id.tv_content_txt);
+       // tv_content_txt = layout.findViewById(R.id.tv_content_txt);
 
-        tv_content_txt.setText(R.string.cydhaen);
+       // tv_content_txt.setText(R.string.cydhaen);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
 
         RecyclerView rv_content_list = layout.findViewById(R.id.rv_content_list);
-       SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.swipeRefreshLayout);
-       mSwipeRefreshLayout.setEnabled(false);
-       mSwipeRefreshLayout.setRefreshing(false);
+//       SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.swipeRefreshLayout);
+//       mSwipeRefreshLayout.setEnabled(false);
+//       mSwipeRefreshLayout.setRefreshing(false);
         rv_content_list.setLayoutManager(layoutManager);
 
         rv_content_list.setItemAnimator(new DefaultItemAnimator());
@@ -101,7 +101,7 @@ public class AllQuestions_view extends ParentFragment {
         adapterContent = new AllQuestionsAdapter(activity);
 
         rv_content_list.setAdapter(adapterContent);
-        progressBar.setVisibility(View.VISIBLE);
+       // progressBar.setVisibility(View.VISIBLE);
         showData();
 
         return layout;
@@ -149,9 +149,9 @@ public class AllQuestions_view extends ParentFragment {
 
             if (jsonArray != null && jsonArray.length() > 0) {
 
-                tv_content_txt.setVisibility(View.GONE);
+              //  tv_content_txt.setVisibility(View.GONE);
 
-                progressBar.setVisibility(View.GONE);
+             //   progressBar.setVisibility(View.GONE);
 
                 adapterContent.setItems(jsonArray);
 
@@ -161,7 +161,7 @@ public class AllQuestions_view extends ParentFragment {
 
             }
 
-            tv_content_txt.setVisibility(View.VISIBLE);
+         //   tv_content_txt.setVisibility(View.VISIBLE);
 
         } catch (Exception e) {
 

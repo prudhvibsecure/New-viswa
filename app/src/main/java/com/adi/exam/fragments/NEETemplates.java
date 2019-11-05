@@ -188,7 +188,7 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        layout = inflater.inflate(R.layout.fragment_kvpyttemplates, container, false);
+        layout = inflater.inflate(R.layout.fragment_neet_templete, container, false);
 
         rg_options = layout.findViewById(R.id.rg_options);
 

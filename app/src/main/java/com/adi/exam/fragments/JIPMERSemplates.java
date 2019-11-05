@@ -828,7 +828,11 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
                         jsonObject.put("qstate", 1);
                         jsonObject.put("qanswer", "");
                     }
-
+                    if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
+                        rg_options.clearCheck();
+                        jsonObject.put("qstate", 1);
+                        jsonObject.put("qanswer", "");
+                    }
                     adapter.notifyItemChanged(currentExamId);
                     updateQuestionTime();
 

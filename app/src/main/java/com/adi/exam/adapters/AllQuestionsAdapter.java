@@ -115,7 +115,9 @@ public class AllQuestionsAdapter extends RecyclerView.Adapter<AllQuestionsAdapte
             }
             String my_qs_file = AESEncryptionDecryption.decrypt(html_content.toString());
             String[] data_questions = my_qs_file.split("</html>");
-            contactViewHolder.iv_qimage.loadData(data_questions[0], "text/html", "utf-8");
+            contactViewHolder.iv_qimage.clearCache(true);
+            contactViewHolder.iv_qimage.clearHistory();
+            contactViewHolder.iv_qimage.loadDataWithBaseURL("",data_questions[0], "text/html", "utf-8",null);
         } catch (Exception e) {
             TraceUtils.logException(e);
 
