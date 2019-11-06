@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.adi.exam.R;
 import com.adi.exam.SriVishwa;
@@ -23,11 +22,10 @@ import com.adi.exam.models.QuestonsModel;
 import com.adi.exam.utils.TraceUtils;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class AllQuestions_view extends ParentFragment {
+public class AllQuestions_New extends ParentFragment {
 
     private OnFragmentInteractionListener mFragListener;
 
@@ -41,13 +39,13 @@ public class AllQuestions_view extends ParentFragment {
     private JSONArray data;
 
     private ArrayList<QuestonsModel> questonsModels;
-    public AllQuestions_view() {
+    public AllQuestions_New() {
         // Required empty public constructor
     }
 
-    public static AllQuestions_view newInstance(String allQus) {
+    public static AllQuestions_New newInstance(String allQus) {
 
-        AllQuestions_view allQuestions_view=new AllQuestions_view();
+        AllQuestions_New allQuestions_view=new AllQuestions_New();
         Bundle args = new Bundle();
 
         args.putString("data", allQus);
@@ -152,19 +150,12 @@ public class AllQuestions_view extends ParentFragment {
 
             if (jsonArray != null && jsonArray.length() > 0) {
 
-              //  tv_content_txt.setVisibility(View.GONE);
 
-             //   progressBar.setVisibility(View.GONE);
-
-                adapterContent.setItems(jsonArray);
-
-                adapterContent.notifyDataSetChanged();
 
                 return;
 
             }
 
-         //   tv_content_txt.setVisibility(View.VISIBLE);
 
         } catch (Exception e) {
 

@@ -1038,7 +1038,7 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
 
             int no_of_correct_answers = 0;
 
-            String marks_per_question = data.optString("marks_per_question");
+            String marks_per_question = data.optString("marks_per_question");//4,4,4
 
             String negative_marks = data.optString("negative_marks");
 

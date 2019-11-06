@@ -31,7 +31,7 @@ public class AppSettings {
             properties = new Properties();
 
            // String BASE_PATH = "https://bsecuresoftechsolutions.com/viswa/";   //Live path
-           String BASE_PATH="https://bsecuresoftechsolutions.com/viswa_dev/";  //local path
+           String BASE_PATH="https://bsecuresoftechsolutions.com/viswa_dev/";  //live path
 
             //String BASE_PATH = "https://bsecuresoftechsolutions.com/smc_api/";
 
@@ -86,6 +86,9 @@ public class AppSettings {
             properties.setProperty("rtf_zip_download", BASE_PATH + "assets/upload/rtf_zip/");
 
             properties.setProperty("question_files", BASE_PATH + "question_files/get_assignmnet_questions");
+
+            properties.setProperty("check_exam_time", BASE_PATH + "question_files/check_exam_time");
+
 
         } catch (Exception e) {
 

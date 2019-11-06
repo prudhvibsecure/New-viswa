@@ -982,7 +982,7 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
     public void onRowClicked(JSONObject jsonObject, int position, TextView tv_processing, TextView tv_start) {
         try {
 
-            if (isNetworkAvailable()) {
+
                 JSONObject jsonObject1 = jsonObject;
                 //write here also diff
                 App_Table table = new App_Table(activity);
@@ -1000,12 +1000,16 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
                 //  JSONObject question_details = jsonObject1.getJSONObject("question_details");
 
                 if (jsonObject1.optString("down_status").equalsIgnoreCase("0")) {
-                    tv_processing.setVisibility(View.VISIBLE);
-                    tv_start.setVisibility(View.GONE);
+                    if (isNetworkAvailable()) {
+                        tv_processing.setVisibility(View.VISIBLE);
+                        tv_start.setVisibility(View.GONE);
 
-                    final String zip_file_name = jsonObject1.optString("zip_file_name");
+                        final String zip_file_name = jsonObject1.optString("zip_file_name");
 
-                    getZipFolderFile(zip_file_name, jsonObject1.optString("assignment_id"));
+                        getZipFolderFile(zip_file_name, jsonObject1.optString("assignment_id"));
+                    } else{
+                    Toast.makeText(activity, "Please check your network", Toast.LENGTH_LONG).show();
+                }
 
                 } else {
                     tv_processing.setVisibility(View.GONE);
@@ -1031,9 +1035,7 @@ public class AssignmentList extends ParentFragment implements View.OnClickListen
 
                     activity.showAssignment(jsonObject1.toString());
                 }
-            }else{
-                Toast.makeText(activity, "Please check your network", Toast.LENGTH_LONG).show();
-            }
+
 
 
         } catch (Exception e) {

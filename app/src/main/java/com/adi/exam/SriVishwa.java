@@ -470,10 +470,7 @@ public class SriVishwa extends AppCompatActivity
 
                 case 1:
 
-                    if (checkPermission("android.permission.READ_EXTERNAL_STORAGE", 100) == 1) {
-                        swiftFragments(ExamList.newInstance(), "examlist");
-
-                    }
+                    getCheckTime(1);
 
                     break;
 
@@ -511,6 +508,23 @@ public class SriVishwa extends AppCompatActivity
 
         }
 
+    }
+
+    private void getCheckTime(int type) {
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+
+            jsonObject.put("system_time", System.currentTimeMillis());
+
+            jsonObject.put("student_id", studentDetails.getString("student_id"));
+
+            HTTPPostTask post = new HTTPPostTask(this, this);
+            post.disableProgress();
+            post.userRequest(getString(R.string.plwait), 191, "check_exam_time", jsonObject.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -1283,6 +1297,24 @@ public class SriVishwa extends AppCompatActivity
 
             switch (requestId) {
 
+                case 191:
+                    JSONObject jsonObject11 = new JSONObject(results.toString());
+
+                    if (jsonObject11.optString("statuscode").equalsIgnoreCase("200")) {
+
+                        if (checkPermission("android.permission.READ_EXTERNAL_STORAGE", 100) == 1) {
+                            swiftFragments(ExamList.newInstance(), "examlist");
+
+                        }
+
+                    }else{
+                        Toast.makeText(this, jsonObject11.optString("statusdescription"), Toast.LENGTH_SHORT).show();
+//                        deleteDatabase("exam_sri.db");
+                        AppPreferences.getInstance(this).clearSharedPreferences(true);
+                        Intent login=new Intent(this,LoginActivity.class);
+                        startActivity(login);
+                    }
+                    break;
                 case 1:
                     JSONObject jsonObject = new JSONObject(results.toString());
 
