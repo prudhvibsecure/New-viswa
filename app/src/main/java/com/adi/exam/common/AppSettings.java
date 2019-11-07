@@ -89,6 +89,8 @@ public class AppSettings {
 
             properties.setProperty("check_exam_time", BASE_PATH + "question_files/check_exam_time");
 
+            properties.setProperty("download_apk", BASE_PATH + "/assets/upload/version/");
+
 
         } catch (Exception e) {
 

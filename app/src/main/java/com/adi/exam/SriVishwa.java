@@ -1360,7 +1360,7 @@ public class SriVishwa extends AppCompatActivity
                                     //Utils.downloadDilog(this);
                                     Toast.makeText(this, "Downloading updates.Please don't Refresh the page or navigate to other pages until download is complete.", Toast.LENGTH_LONG).show();
                                     downloadnote.setVisibility(View.VISIBLE);
-                                    startService(ApkFileDownloader.getDownloadService(this, "https://bsecuresoftechsolutions.com/viswa/assets/upload/version/", String.valueOf(mediaStorage), "viswa.apk"));
+                                    startService(ApkFileDownloader.getDownloadService(this, AppSettings.getInstance().getPropertyValue("download_apk"), String.valueOf(mediaStorage), "viswa.apk"));
 
                                     downloadnote.setVisibility(View.GONE);
                                 }
@@ -1617,7 +1617,7 @@ public class SriVishwa extends AppCompatActivity
                         mediaStorage.mkdirs();
                     }
                     Utils.downloadDilog(this);
-                    startService(ApkFileDownloader.getDownloadService(this, "https://bsecuresoftechsolutions.com/viswa/assets/upload/version/", String.valueOf(mediaStorage), "viswa.apk"));
+                    startService(ApkFileDownloader.getDownloadService(this, AppSettings.getInstance().getPropertyValue("download_apk"), String.valueOf(mediaStorage), "viswa.apk"));
                 }
 
                 break;
@@ -1679,7 +1679,7 @@ public class SriVishwa extends AppCompatActivity
                     String type = Utils.getMimeType(a_name);
                     if (type.startsWith("application/vnd.android.package-archive")) {
                         stopLockTask();
-                        deleteDatabase("exam.db");
+                        deleteDatabase("exam_sri.db");
                         stopService(new Intent(getApplicationContext(), DNotifyCloser.class));
                         AppPreferences.getInstance(SriVishwa.this).clearSharedPreferences(true);
                       //  AppPreferences.getInstance(SriVishwa.this).addToStore("inFlag","Yes",false);
@@ -1691,9 +1691,9 @@ public class SriVishwa extends AppCompatActivity
                         Uri paths = Uri.fromFile(new File(path));
                         downloadnote.setVisibility(View.GONE);
                         Intent intent_n = new Intent(Intent.ACTION_VIEW);
-                        intent_n.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                     //   intent_n.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent_n.setDataAndType(paths, type);
-                        startActivityForResult(intent_n,1009);
+                        startActivity(intent_n);
                         apkDelte(path);
 
                        // SriVishwa.this.finish();
@@ -2202,16 +2202,4 @@ public class SriVishwa extends AppCompatActivity
         return super.onKeyLongPress(keyCode, event);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1009 && requestCode==RESULT_OK){
-            Intent i = new Intent(this, MainActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                    |Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-                    |Intent.FLAG_ACTIVITY_SINGLE_TOP
-                    |Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(i);
-        }
-    }
 }

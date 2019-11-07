@@ -2015,6 +2015,112 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
         try {
 
+            int total_questions_attempted = 0;
+
+            int no_of_correct_answers = 0;
+
+            double marks_per_question = data.optDouble("marks_per_question");
+
+            double negative_marks = data.optDouble("negative_marks");
+
+            double score = 0;
+
+            int total_not_answered = 0;
+
+            int total_marked_for_review = 0;
+
+            int total_not_visited = 0;
+
+            int total_answered_and_marked_for_review = 0;
+
+            int total_visited = 0;
+
+            JSONArray jsonArray = adapter.getItems();
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                //qstate = //0 = not visited, 1 = not answered, 2 = answered, 3 = marked for review, 4 = answered and marked for review
+                if (jsonObject.optString("qstate").equalsIgnoreCase("3")) {
+
+                    ++total_marked_for_review;
+
+                }
+
+                if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
+
+                    ++total_not_visited;
+
+                }
+
+                if (!jsonObject.optString("qstate").equalsIgnoreCase("0")) {
+
+                    ++total_visited;
+
+                }
+
+                if (jsonObject.optString("qstate").equalsIgnoreCase("4")) {
+
+                    ++total_answered_and_marked_for_review;
+
+                }
+
+                if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
+
+                    ++total_not_answered;
+
+                }
+
+                String qanswer = jsonObject.optString("qanswer");
+
+                String answer = jsonObject.optString("answer");
+
+                if (qanswer.trim().length() > 0) {
+
+                    ++total_questions_attempted;
+
+                    if (qanswer.toLowerCase().equalsIgnoreCase(answer.toLowerCase())) {
+
+                        ++no_of_correct_answers;
+
+                        score = score + marks_per_question;
+
+                    } else {
+
+                        score = score - negative_marks;
+
+                    }
+
+                }
+
+            }
+
+            data.put("total_not_answered", total_not_answered);
+
+            data.put("total_marked_for_review", total_marked_for_review);
+
+            data.put("total_not_visited", total_not_visited);
+
+            data.put("total_answered_and_marked_for_review", total_answered_and_marked_for_review);
+
+            JSONObject question_details = data.getJSONObject("question_details");
+
+            JSONObject STUDENTEXAMRESULT = new JSONObject();
+            JSONObject backup_result = new JSONObject();
+
+            //double x = System.currentTimeMillis();
+            long student_exam_result_id = System.currentTimeMillis();
+            STUDENTEXAMRESULT.put("student_exam_result_id", student_exam_result_id);
+            STUDENTEXAMRESULT.put("student_id", activity.getStudentDetails().optInt("student_id"));
+            STUDENTEXAMRESULT.put("exam_id", data.optInt("exam_id"));
+            STUDENTEXAMRESULT.put("exam_name", data.optString("exam_name"));
+            STUDENTEXAMRESULT.put("exam_date", question_details.optString("exam_date"));
+            STUDENTEXAMRESULT.put("total_questions", adapter.getCount() + "");
+            STUDENTEXAMRESULT.put("total_questions_attempted", total_questions_attempted + "");
+            STUDENTEXAMRESULT.put("no_of_correct_answers", no_of_correct_answers + "");
+            STUDENTEXAMRESULT.put("score", score + "");
+
             App_Table table = new App_Table(activity);
 
 
@@ -2027,19 +2133,58 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
             fos = getActivity().openFileOutput(FILE_NAME, MODE_PRIVATE);
 
             fos.write(json.toString().getBytes());
+
             path = getActivity().getFilesDir().getAbsolutePath() + "/" + FILE_NAME;
-            startUploadBackUp(path, FILE_NAME);
-            Intent str=new Intent(getActivity(), MainActivity.class);
-            startActivity(str);
-            Toast.makeText(getActivity(), "Exam Submitted successfully...", Toast.LENGTH_SHORT).show();
-          //  activity.showokPopUp(R.drawable.pop_ic_failed, activity.getString(R.string.errorTxt), activity.getString(R.string.isr));
+            table.insertFileData(data.optInt("exam_id"), FILE_NAME, path);
+            long val = table.insertSingleRecords(STUDENTEXAMRESULT, "STUDENTEXAMRESULT");
+
+            if (val > 0) {
+
+                activity.setAllQuestions(jsonArray);
+
+                Intent str=new Intent(getActivity(), MainActivity.class);
+                startActivity(str);
+                Toast.makeText(getActivity(), "Exam Submitted successfully...", Toast.LENGTH_SHORT).show();
+
+                startUploadBackUp(path, FILE_NAME);
+
+                return;
+
+            }
+
+            activity.showokPopUp(R.drawable.pop_ic_failed, activity.getString(R.string.errorTxt), activity.getString(R.string.isr));
 
         } catch (Exception e) {
 
             TraceUtils.logException(e);
 
         }
-     activity.onKeyDown(4,null);
+//        try {
+//
+//            App_Table table = new App_Table(activity);
+//
+//
+//            json = table.getExamsResult(data.optInt("exam_id"), activity.getStudentDetails().optInt("student_id"));
+//            json.put("student_exam_result_id", "");
+//            json.put("student_id", activity.getStudentDetails().optInt("student_id"));
+//            json.put("exam_id", data.optInt("exam_id"));
+//            json.put("exam_name", data.optString("exam_name"));
+//            FILE_NAME = System.currentTimeMillis() + "_Result.txt";
+//            fos = getActivity().openFileOutput(FILE_NAME, MODE_PRIVATE);
+//
+//            fos.write(json.toString().getBytes());
+//            path = getActivity().getFilesDir().getAbsolutePath() + "/" + FILE_NAME;
+//
+//            startUploadBackUp(path, FILE_NAME);
+//
+//          //  activity.showokPopUp(R.drawable.pop_ic_failed, activity.getString(R.string.errorTxt), activity.getString(R.string.isr));
+//
+//        } catch (Exception e) {
+//
+//            TraceUtils.logException(e);
+//
+//        }
+    // activity.onKeyDown(4,null);
 
     }
 
