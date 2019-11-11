@@ -557,8 +557,8 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                 break;
 
             case R.id.action_aq:
-                Toast.makeText(activity, "Can't preview...", Toast.LENGTH_SHORT).show();
-              //  activity.allQuestions_view(adapter.getItems());
+               // Toast.makeText(activity, "Can't preview...", Toast.LENGTH_SHORT).show();
+                activity.allQuestions_view(adapter.getItems());
 
                // activity.showAllQuestions();
 

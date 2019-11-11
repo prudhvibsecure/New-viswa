@@ -319,6 +319,7 @@
                     android:background="@android:color/black" />
 
                 <LinearLayout
+                    android:id="@+id/lms_one"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/v_line"
@@ -369,6 +370,41 @@
                         android:textColor="@android:color/black"
                         android:textSize="16sp"
                         app:fontType="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lms_one"
+                    android:orientation="horizontal">
+
+                    <com.adi.exam.controls.CustomTextView
+                        android:id="@+id/tv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="0.3dp"
+                        android:background="@drawable/button_bg_submit_blue"
+                        android:gravity="center"
+                        android:text="Previous"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        app:fontType="1" />
+
+                    <com.adi.exam.controls.CustomTextView
+                        android:id="@+id/tv_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/button_bg_submit_blue"
+                        android:gravity="center"
+                        android:text="@string/next"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        app:fontType="1" />
+
                 </LinearLayout>
             </RelativeLayout>
 

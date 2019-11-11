@@ -34,6 +34,7 @@
             android:id="@+id/nav_download"
             android:icon="@drawable/download"
             android:enabled="true"
+            android:visible="false"
             android:title="Download Question Paper"/>
 
         <item

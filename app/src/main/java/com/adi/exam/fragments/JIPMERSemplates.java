@@ -404,7 +404,7 @@ public class JIPMERSemplates extends ParentFragment implements View.OnClickListe
 
             case R.id.action_aq:
 
-                activity.setAllQuestions(adapter.getItems());
+                activity.allQuestions_view(adapter.getItems());
 
               //  activity.showAllQuestions();
 

@@ -453,8 +453,8 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
               /*  activity.setAllQuestions(adapter.getItems());
 
                 activity.showAllQuestions();*/
-              //  activity.allQuestions_view(adapter.getItems());
-                Toast.makeText(activity, "Can't preview...", Toast.LENGTH_SHORT).show();
+                activity.allQuestions_view(adapter.getItems());
+               // Toast.makeText(activity, "Can't preview...", Toast.LENGTH_SHORT).show();
 
                 break;
         }

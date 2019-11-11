@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -18,10 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adi.exam.R;
 import com.adi.exam.SriVishwa;
 import com.adi.exam.adapters.AllQuestionsAdapter;
+import com.adi.exam.adapters.AllQuestionsAdapter_List;
 import com.adi.exam.models.QuestonsModel;
 import com.adi.exam.utils.TraceUtils;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -35,10 +38,12 @@ public class AllQuestions_New extends ParentFragment {
 
     private SriVishwa activity;
 
-    private AllQuestionsAdapter adapterContent;
+    private AllQuestionsAdapter_List adapterContent;
     private JSONArray data;
 
     private ArrayList<QuestonsModel> questonsModels;
+
+    private ListView mListView;
     public AllQuestions_New() {
         // Required empty public constructor
     }
@@ -80,29 +85,30 @@ public class AllQuestions_New extends ParentFragment {
 
         View layout = inflater.inflate(R.layout.question_list_layout, container, false);
 
+        mListView=layout.findViewById(R.id.rv_content_list);
       //  progressBar = layout.findViewById(R.id.pb_content_bar);
 
        // tv_content_txt = layout.findViewById(R.id.tv_content_txt);
 
        // tv_content_txt.setText(R.string.cydhaen);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+      //  LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
 
-        RecyclerView rv_content_list = layout.findViewById(R.id.rv_content_list);
+      //  RecyclerView rv_content_list = layout.findViewById(R.id.rv_content_list);
 //       SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) layout.findViewById(R.id.swipeRefreshLayout);
 //       mSwipeRefreshLayout.setEnabled(false);
 //       mSwipeRefreshLayout.setRefreshing(false);
-        rv_content_list.setLayoutManager(layoutManager);
+      //  rv_content_list.setLayoutManager(layoutManager);
 
-        rv_content_list.setItemAnimator(new DefaultItemAnimator());
+       // rv_content_list.setItemAnimator(new DefaultItemAnimator());
+//
+      //  DividerItemDecoration did = new DividerItemDecoration(rv_content_list.getContext(), layoutManager.getOrientation());
 
-        DividerItemDecoration did = new DividerItemDecoration(rv_content_list.getContext(), layoutManager.getOrientation());
+      //  rv_content_list.addItemDecoration(did);
 
-        rv_content_list.addItemDecoration(did);
+      //  adapterContent = new AllQuestionsAdapter(activity);
 
-        adapterContent = new AllQuestionsAdapter(activity);
-
-        rv_content_list.setAdapter(adapterContent);
+      //  rv_content_list.setAdapter(adapterContent);
        // progressBar.setVisibility(View.VISIBLE);
         showData();
 
@@ -147,11 +153,20 @@ public class AllQuestions_New extends ParentFragment {
 
         try {
             JSONArray jsonArray = data;
-
+            questonsModels=new ArrayList<>();
             if (jsonArray != null && jsonArray.length() > 0) {
+                for (int i=0;i<jsonArray.length();i++){
 
+                    QuestonsModel model=new QuestonsModel();
+                    JSONObject object=jsonArray.getJSONObject(i);
 
+                    model.setSno(object.optString("sno"));
+                    model.setQuestion_name(object.optString("question_name"));
+                    questonsModels.add(model);
+                }
 
+                adapterContent= new AllQuestionsAdapter_List(questonsModels,getActivity());
+                mListView.setAdapter(adapterContent);
                 return;
 
             }

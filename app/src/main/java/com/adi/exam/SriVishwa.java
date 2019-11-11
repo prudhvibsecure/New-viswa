@@ -55,6 +55,7 @@ import com.adi.exam.dialogfragments.ExitDialog;
 import com.adi.exam.dialogfragments.MessageDialog;
 import com.adi.exam.fragments.AIIMSemplates;
 import com.adi.exam.fragments.AllQuestions;
+import com.adi.exam.fragments.AllQuestions_New;
 import com.adi.exam.fragments.AllQuestions_view;
 import com.adi.exam.fragments.AssignResultsPage;
 import com.adi.exam.fragments.Assignment;
@@ -469,9 +470,16 @@ public class SriVishwa extends AppCompatActivity
             switch (position) {
 
                 case 1:
+                    if (isNetworkAvailable()) {
+                         getCheckTime(1);
+                    } else {
+                        Toast.makeText(this, "Please connect your network", Toast.LENGTH_SHORT).show();
+                        if (checkPermission("android.permission.READ_EXTERNAL_STORAGE", 100) == 1) {
+                            swiftFragments(ExamList.newInstance(), "examlist");
 
-                    getCheckTime(1);
+                        }
 
+                    }
                     break;
 
                 case 2:
@@ -888,62 +896,7 @@ public class SriVishwa extends AppCompatActivity
         return super.onKeyDown(keyCode, event);
     }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        try {
-//            if (keyCode == 4) {
-//
-//                if (fragStack.size() > 0) {
-//
-//                    ParentFragment pf = fragStack.peek();
-//                    if (pf instanceof ExamTemplates) {
-//                        return true;
-//                    }
-//
-//                    if(pf instanceof Assignment)
-//                    {
-//                        return true;
-//                    }
-//
-//                    if (pf instanceof ResultsPage) {
-//                        startActivity(new Intent(this, SriVishwa.class));
-//                    }
-//
-//                    if (pf instanceof Dashboard) {
-//                        PrefUtils.setKioskModeActive(false, getApplicationContext());
-//                        finish();
-//                    } else {
-//                        if (pf.back())
-//                            return true;
-//                    }
-//
-//                    fragStack.pop();
-//
-//                    FragmentTransaction trans = manager.beginTransaction();
-//                    trans.remove(pf);
-//
-//                    if (fragStack.size() > 0) {
-//                        ParentFragment pf1 = fragStack.get(fragStack.size() - 1);
-//                        trans.show(pf1);
-//                    } /*else {
-//                        swiftHomeFragments(null, fragHomeStack.peek());
-//                    }*/
-//
-//                    trans.commit();
-//
-//                    return true;
-//                }
-//
-//                showExitDialog();
-//                return false;
-//
-//            }
-//        } catch (Exception e) {
-//            TraceUtils.logException(e);
-//        }
-//
-//        return super.onKeyDown(keyCode, event);
-//    }
+
 
     public void showExitDialog() {
 
@@ -1201,7 +1154,7 @@ public class SriVishwa extends AppCompatActivity
 
     public void allQuestions_view(JSONArray aAllQuestions) {
 
-        swiftFragments(AllQuestions_view.newInstance(aAllQuestions.toString()), "allquestins");
+        swiftFragments(AllQuestions_New.newInstance(aAllQuestions.toString()), "allquestins");
 
     }
 

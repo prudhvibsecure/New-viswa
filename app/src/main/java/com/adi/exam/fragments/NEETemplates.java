@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -236,6 +237,10 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
         layout.findViewById(R.id.tv_mfrn).setOnClickListener(this);
 
         layout.findViewById(R.id.tv_submit).setOnClickListener(this);
+
+        layout.findViewById(R.id.tv_back).setOnClickListener(this);
+
+        layout.findViewById(R.id.tv_next).setOnClickListener(this);
 
         rv_ques_nums = layout.findViewById(R.id.rv_ques_nums);
 
@@ -605,6 +610,96 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                         }
 
                     }
+                    break;
+                case R.id.tv_back:
+
+                    if (currentExamId == -1) {
+                        currentExamId = 0;
+                        showNextQuestion(currentExamId);
+                        return;
+                    }
+                    if(currentExamId == 0)
+                    {
+                        showNextQuestion(currentExamId);
+                        return;
+                    }
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId=adapter.getCount()-1;
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
+                            rg_options.clearCheck();
+                            jsonObject.put("qstate", 1);
+                            jsonObject.put("qanswer", "");
+                        }
+                        adapter.notifyItemChanged(currentExamId);
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
+
+                        return;
+                    }
+                    showNextQuestion(currentExamId - 1);
+                    jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                    if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
+                        rg_options.clearCheck();
+                        jsonObject.put("qstate", 1);
+                        jsonObject.put("qanswer", "");
+                    }
+                    if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
+                        rg_options.clearCheck();
+                        jsonObject.put("qstate", 1);
+                        jsonObject.put("qanswer", "");
+                    }
+
+                    adapter.notifyItemChanged(currentExamId);
+                    updateQuestionTime();
+
+                    if (currentExamId == 0) {
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                        if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
+                            rg_options.clearCheck();
+
+                            jsonObject.put("qstate", 1);
+                            jsonObject.put("qanswer", "");
+                            currentExamId = 0;//this one
+                        }
+                    }
+
+                    break;
+                case R.id.tv_next:
+
+                    if (currentExamId >= adapter.getCount()) {
+                        currentExamId= adapter.getCount();
+
+                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                        if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
+
+                            jsonObject.put("qstate", 1);
+
+                        }
+
+                        adapter.notifyItemChanged(currentExamId);
+                        rg_options.clearCheck();
+                        updateQuestionTime();
+                        showNextQuestion(currentExamId);
+                        return;
+                    }
+                    //question_no++;
+                    jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                    if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
+
+                        jsonObject.put("qstate", 1);
+
+                    }
+
+                    adapter.notifyItemChanged(currentExamId);
+                    rg_options.clearCheck();
+                    updateQuestionTime();
+
+                    showNextQuestion(currentExamId + 1);
+
                     break;
 
                 case R.id.tv_submit:
@@ -1208,7 +1303,29 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
         }
 
     }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        switch (item.getItemId()) {
+
+            case R.id.action_gi:
+
+                activity.showInstructionsScreen(data, false);
+
+                break;
+
+            case R.id.action_aq:
+
+                activity.allQuestions_view(adapter.getItems());
+
+                //activity.showAllQuestions();
+
+                break;
+        }
+
+        return true;
+
+    }
     private void startUploadBackUp(String path, String file_name) {
 
         String url = AppSettings.getInstance().getPropertyValue("uploadfile_admin");

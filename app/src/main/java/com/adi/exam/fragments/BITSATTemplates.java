@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -397,6 +398,29 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
         super.onActivityCreated(savedInstanceState);
 
         mFragListener.onFragmentInteraction(data.optString("exam_name"), false);
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.action_gi:
+
+                activity.showInstructionsScreen(data, false);
+
+                break;
+
+            case R.id.action_aq:
+
+                activity.allQuestions_view(adapter.getItems());
+
+                //  activity.showAllQuestions();
+
+                break;
+        }
+
+        return true;
 
     }
 

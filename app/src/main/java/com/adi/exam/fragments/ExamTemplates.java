@@ -390,7 +390,7 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
             case R.id.action_aq:
 
-                activity.setAllQuestions(adapter.getItems());
+                activity.allQuestions_view(adapter.getItems());
 
              //   activity.showAllQuestions();
 
