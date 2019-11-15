@@ -17,7 +17,7 @@ import com.adi.exam.fragments.WifiFragment;
 import java.util.List;
 
 
-public class WifiScanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class WifiScanAdapter extends RecyclerView.Adapter<WifiScanAdapter.ContactViewHolder> {
 
 private List<WifiFragment.device> wifiList;
 private Context context;
@@ -31,48 +31,54 @@ private View.OnClickListener mOnClickListener;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public ContactViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
-            View itemView = LayoutInflater.
-                    from(viewGroup.getContext()).
-                    inflate(R.layout.network_list, viewGroup, false);
+        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.network_list, viewGroup,
+                false);
 
-         MyViewHolder holder = new MyViewHolder(itemView);
-            itemView.setTag(holder);
-            itemView.setOnClickListener(mOnClickListener);
-            return holder;
+        return new ContactViewHolder(itemView);
+//            View itemView = LayoutInflater.
+//                    from(viewGroup.getContext()).
+//                    inflate(R.layout.network_list, viewGroup, false);
+//
+//         MyViewHolder holder = new MyViewHolder(itemView);
+//            itemView.setTag(holder);
+//            itemView.setOnClickListener(mOnClickListener);
+//            return holder;
 
     }
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(ContactViewHolder holder, int position) {
 
 
            WifiFragment.device device=wifiList.get(position);
            String name=device.getName().toString();
 
-             ((MyViewHolder) holder).vName.setText(name);
-             ((MyViewHolder) holder).vName.setTag(device);
+             holder.vName.setText(name);
+             holder.vName.setTag(device);
 
 
-            ((MyViewHolder) holder).vImage.setImageResource(R.mipmap.ic_action_wifi);
-            ((MyViewHolder) holder).context = context;
-            ((MyViewHolder) holder).position = position;
-             applyClickEvents(((MyViewHolder) holder).vName, ((MyViewHolder) holder).wfi_connect,((MyViewHolder) holder). password_wifi ,position,device,((MyViewHolder) holder).wifi_hiden);
+             holder.vImage.setImageResource(R.mipmap.ic_action_wifi);
+             holder.context = context;
+            holder.position = position;
+             applyClickEvents(holder.vName,  holder.wfi_connect,holder.password_wifi ,position,device, holder.wifi_hiden,holder.wfi_forgot);
     }
 
-    private void applyClickEvents(TextView name, final TextView wfi_connect, final EditText password_wifi, final int position, final  WifiFragment.device device, final LinearLayout wifi_ll) {
+    private void applyClickEvents(TextView name, final TextView wfi_connect, final EditText password_wifi, final int position, final  WifiFragment.device device, final LinearLayout wifi_ll,final TextView wfi_forgot) {
         name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onMessageRowClicked(wfi_connect,password_wifi, device,position,wifi_ll);
             }
         });
+        wfi_forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onMessageForgot(wfi_connect,password_wifi, device,position,wifi_ll,wfi_forgot);
+            }
+        });
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
 
    /* private void applyClickEvents(ContactViewHolder contactViewHolder, final List<ClassModel> classModelList, final int position) {
         contactViewHolder.mViewContent.setOnClickListener(new View.OnClickListener() {
@@ -97,28 +103,32 @@ private View.OnClickListener mOnClickListener;
     public void setOnClickListener(View.OnClickListener lis) {
         mOnClickListener = lis;
     }
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class ContactViewHolder extends RecyclerView.ViewHolder {
         protected ImageView vImage;
         protected TextView vName;
+        protected TextView wfi_forgot;
         protected  Context context;
         protected int position;
         LinearLayout wifi_hiden;
         EditText password_wifi;
         TextView wfi_connect;
 
-        public MyViewHolder(View v) {
+        public ContactViewHolder(View v) {
             super(v);
             vName = v.findViewById(R.id.ssid_name);
             vImage = v.findViewById(R.id.Wifilogo);
             wifi_hiden = v.findViewById(R.id.wifi_hiden);
             password_wifi = v.findViewById(R.id.password_wifi);
             wfi_connect = v.findViewById(R.id.wfi_connect);
+            wfi_forgot = v.findViewById(R.id.wfi_forgot);
 
         }
     }
     public interface ContactAdapterListener {
 
         void onMessageRowClicked(TextView wfi_connect, EditText password_wifi, WifiFragment.device device, int position, LinearLayout wifi_ll);
+
+        void onMessageForgot(TextView wfi_connect, EditText password_wifi, WifiFragment.device device, int position, LinearLayout wifi_ll, TextView wfi_forgot);
     }
 
 }

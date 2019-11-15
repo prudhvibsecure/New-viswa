@@ -46,6 +46,7 @@
         <item
             android:id="@+id/clear"
             android:enabled="true"
+            android:visible="false"
             android:title="Clear Exams"/>
 
 

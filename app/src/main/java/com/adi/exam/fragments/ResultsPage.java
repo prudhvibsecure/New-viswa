@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.adi.exam.MainActivity;
 import com.adi.exam.R;
 import com.adi.exam.SriVishwa;
 import com.adi.exam.callbacks.IDialogCallbacks;
@@ -105,25 +106,25 @@ public class ResultsPage extends ParentFragment implements IItemHandler, View.On
 
         View layout = inflater.inflate(R.layout.fragment_exam_resultspage, container, false);
 
-        layout.setFocusableInTouchMode(true);
-
-        layout.requestFocus();
-
-        layout.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-                        startActivity(new Intent(activity, SriVishwa.class));
-
-                    }
-
-                }
-
-                return false;
-            }
-        });
+//        layout.setFocusableInTouchMode(true);
+//
+//        layout.requestFocus();
+//
+//        layout.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+//                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+//
+//                        startActivity(new Intent(activity, SriVishwa.class));
+//
+//                    }
+//
+//                }
+//
+//                return false;
+//            }
+//        });
 
         tl_results = layout.findViewById(R.id.tl_results);
 
@@ -150,8 +151,11 @@ public class ResultsPage extends ParentFragment implements IItemHandler, View.On
         tv_dash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.closeFrags();
-                activity.swiftFragments(Dashboard.newInstance(), "DashBoard");
+                Intent str=new Intent(getActivity(), MainActivity.class);
+                startActivity(str);
+
+//                activity.closeFrags();
+//                activity.swiftFragments(Dashboard.newInstance(), "DashBoard");
             }
         });
 

@@ -129,7 +129,7 @@ public class BITSATTemplates extends ParentFragment implements View.OnClickListe
 
     private String PATH = Environment.getExternalStorageDirectory().toString();
 
-    private final String IMGPATH = PATH + "/System/allimages/";
+    private final String IMGPATH = PATH + "/System/allFiles/";
 
     private boolean isVisible = false;
 

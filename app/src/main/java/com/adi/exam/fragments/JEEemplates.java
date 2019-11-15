@@ -671,6 +671,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_not_answered));
                         // v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_not_answered));
                     } else if (jsonObject.optString("qstate").equalsIgnoreCase("3")) {
+                        rg_options.clearCheck();
                         jsonObject.put("qstate", 3);
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_marked_for_review));
                         // v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_marked_for_review));
@@ -693,27 +694,6 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                     break;
 
                 case R.id.tv_savennext:
-                    /*if (currentExamId+1 == adapter.getCount()) {
-
-                      if(currentExamId+1 < adapter.getCount()) {
-                          Toast.makeText(activity, "All question Attempted Please submit your exam", Toast.LENGTH_SHORT).show();
-                          return;
-                      }
-                      int nvc = Integer.parseInt(tv_notvisitedcnt.getText().toString());
-                      nvc = nvc-1;
-                      tv_notvisitedcnt.setText(nvc+"");
-                    //tv_answeredcnt.setText(currentExamId);//increment or decrement value ga check cheddam
-
-                      int ans = Integer.parseInt(tv_answeredcnt.getText().toString());
-                      ans = ans+1;
-                      tv_answeredcnt.setText(ans + "");
-                      currentExamId++;
-
-                      Toast.makeText(activity, "All question Attempted Please submit your exam", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-*/
-
 
                     if (currentExamId>=adapter.getCount()){
                         currentExamId=adapter.getCount()-1;
@@ -721,7 +701,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
                         int selRatioId = rg_options.getCheckedRadioButtonId();
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
-                        jsonObject.put("qstate", 2);
+
                         boolean result = inRange(21, 25, Integer.parseInt(jsonObject.optString("sno")));
                         boolean result2 = inRange(46, 50, Integer.parseInt(jsonObject.optString("sno")));
                         boolean result3 = inRange(71, 75, Integer.parseInt(jsonObject.optString("sno")));
@@ -731,6 +711,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                                 activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psas));
                                 return;
                             }
+                            jsonObject.put("qstate", 2);
                             jsonObject.put("qanswer",ck );
                         }else {
 
@@ -742,11 +723,12 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                                 return;
                             }
                             Object vv=layout.findViewById(selRatioId).getTag();
+                            jsonObject.put("qstate", 2);
                             jsonObject.put("qanswer",vv.toString() );
                         }
 
                         adapter.notifyItemChanged(currentExamId);
-
+                        rg_options.clearCheck();
                         updateQuestionTime();
                         showNextQuestion(currentExamId);
                         return;
@@ -755,7 +737,6 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                         //  question_no++;
                         int selRatioId = rg_options.getCheckedRadioButtonId();
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
-                        jsonObject.put("qstate", 2);
                         boolean result = inRange(21, 25, Integer.parseInt(jsonObject.optString("sno")));
                         boolean result2 = inRange(46, 50, Integer.parseInt(jsonObject.optString("sno")));
                         boolean result3 = inRange(71, 75, Integer.parseInt(jsonObject.optString("sno")));
@@ -765,6 +746,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                             activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psas));
                             return;
                         }
+                            jsonObject.put("qstate", 2);
                             jsonObject.put("qanswer",ck );
                         }else {
 
@@ -776,12 +758,13 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                                 return;
                             }
                             Object vv=layout.findViewById(selRatioId).getTag();
+                            jsonObject.put("qstate", 2);
                             jsonObject.put("qanswer",vv.toString() );
                         }
 
                         adapter.notifyItemChanged(currentExamId);
 
-
+                        rg_options.clearCheck();
                         updateQuestionTime();
                         if (jsonObject.optInt("sno") < adapter.getItemCount()) {
                             rg_options.clearCheck();
@@ -801,16 +784,11 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
                 case R.id.tv_savenmarkforreview:
 
-//                    if (currentExamId>adapter.getCount()){
-//                        currentExamId=adapter.getCount();
-//                        showNextQuestion(currentExamId-1);
-//                        return;
-//                    }
                     if (currentExamId >= adapter.getCount()) {
                         currentExamId=adapter.getCount()-1;
                         int selRatioId = rg_options.getCheckedRadioButtonId();
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
-                        jsonObject.put("qstate", 4);
+
                         boolean result = inRange(21, 25, Integer.parseInt(jsonObject.optString("sno")));
                         boolean result2 = inRange(46, 50, Integer.parseInt(jsonObject.optString("sno")));
                         boolean result3 = inRange(71, 75, Integer.parseInt(jsonObject.optString("sno")));
@@ -820,6 +798,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                                 activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psas));
                                 return;
                             }
+                            jsonObject.put("qstate", 4);
                             jsonObject.put("qanswer", ck);
                         }else {
                             if (selRatioId == -1) {
@@ -828,6 +807,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
                                 return;
                             }
+                            jsonObject.put("qstate", 4);
                             jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
                         }
 
@@ -844,7 +824,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                     if (currentExamId != -1) {
                         int selRatioId = rg_options.getCheckedRadioButtonId();
                         jsonObject = adapter.getItems().getJSONObject(currentExamId);
-                        jsonObject.put("qstate", 4);
+
                         boolean result = inRange(21, 25, Integer.parseInt(jsonObject.optString("sno")));
                         boolean result2 = inRange(46, 50, Integer.parseInt(jsonObject.optString("sno")));
                         boolean result3 = inRange(71, 75, Integer.parseInt(jsonObject.optString("sno")));
@@ -854,6 +834,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                                 activity.showokPopUp(R.drawable.pop_ic_info, activity.getString(R.string.alert), activity.getString(R.string.psas));
                                 return;
                             }
+                            jsonObject.put("qstate", 4);
                             jsonObject.put("qanswer", ck);
                         }else {
                             if (selRatioId == -1) {
@@ -862,6 +843,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
                                 return;
                             }
+                            jsonObject.put("qstate", 4);
                             jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
                         }
 
@@ -1568,18 +1550,17 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
 
                 double negative_marks1=Double.parseDouble(negative_marks_s[0]);
 
-                if (qanswer.trim().length() > 0) {
-
+                if (!TextUtils.isEmpty(qanswer)) {
 
                     ++total_questions_attempted;
 
-                    if (qanswer.toLowerCase().equalsIgnoreCase(answer.toLowerCase())) {
+                    if (qanswer.equalsIgnoreCase(answer)) {
 
                         ++no_of_correct_answers;
 
                         score = score + marks_per_question1;
 
-                    } else {
+                    }else {
 
                         boolean result = inRange(21, 25, Integer.parseInt(jsonObject.optString("sno")));
                         boolean result2 = inRange(46, 50, Integer.parseInt(jsonObject.optString("sno")));
@@ -1980,5 +1961,10 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                 .getSystemService(Context.ACTIVITY_SERVICE);
 
         activityManager.moveTaskToFront(getActivity().getTaskId(), 0);
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mFragListener = null;
     }
 }

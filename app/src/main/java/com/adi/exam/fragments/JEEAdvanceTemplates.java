@@ -747,6 +747,12 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_preve));
                         // v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_not_answered));
                     } else if (jsonObject.optString("qstate").equalsIgnoreCase("3")) {
+                        rg_options.clearCheck();
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+                        ed_texx.setText("");
                         jsonObject.put("qstate", 3);
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_marked_for_review));
                         // v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_marked_for_review));
@@ -2530,5 +2536,9 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
         return true;
 
     }
-
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mFragListener = null;
+    }
 }

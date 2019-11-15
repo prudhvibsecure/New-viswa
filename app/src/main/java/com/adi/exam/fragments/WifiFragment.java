@@ -42,18 +42,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WifiFragment extends ParentFragment implements IOnFocusListenable, WifiScanAdapter.ContactAdapterListener {
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        if (hasFocus) {
-            getActivity().sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
-        } else {
-            getActivity().sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
-        }
-    }
+public class WifiFragment extends ParentFragment implements WifiScanAdapter.ContactAdapterListener {
 
     @Override
-    public void onMessageRowClicked(TextView wfi_connect,final EditText password_wifi, final device device, int position, final  LinearLayout wifi_ll) {
+    public void onMessageRowClicked(TextView wfi_connect, final EditText password_wifi, final device device, final int position, final  LinearLayout wifi_ll) {
 
         wifi_ll.setVisibility(View.VISIBLE);
 
@@ -71,6 +63,20 @@ public class WifiFragment extends ParentFragment implements IOnFocusListenable, 
 
 
 
+    }
+
+    @Override
+    public void onMessageForgot(TextView wfi_connect, final EditText password_wifi, final device device, int position, final LinearLayout wifi_ll, TextView wfi_forgot) {
+        wifi_ll.setVisibility(View.VISIBLE);
+        wfi_forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wifi_ll.setVisibility(View.GONE);
+                password_wifi.setText("");
+                wifi.removeNetwork(wifi.getConnectionInfo().getNetworkId());
+
+            }
+        });
     }
 
     public class device {
@@ -105,6 +111,7 @@ public class WifiFragment extends ParentFragment implements IOnFocusListenable, 
     private SriVishwa mActivity;
     private static String TAG = "WifiFragment";
     private String password = null;
+
     //Option Menu for wifi connection
     // private OnFragmentInteractionListener mListener;
 
@@ -141,21 +148,8 @@ public class WifiFragment extends ParentFragment implements IOnFocusListenable, 
             Toast.makeText(getActivity(), "Wifi is disabled enabling...", Toast.LENGTH_LONG).show();
             wifi.setWifiEnabled(true);
         }
-        //register Broadcast receiver
         try {
-            getActivity().registerReceiver(new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    if (ContextCompat.checkSelfPermission((Activity) context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 11);
-                    } else {
-                        wifiList = wifi.getScanResults();
-                        netCount = wifiList.size();
-                    }
-                    // wifiScanAdapter.notifyDataSetChanged();
-                    Log.d("Wifi", "Total Wifi Network" + netCount);
-                }
-            }, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+            getActivity().registerReceiver(mBroadcastReceiver,new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -182,6 +176,7 @@ public class WifiFragment extends ParentFragment implements IOnFocusListenable, 
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.wifiRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(wifiScanAdapter);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkandAskPermission();
         } else {
@@ -206,13 +201,15 @@ public class WifiFragment extends ParentFragment implements IOnFocusListenable, 
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getActivity().findViewById(R.id.scan).setVisibility(View.GONE);
                 wifi.startScan();
                 values.clear();
+
                 try {
                     netCount = netCount - 1;
                     while (netCount >= 0) {
                         getActivity().findViewById(R.id.no_scan).setVisibility(View.GONE);
+
                         device d = new device();
                         d.setName(wifiList.get(netCount).SSID.toString());
                         d.setCapabilities(wifiList.get(netCount).capabilities);
@@ -271,6 +268,7 @@ public class WifiFragment extends ParentFragment implements IOnFocusListenable, 
         });*/
     }
 
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -294,7 +292,17 @@ public class WifiFragment extends ParentFragment implements IOnFocusListenable, 
         mFragListener = null;
 
     }
-
+    BroadcastReceiver mBroadcastReceiver=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ContextCompat.checkSelfPermission((Activity) context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 11);
+                    } else {
+                        wifiList = wifi.getScanResults();
+                        netCount = wifiList.size();
+                    }
+        }
+    };
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -306,6 +314,11 @@ public class WifiFragment extends ParentFragment implements IOnFocusListenable, 
 
     @Override
     public void onDestroy() {
+        try{
+            getActivity().unregisterReceiver(mBroadcastReceiver);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         super.onDestroy();
     }
 
@@ -329,6 +342,21 @@ public class WifiFragment extends ParentFragment implements IOnFocusListenable, 
                     perms.put(permissions[i], grantResults[i]);
                 if (perms.get(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     wifi.startScan();
+                    values.clear();
+                    try {
+                        netCount = netCount - 1;
+                        while (netCount >= 0) {
+                            getActivity().findViewById(R.id.no_scan).setVisibility(View.GONE);
+                            device d = new device();
+                            d.setName(wifiList.get(netCount).SSID.toString());
+                            d.setCapabilities(wifiList.get(netCount).capabilities);
+                            values.add(d);
+                            wifiScanAdapter.notifyDataSetChanged();
+                            netCount = netCount - 1;
+                        }
+                    } catch (Exception e) {
+                        Log.d("Wifi", e.getMessage());
+                    }
                 } else {
                     // Permission Denied
                     Toast.makeText(getContext(), "Some Permission is Denied", Toast.LENGTH_SHORT)

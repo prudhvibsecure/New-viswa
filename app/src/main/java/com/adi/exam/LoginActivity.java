@@ -373,6 +373,8 @@ public class LoginActivity extends AppCompatActivity implements IItemHandler {
 
             jsonObject.put("password", password);
 
+            jsonObject.put("device_id", getDevid());
+
             HTTPPostTask post = new HTTPPostTask(this, this);
 
             post.userRequest(getString(R.string.plwait), 1, "studentlogin", jsonObject.toString());

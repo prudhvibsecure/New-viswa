@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    tools:context=".fragments.ExamTemplates">
+    tools:context=".fragments.ExamTemplates"
+    android:keepScreenOn="true">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl_subjects"

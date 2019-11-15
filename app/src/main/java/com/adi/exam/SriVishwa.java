@@ -827,18 +827,17 @@ public class SriVishwa extends AppCompatActivity
                     }
 
                     if (pf instanceof ExamSubmitConfirmationPage) {
-                        //showExitDialog();
+                       // showExitDialog();
                         return true;
                     }
 
                     if (pf instanceof AssignResultsPage) {
-                        //showExitDialog();
+                       // showExitDialog();
                         return true;
                     }
 
                     if (pf instanceof ResultsPage) {
-
-                        //showExitDialog();
+                       // showExitDialog();
                         return true;
 
                     }

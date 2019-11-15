@@ -6,8 +6,6 @@
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/wifiRecyclerView"
        android:layout_width="match_parent"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
        android:layout_height="match_parent"/>
 
    <ImageView
