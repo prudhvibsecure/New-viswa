@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:keepScreenOn="true"
     tools:context=".fragments.ExamTemplates">
 
     <com.google.android.material.tabs.TabLayout
@@ -22,15 +23,7 @@
         app:tabTextAppearance="@style/CustomTextStyle"
         app:textAllCaps="false" />
 
-    <com.adi.exam.controls.CustomTextView
-        android:id="@+id/tv_timer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/_5sdp"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        app:fontType="1" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:padding="@dimen/_5sdp"
+                android:padding="@dimen/_4sdp"
                 android:text="@string/questionno"
                 android:textAllCaps="true"
                 android:textColor="@android:color/black"
@@ -62,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/tv_questionno"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@android:color/black" />
 
@@ -96,6 +89,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left|center"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -124,6 +118,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left|center"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -152,6 +147,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left|center"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -180,6 +176,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left|center"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -416,6 +413,17 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:padding="@dimen/_5sdp">
+
+            <com.adi.exam.controls.CustomTextView
+                android:id="@+id/tv_timer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_gravity="top"
+                android:padding="@dimen/_5sdp"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:fontType="1" />
 
             <LinearLayout
                 android:id="@+id/profile"

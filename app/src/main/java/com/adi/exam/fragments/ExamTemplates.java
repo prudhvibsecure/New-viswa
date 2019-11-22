@@ -136,6 +136,8 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
     private Dialog mDialog;
 
+    private int clickcount = 0;
+
     public ExamTemplates() {
         // Required empty public constructor
     }
@@ -313,7 +315,7 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
                         questionIndex = questionIndex + Integer.parseInt(temp1[i]);
 
                     }
-
+                    rg_options.clearCheck();
                     updateQuestionTime();
 
                     showNextQuestion(questionIndex);
@@ -432,12 +434,17 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
                     String question_time = jsonObject1.optString("question_time").trim();
 
+                    String clicks = jsonObject1.optString("no_of_clicks").trim();
                     if (question_time.length() > 0) {
 
                         timeTaken = Long.parseLong(question_time);
 
                     }
+                    if (clicks.length() > 0) {
+                        clickcount = Integer.parseInt(clicks);
+                    }
 
+                    clickcount = clickcount + check;
                     timeTaken = timeTaken + timeTaken4Question;
                     timeTaken4Question = timeTaken;
                     jsonObject1.put("question_time", timeTaken);
@@ -457,11 +464,19 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
                     jsonObject1.put("result", res);
                     jsonObject1.put("question_time", timeTaken4Question + "");
                     jsonObject1.put("no_of_clicks", check++);
-                    jsonObject1.put("marked_for_review", jsonObject.optInt("qstate") == 3 ? "1" : "0");
+                    jsonObject1.put("question_time", timeTaken4Question + "");
+                    jsonObject1.put("no_of_clicks", clickcount);
+                    jsonObject1.put("marked_for_review", "0");
 
                     iwhereClause = "exam_id = '" + data.optString("exam_id") + "' AND question_id = '" + jsonObject.optInt("question_id") + "' AND student_question_time_id = '" + jsonObject1.optInt("student_question_time_id") + "'";
 
-                    table.updateRecord(jsonObject1, "STUDENTQUESTIONTIME", iwhereClause);
+                    table.checkNInsertARecord(jsonObject1, "STUDENTQUESTIONTIME", iwhereClause);
+
+                    check = 0;
+                    clickcount = 0;
+                    timeTaken4Question = 0;
+                    timeTaken = 0;
+
                     return;
                 }
 
@@ -497,10 +512,12 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
                 questionTimeObject.put("result", res);
                 questionTimeObject.put("question_time", timeTaken4Question + "");
                 questionTimeObject.put("no_of_clicks", check++);
-                questionTimeObject.put("marked_for_review", jsonObject.optInt("qstate") == 3 ? "1" : "0");
+                questionTimeObject.put("marked_for_review", "0");
 
                 table.insertSingleRecords(questionTimeObject, "STUDENTQUESTIONTIME");
                 check = 0;
+                clickcount = 0;
+                timeTaken4Question = 0;
 
             }
 
@@ -568,6 +585,7 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
                     } else if (jsonObject.optString("qstate").equalsIgnoreCase("3")) {
                         jsonObject.put("qstate", 3);
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_marked_for_review));
+                        rg_options.clearCheck();
                         // v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_marked_for_review));
                     } else if (jsonObject.optString("qstate").equalsIgnoreCase("4")) {
                         jsonObject.put("qstate", 4);
@@ -734,7 +752,23 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
                     if (currentExamId >= adapter.getCount()) {
                         currentExamId=adapter.getCount();
-                        if (rg_options.isSelected()) {
+                        if (rg_options.getCheckedRadioButtonId() == -1) {
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
+
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                            jsonObject.put("qstate", 3);
+
+                            jsonObject.put("qanswer", "");
+
+                            adapter.notifyItemChanged(currentExamId);
+                            rg_options.clearCheck();
+
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId - 1);
+                        }else {
+
                             int selRatioId = rg_options.getCheckedRadioButtonId();
 
                             jsonObject = adapter.getItems().getJSONObject(currentExamId);
@@ -750,7 +784,14 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
                             updateQuestionTime();
 
                             showNextQuestion(currentExamId);
-                        }else {
+
+                        }
+                        return;
+                    }
+                    if (currentExamId != -1) {
+
+                        if (rg_options.getCheckedRadioButtonId() == -1) {
+
                             int selRatioId = rg_options.getCheckedRadioButtonId();
 
                             jsonObject = adapter.getItems().getJSONObject(currentExamId);
@@ -764,13 +805,8 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
                             updateQuestionTime();
 
-                            showNextQuestion(currentExamId - 1);
-                        }
-                        return;
-                    }
-                    if (currentExamId != -1) {
-
-                        if (rg_options.isSelected()) {
+                            showNextQuestion(currentExamId + 1);
+                        } else {
                             int selRatioId = rg_options.getCheckedRadioButtonId();
 
                             jsonObject = adapter.getItems().getJSONObject(currentExamId);
@@ -787,22 +823,6 @@ public class ExamTemplates extends ParentFragment implements View.OnClickListene
 
                             showNextQuestion(currentExamId + 1);
 
-                        } else {
-
-                            int selRatioId = rg_options.getCheckedRadioButtonId();
-
-                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
-
-                            jsonObject.put("qstate", 3);
-
-                            jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
-
-                            adapter.notifyItemChanged(currentExamId);
-                            rg_options.clearCheck();
-
-                            updateQuestionTime();
-
-                            showNextQuestion(currentExamId + 1);
                         }
 
                     }

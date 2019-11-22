@@ -213,7 +213,7 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
 
         layout.findViewById(R.id.tv_savennext).setOnClickListener(this);
 
-        layout.findViewById(R.id.tv_savenmarkforreview).setOnClickListener(this);
+      // layout.findViewById(R.id.tv_savenmarkforreview).setOnClickListener(this);
 
         layout.findViewById(R.id.tv_clearresponse).setOnClickListener(this);
 
@@ -312,7 +312,7 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
                     }
 
                     updateQuestionTime();
-
+                    rg_options.clearCheck();
                     showNextQuestion(questionIndex);
 
                 }
@@ -564,6 +564,7 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_not_answered));
                         // v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_not_answered));
                     } else if (jsonObject.optString("qstate").equalsIgnoreCase("3")) {
+                        rg_options.clearCheck();
                         jsonObject.put("qstate", 3);
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_marked_for_review));
                         // v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_marked_for_review));
@@ -644,7 +645,7 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
 
                     break;
 
-                case R.id.tv_savenmarkforreview:
+              /*  case R.id.tv_savenmarkforreview:
 
                     if (currentExamId >= adapter.getCount()) {
                         currentExamId=adapter.getCount()-1;
@@ -700,7 +701,7 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
                     }
 
                     break;
-
+*/
                 case R.id.tv_clearresponse:
 
                     if (currentExamId>adapter.getCount()){
@@ -735,6 +736,7 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
                     if (currentExamId >= adapter.getCount()) {
                         currentExamId=adapter.getCount();
 
+                        if (rg_options.getCheckedRadioButtonId() == -1) {
                             int selRatioId = rg_options.getCheckedRadioButtonId();
 
                             jsonObject = adapter.getItems().getJSONObject(currentExamId);
@@ -749,29 +751,63 @@ public class AIIMSemplates extends ParentFragment implements View.OnClickListene
                             updateQuestionTime();
 
                             showNextQuestion(currentExamId - 1);
+                        }else {
 
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
+
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                            jsonObject.put("qstate", 4);
+
+                            jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                            adapter.notifyItemChanged(currentExamId);
+
+                            rg_options.clearCheck();
+
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId);
+
+                        }
                         return;
                     }
                     if (currentExamId != -1) {
 
-                        //question_no++;
-                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (rg_options.getCheckedRadioButtonId() == -1) {
 
-                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
 
-                        jsonObject.put("qstate", 3);
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
-                        jsonObject.put("qanswer", "");
+                            jsonObject.put("qstate", 3);
 
-                        adapter.notifyItemChanged(currentExamId);
-//                        if (jsonObject.optString("qstate").equalsIgnoreCase("1")) {
-//                            rg_options.clearCheck();
-//                        }
-                        rg_options.clearCheck();
+                            jsonObject.put("qanswer", "");
 
-                        updateQuestionTime();
+                            adapter.notifyItemChanged(currentExamId);
+                            rg_options.clearCheck();
 
-                        showNextQuestion(currentExamId + 1);
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId + 1);
+                        } else {
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
+
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                            jsonObject.put("qstate", 4);
+
+                            jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                            adapter.notifyItemChanged(currentExamId);
+
+                            rg_options.clearCheck();
+
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId + 1);
+
+                        }
 
                     }
 

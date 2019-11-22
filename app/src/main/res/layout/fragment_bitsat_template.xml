@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:keepScreenOn="true"
     tools:context=".fragments.ExamTemplates">
 
     <com.google.android.material.tabs.TabLayout
@@ -29,7 +30,7 @@
         android:layout_gravity="end"
         android:background="@drawable/button_bg_cancel_gray"
         android:gravity="end"
-        android:padding="@dimen/_5sdp"
+        android:padding="@dimen/_4sdp"
         android:text="Time:00:00:00"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
@@ -45,10 +46,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:background="@drawable/template_pop_but_def_cancel_gray"
             android:orientation="vertical"
-            android:padding="@dimen/_5sdp">
+            android:padding="@dimen/_2sdp">
 
 
             <RelativeLayout
@@ -85,7 +86,7 @@
             <com.adi.exam.controls.CustomTextView
                 android:id="@+id/tv_questionno"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:background="@drawable/trapezium"
                 android:gravity="left|center"
                 android:paddingLeft="10dp"
@@ -111,7 +112,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <WebView
@@ -130,7 +131,8 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left|center"
                         android:background="@drawable/template_pop_but_def_cancel_gray"
                         android:orientation="horizontal">
 
@@ -138,8 +140,7 @@
                             android:id="@+id/tv_option1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:drawablePadding="@dimen/_3sdp"
+                            android:layout_gravity="center"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
                             android:text="1)"
@@ -152,14 +153,14 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/app_name"
-                            android:padding="@dimen/_5sdp"
-                            android:scaleType="fitXY" />
+                            android:padding="@dimen/_5sdp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left|center"
                         android:background="@drawable/template_pop_but_def_cancel_gray"
                         android:orientation="horizontal">
 
@@ -168,7 +169,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:drawablePadding="@dimen/_3sdp"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
                             android:text="2)"
@@ -181,15 +181,15 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/app_name"
-                            android:padding="@dimen/_5sdp"
-                            android:scaleType="fitXY" />
+                            android:padding="@dimen/_5sdp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@drawable/template_pop_but_def_cancel_gray"
+                        android:layout_gravity="left|center"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -197,7 +197,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:drawablePadding="@dimen/_3sdp"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
                             android:text="3)"
@@ -210,15 +209,15 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/app_name"
-                            android:padding="@dimen/_5sdp"
-                            android:scaleType="fitXY" />
+                            android:padding="@dimen/_5sdp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@drawable/template_pop_but_def_cancel_gray"
+                        android:layout_gravity="left|center"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -226,7 +225,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:drawablePadding="@dimen/_3sdp"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
                             android:text="4)"
@@ -239,8 +237,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/app_name"
-                            android:padding="@dimen/_5sdp"
-                            android:scaleType="fitXY" />
+                            android:padding="@dimen/_5sdp" />
 
                     </LinearLayout>
 
@@ -309,6 +306,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:tag="a"
                             android:text="1)" />
 
                         <RadioButton
@@ -316,6 +314,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:tag="b"
                             android:text="2)" />
 
                         <RadioButton
@@ -323,6 +322,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:tag="c"
                             android:text="3)" />
 
                         <RadioButton
@@ -330,6 +330,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:tag="d"
                             android:text="4)" />
 
                     </RadioGroup>
@@ -373,7 +374,7 @@
                             android:layout_marginEnd="0.3dp"
                             android:background="@drawable/button_bg_submit_blue"
                             android:gravity="center"
-                            android:text="@string/savenext"
+                            android:text="@string/next_qs"
                             android:textAllCaps="true"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"

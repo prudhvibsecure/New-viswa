@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:keepScreenOn="true"
     tools:context=".fragments.ExamTemplates">
 
     <!--<LinearLayout-->
@@ -74,15 +75,7 @@
         app:tabTextAppearance="@style/CustomTextStyle"
         app:textAllCaps="false" />
 
-    <com.adi.exam.controls.CustomTextView
-        android:id="@+id/tv_timer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/_5sdp"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        app:fontType="1" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -134,20 +127,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/app_name"
-                        android:padding="@dimen/_5sdp"
-                        android:scaleType="fitXY" />
+                        android:padding="@dimen/_5sdp" />
 
                     <WebView
                         android:id="@+id/iv_questionimg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/app_name"
-                        android:padding="@dimen/_5sdp"
-                        android:scaleType="fitXY" />
+                        android:padding="@dimen/_5sdp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left|center"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -155,7 +147,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:drawablePadding="@dimen/_3sdp"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
                             android:text="1)"
@@ -168,14 +159,14 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/app_name"
-                            android:padding="@dimen/_5sdp"
-                            android:scaleType="fitXY" />
+                            android:padding="@dimen/_5sdp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left|center"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -183,7 +174,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:drawablePadding="@dimen/_3sdp"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
                             android:text="2)"
@@ -196,14 +186,14 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/app_name"
-                            android:padding="@dimen/_5sdp"
-                            android:scaleType="fitXY" />
+                            android:padding="@dimen/_5sdp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left|center"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -211,7 +201,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:drawablePadding="@dimen/_3sdp"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
                             android:text="3)"
@@ -224,14 +213,14 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/app_name"
-                            android:padding="@dimen/_5sdp"
-                            android:scaleType="fitXY" />
+                            android:padding="@dimen/_5sdp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left|center"
                         android:orientation="horizontal">
 
                         <com.adi.exam.controls.CustomTextView
@@ -239,7 +228,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:drawablePadding="@dimen/_3sdp"
                             android:gravity="center"
                             android:padding="@dimen/_5sdp"
                             android:text="4)"
@@ -432,7 +420,15 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:padding="@dimen/_5sdp">
-
+            <com.adi.exam.controls.CustomTextView
+                android:id="@+id/tv_timer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:fontType="1" />
             <LinearLayout
                 android:id="@+id/profile"
                 android:layout_width="match_parent"

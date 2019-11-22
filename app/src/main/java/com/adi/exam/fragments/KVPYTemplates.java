@@ -316,7 +316,7 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
                     }
 
                     updateQuestionTime();
-
+                    rg_options.clearCheck();
                     showNextQuestion(questionIndex);
 
                 }
@@ -738,6 +738,7 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
                     if (currentExamId >= adapter.getCount()) {
                         currentExamId=adapter.getCount();
 
+                        if (rg_options.getCheckedRadioButtonId() == -1) {
                             int selRatioId = rg_options.getCheckedRadioButtonId();
 
                             jsonObject = adapter.getItems().getJSONObject(currentExamId);
@@ -747,31 +748,68 @@ public class KVPYTemplates extends ParentFragment implements View.OnClickListene
                             jsonObject.put("qanswer", "");
 
                             adapter.notifyItemChanged(currentExamId);
+                            rg_options.clearCheck();
+
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId - 1);
+                        }else {
+
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
+
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                            jsonObject.put("qstate", 4);
+
+                            jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                            adapter.notifyItemChanged(currentExamId);
 
                             rg_options.clearCheck();
 
                             updateQuestionTime();
 
                             showNextQuestion(currentExamId);
+
+                        }
                         }
                     if (currentExamId != -1) {
 
-                        //question_no++;
-                        int selRatioId = rg_options.getCheckedRadioButtonId();
+                        if (rg_options.getCheckedRadioButtonId() == -1) {
 
-                        jsonObject = adapter.getItems().getJSONObject(currentExamId);
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
 
-                        jsonObject.put("qstate", 3);
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
-                        jsonObject.put("qanswer", "");
+                            jsonObject.put("qstate", 3);
 
-                        adapter.notifyItemChanged(currentExamId);
+                            jsonObject.put("qanswer", "");
 
-                        rg_options.clearCheck();
+                            adapter.notifyItemChanged(currentExamId);
+                            rg_options.clearCheck();
 
-                        updateQuestionTime();
+                            updateQuestionTime();
 
-                        showNextQuestion(currentExamId + 1);
+                            showNextQuestion(currentExamId + 1);
+                        } else {
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
+
+                            jsonObject = adapter.getItems().getJSONObject(currentExamId);
+
+                            jsonObject.put("qstate", 4);
+
+                            jsonObject.put("qanswer", layout.findViewById(selRatioId).getTag());
+
+                            adapter.notifyItemChanged(currentExamId);
+
+                            rg_options.clearCheck();
+
+                            updateQuestionTime();
+
+                            showNextQuestion(currentExamId + 1);
+
+                        }
+
 
                     }
 

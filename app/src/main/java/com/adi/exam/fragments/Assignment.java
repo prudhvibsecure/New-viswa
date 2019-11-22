@@ -289,7 +289,7 @@ public class Assignment extends ParentFragment implements View.OnClickListener, 
                     }
 
                     updateQuestionTime();
-
+                    rg_options.clearCheck();
                     showNextQuestion(questionIndex);
 
                 }

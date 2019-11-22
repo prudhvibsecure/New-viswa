@@ -376,7 +376,7 @@ public class JEEemplates extends ParentFragment implements View.OnClickListener,
                     }
 
                     updateQuestionTime();
-
+                    rg_options.clearCheck();
                     showNextQuestion(questionIndex);
 
                 }

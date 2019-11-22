@@ -357,7 +357,7 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                     }
 
                     updateQuestionTime();
-
+                    rg_options.clearCheck();
                     showNextQuestion(questionIndex);
 
                 }
@@ -430,6 +430,7 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                     } else if (jsonObject.optString("qstate").equalsIgnoreCase("3")) {
                         jsonObject.put("qstate", 3);
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_marked_for_review));
+                        rg_options.clearCheck();
                         // v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_marked_for_review));
                     } else if (jsonObject.optString("qstate").equalsIgnoreCase("4")) {
                         jsonObject.put("qstate", 4);
@@ -536,9 +537,10 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                     if (currentExamId>=adapter.getCount()){
                         currentExamId=adapter.getCount();
 
-                            int selRatioId = rg_options.getCheckedRadioButtonId();
-                        RadioButton b = (RadioButton)layout. findViewById(selRatioId);
-                        if (b==null) {
+                        if (rg_options.getCheckedRadioButtonId()==-1){
+
+                      //  RadioButton b = (RadioButton)layout. findViewById(selRatioId);
+                    //    if (b==null) {
 
                             jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
@@ -555,7 +557,7 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                             showNextQuestion(currentExamId);
 
                         } else {
-
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
                             jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                             jsonObject.put("qstate", 4);
@@ -575,9 +577,8 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
 
                         //question_no++;
 
-                            int selRatioId = rg_options.getCheckedRadioButtonId();
-                            RadioButton b = (RadioButton)layout. findViewById(selRatioId);
-                        if (b==null) {
+                        if (rg_options.getCheckedRadioButtonId()==-1){
+                       // if (b==null) {
                             jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                             jsonObject.put("qstate", 3);
@@ -593,7 +594,7 @@ public class NEETemplates extends ParentFragment implements View.OnClickListener
                             showNextQuestion(currentExamId + 1);
 
                         } else {
-
+                            int selRatioId = rg_options.getCheckedRadioButtonId();
                             jsonObject = adapter.getItems().getJSONObject(currentExamId);
 
                             jsonObject.put("qstate", 4);

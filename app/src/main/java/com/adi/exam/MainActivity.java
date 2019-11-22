@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.UserManager;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -27,6 +28,7 @@ import com.adi.exam.common.AppPreferences;
 import com.adi.exam.services.DNotifyCloser;
 import com.adi.exam.utils.TraceUtils;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -53,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ComponentName componentName;
     private static final int REQUEST_ENABLE = 1;
     private static final int SET_PASSWORD = 2;
+
+    String path = Environment.getExternalStorageDirectory()
+            .toString() + "/" + "viswa.apk";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +72,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         decorView.setSystemUiVisibility(uiOptions);*/
         View rootContent=findViewById(R.id.frame);
 
-
+        try {
+            File apk_file = new File(path);
+            if (apk_file.exists()) {
+                apk_file.delete();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         findViewById(R.id.ll_appicon).setOnClickListener(this);
        /* devicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         componentName = new ComponentName(this, MyPolicyReceiver.class);

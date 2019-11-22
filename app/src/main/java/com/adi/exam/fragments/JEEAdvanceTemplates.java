@@ -365,7 +365,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                     }
 
                     updateQuestionTime();
-
+                    rg_options.clearCheck();
                     showNextQuestion(questionIndex);
 
                 }
@@ -481,7 +481,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                             }
                         }
                         updateQuestionTime();
-
+                        rg_options.clearCheck();
                         showNextQuestion(questionIndex);
 
                     }
@@ -733,16 +733,22 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_anse));
                         //  v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_answered));
                     } else if (jsonObject.optString("qstate").equalsIgnoreCase("0")) {
-                        if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
-                            rg_options.clearCheck();
-                        } else if (type_ID.equalsIgnoreCase("2")) {
-                            checkBox1.setChecked(false);
-                            checkBox2.setChecked(false);
-                            checkBox3.setChecked(false);
-                            checkBox4.setChecked(false);
-                        } else if (type_ID.equalsIgnoreCase("3")) {
-                            ed_texx.setText("");
-                        }
+//                        if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
+//                            rg_options.clearCheck();
+//                        } else if (type_ID.equalsIgnoreCase("2")) {
+//                            checkBox1.setChecked(false);
+//                            checkBox2.setChecked(false);
+//                            checkBox3.setChecked(false);
+//                            checkBox4.setChecked(false);
+//                        } else if (type_ID.equalsIgnoreCase("3")) {
+//                            ed_texx.setText("");
+//                        }
+                        rg_options.clearCheck();
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+                        ed_texx.setText("");
                         jsonObject.put("qstate", 1);
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_preve));
                         // v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_not_answered));
@@ -761,16 +767,22 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_answered_marked));
                         // v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_answered_marked));
                     }  else {
-                        if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
-                            rg_options.clearCheck();
-                        } else if (type_ID.equalsIgnoreCase("2")) {
-                            checkBox1.setChecked(false);
-                            checkBox2.setChecked(false);
-                            checkBox3.setChecked(false);
-                            checkBox4.setChecked(false);
-                        } else if (type_ID.equalsIgnoreCase("3")) {
-                            ed_texx.setText("");
-                        }
+//                        if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
+//                            rg_options.clearCheck();
+//                        } else if (type_ID.equalsIgnoreCase("2")) {
+//                            checkBox1.setChecked(false);
+//                            checkBox2.setChecked(false);
+//                            checkBox3.setChecked(false);
+//                            checkBox4.setChecked(false);
+//                        } else if (type_ID.equalsIgnoreCase("3")) {
+//                            ed_texx.setText("");
+//                        }
+                        rg_options.clearCheck();
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+                        ed_texx.setText("");
                         jsonObject.put("qstate", 1);
                         v.findViewById(R.id.tv_questionno).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_preve));
                         //  v.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.ic_not_answered));
@@ -929,19 +941,13 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
                         adapter.notifyItemChanged(currentExamId);
 
-                        if (jsonObject.optInt("sno") < adapter.getItemCount()) {
-                            if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
-                                rg_options.clearCheck();
-                            } else if (type_ID.equalsIgnoreCase("2")) {
-                                checkBox1.setChecked(false);
-                                checkBox2.setChecked(false);
-                                checkBox3.setChecked(false);
-                                checkBox4.setChecked(false);
-                            } else if (type_ID.equalsIgnoreCase("3")) {
-                                ed_texx.setText("");
-                            }
-
-                        }
+                        Total="";
+                        rg_options.clearCheck();
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+                        ed_texx.setText("");
 
                         updateQuestionTime();
                         showNextQuestion(currentExamId);
@@ -1095,20 +1101,13 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
                         adapter.notifyItemChanged(currentExamId);
 
-                        if (jsonObject.optInt("sno") < adapter.getItemCount()) {
-                            if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
-                                rg_options.clearCheck();
-                            } else if (type_ID.equalsIgnoreCase("2")) {
-                                checkBox1.setChecked(false);
-                                checkBox2.setChecked(false);
-                                checkBox3.setChecked(false);
-                                checkBox4.setChecked(false);
-                            } else if (type_ID.equalsIgnoreCase("3")) {
-                                ed_texx.setText("");
-                            }
-
-                        }
-
+                        Total="";
+                        rg_options.clearCheck();
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+                        ed_texx.setText("");
                         updateQuestionTime();
 
 
@@ -1121,17 +1120,13 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
 
                 case R.id.tv_clearresponse:
-                    if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
+                    Total="";
                         rg_options.clearCheck();
-                    } else if (type_ID.equalsIgnoreCase("2")) {
                         checkBox1.setChecked(false);
                         checkBox2.setChecked(false);
                         checkBox3.setChecked(false);
                         checkBox4.setChecked(false);
-                    } else if (type_ID.equalsIgnoreCase("3")) {
-                        ed_texx.setText("");
-                    }
-
+                    ed_texx.setText("");
                     jsonObject = adapter.getItems().getJSONObject(currentExamId);
                     jsonObject.put("qstate", 1);
                     jsonObject.put("qanswer", "");
@@ -1264,7 +1259,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
                                 jsonObject.put("qstate", 3);
 
-                                jsonObject.put("qanswer", ed_texx.getText().toString().trim());
+                                jsonObject.put("qanswer", "");
                             }else{
                                 jsonObject.put("qstate", 4);
 
@@ -1272,17 +1267,13 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                             }
                         }
                         adapter.notifyItemChanged(currentExamId);
-
-                        if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
+                            Total="";
                             rg_options.clearCheck();
-                        } else if (type_ID.equalsIgnoreCase("2")) {
                             checkBox1.setChecked(false);
                             checkBox2.setChecked(false);
                             checkBox3.setChecked(false);
                             checkBox4.setChecked(false);
-                        } else if (type_ID.equalsIgnoreCase("3")) {
                             ed_texx.setText("");
-                        }
 
                         updateQuestionTime();
 
@@ -1404,7 +1395,7 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
 
                                 jsonObject.put("qstate", 3);
 
-                                jsonObject.put("qanswer", ed_texx.getText().toString().trim());
+                                jsonObject.put("qanswer", "");
                             }else{
                                 jsonObject.put("qstate", 4);
 
@@ -1412,17 +1403,15 @@ public class JEEAdvanceTemplates extends ParentFragment implements View.OnClickL
                             }
                         }
                         adapter.notifyItemChanged(currentExamId);
-
-                        if (type_ID.equalsIgnoreCase("1")||type_ID.equalsIgnoreCase("4")) {
+                        Total="";
                             rg_options.clearCheck();
-                        } else if (type_ID.equalsIgnoreCase("2")) {
+
                             checkBox1.setChecked(false);
                             checkBox2.setChecked(false);
                             checkBox3.setChecked(false);
                             checkBox4.setChecked(false);
-                        } else if (type_ID.equalsIgnoreCase("3")) {
                             ed_texx.setText("");
-                        }
+
 
                         updateQuestionTime();
 

@@ -129,6 +129,8 @@
 
     <string name="next">Next</string>
 
+    <string name="next_qs">Next Question</string>
+
     <string name="savenext">Save &amp; Next</string>
 
     <string name="savemarkforreview">Save &amp; Mark for Review</string>

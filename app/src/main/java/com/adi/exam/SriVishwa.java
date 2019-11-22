@@ -819,6 +819,8 @@ public class SriVishwa extends AppCompatActivity
                     }
                     if (pf instanceof JEEAdvanceTemplates) {
                         return true;
+                    } if (pf instanceof BITSATTemplates) {
+                        return true;
                     }
 
                     if (pf instanceof Assignment) {
@@ -841,16 +843,6 @@ public class SriVishwa extends AppCompatActivity
                         return true;
 
                     }
-
-                    /*if(pf instanceof ChangePassword)
-                    {
-                        startActivity(new Intent(SriVishwa.this, SriVishwa.class));
-                    }
-
-                    if(pf instanceof Subjects)
-                    {
-                        startActivity(new Intent(SriVishwa.this, SriVishwa.class));
-                    }*/
 
                     if (pf.back())
                         return true;
